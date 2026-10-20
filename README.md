@@ -37,12 +37,11 @@
 ```bash
 pip install -r requirements.txt
 ```
-# python run_global.py
 
 ### 2. Run Options | خيارات التشغيل
 
 #### Option A: تشغيل محلي (Local Development)
-لتشغيل النظام على جهازك المحلي فقط:
+لتشغيل النظام محلياً على جهازك:
 ```bash
 python app.py
 ```
@@ -51,12 +50,12 @@ python app.py
 
 ---
 
-#### Option B: تشغيل برابط عالمي عام (Global Public Link)
-لتشغيل الخادم وتوليد رابط فوري سريع لمشاركته مع أي شخص أو فتحه من الهاتف عبر الإنترنت (Cloudflare Tunnel):
+#### Option B: تشغيل برابط عالمي عام (Global Public Link / Cloudflare Tunnel)
+لتشغيل الخادم وتوليد رابط إنترنت مباشر لمشاركته مع أي شخص أو فتحه من الهاتف فوراً:
 ```bash
 python run_global.py
 ```
-يقوم السكريبت بتشغيل سيرفر Waitress وإنشاء رابط إنترنت عام ونسخه إلى الحافظة تلقائياً! 🌐
+يقوم السكريبت بتشغيل سيرفر Waitress وتوليد رابط إنترنت عام ونسخه إلى الحافظة تلقائياً! 🌐
 
 ---
 
@@ -64,4 +63,3 @@ python run_global.py
 - **Backend:** Python / Flask
 - **Frontend:** HTML5, CSS3, JavaScript (Vanilla ES6+), Responsive Grid
 - **Knowledge Engine:** Rule-based expert decision tree & pattern matching
-
