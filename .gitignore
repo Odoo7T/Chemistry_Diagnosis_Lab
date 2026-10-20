@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+tunnel.log
+tunnel_out.log
+cloudflared.exe
+*.rar
+*.zip
+.vscode/
+.idea/
