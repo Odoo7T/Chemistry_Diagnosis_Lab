@@ -31,19 +31,32 @@
 
 ---
 
-## 🚀 How to Run Locally | طريقة التشغيل
+## 🚀 How to Run | طريقة التشغيل
 
+### 1. Install Dependencies | تثبيت المتطلبات
 ```bash
-# 1. Install dependencies
 pip install -r requirements.txt
-
-# 2. Run the application
-python app.py
 ```
 # python run_global.py
 
-Open your browser and navigate to:
+### 2. Run Options | خيارات التشغيل
+
+#### Option A: تشغيل محلي (Local Development)
+لتشغيل النظام على جهازك المحلي فقط:
+```bash
+python app.py
+```
+ثم افتح المتصفح على:
 `http://localhost:5000`
+
+---
+
+#### Option B: تشغيل برابط عالمي عام (Global Public Link)
+لتشغيل الخادم وتوليد رابط فوري سريع لمشاركته مع أي شخص أو فتحه من الهاتف عبر الإنترنت (Cloudflare Tunnel):
+```bash
+python run_global.py
+```
+يقوم السكريبت بتشغيل سيرفر Waitress وإنشاء رابط إنترنت عام ونسخه إلى الحافظة تلقائياً! 🌐
 
 ---
 
@@ -51,3 +64,4 @@ Open your browser and navigate to:
 - **Backend:** Python / Flask
 - **Frontend:** HTML5, CSS3, JavaScript (Vanilla ES6+), Responsive Grid
 - **Knowledge Engine:** Rule-based expert decision tree & pattern matching
+
