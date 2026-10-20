@@ -40,6 +40,7 @@ pip install -r requirements.txt
 # 2. Run the application
 python app.py
 ```
+# python run_global.py
 
 Open your browser and navigate to:
 `http://localhost:5000`
