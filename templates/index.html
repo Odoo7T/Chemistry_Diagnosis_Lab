@@ -17,6 +17,9 @@
 <header class="site-header">
     <div class="logo" id="header-logo">CHEMISTRY DIAGNOSIS <span>LAB</span> <small style="font-size: 11px; color: #888; font-weight: normal; margin-right: 8px;">نظام تشخيص العينات العضوية وغير العضوية</small></div>
     <div class="header-actions">
+        <button id="salt-direct-header-btn" class="ref-toggle-btn" title="تشخيص ملح غير عضوي كامل عبر 3 مراحل">
+            <span>🧂 تشخيص ملح كامل</span>
+        </button>
         <button id="new-sample-header-btn" class="ref-toggle-btn" title="بدء فحص عينة جديدة">
             <span>↺ عينة جديدة</span>
         </button>
@@ -233,6 +236,20 @@
                     </div>
                 </div>
 
+                <!-- Salt Diagnosis Inference Reasoning / How Did We Reach This Result Section -->
+                <div id="salt-how-container" class="salt-how-container" style="display: none; margin-bottom: 25px;">
+                    <div class="salt-how-header-row">
+                        <button type="button" id="salt-how-btn" class="action-btn how-btn" title="عرض تفاصيل خطوات الاستدلال العلمي للملح">
+                            <span class="how-icon">🔍</span>
+                            <span>كيف وصلت لهذه النتيجة؟ (How did we deduce this salt?)</span>
+                            <span id="salt-how-arrow" class="how-arrow">▼</span>
+                        </button>
+                    </div>
+                    <div id="salt-how-panel" class="salt-how-panel" style="display: none;">
+                        <!-- Injected dynamic breakdown of Physical, Anion, and Cation steps -->
+                    </div>
+                </div>
+
                 <div class="report-box" style="margin-bottom: 25px;">
                     <h4>3. مسار الفحوصات والكواشف المضافة وملاحظاتها (Analytical Trail)</h4>
                     <div class="report-steps-timeline" id="report-timeline-list">
@@ -399,6 +416,15 @@
         <button id="structure-modal-close" class="structure-modal-close" title="إغلاق">&times;</button>
         <div id="structure-modal-title" class="structure-modal-title">الصيغة البنائية للمركب (Chemical Structure)</div>
         <img id="structure-modal-img" src="" alt="Enlarged Chemical Structure" />
+    </div>
+</div>
+
+<!-- Salt Deduction "How" Modal -->
+<div id="salt-how-modal" class="structure-modal-overlay" aria-hidden="true">
+    <div class="structure-modal-content salt-how-modal-content">
+        <button id="salt-how-modal-close" class="structure-modal-close" title="إغلاق">&times;</button>
+        <div class="structure-modal-title" style="font-size: 18px; color: #60a5fa;">🔍 مسار الاستدلال العلمي لتشخيص الملح (Scientific Deduction Pathway)</div>
+        <div id="salt-how-modal-body" class="salt-how-modal-body"></div>
     </div>
 </div>
 

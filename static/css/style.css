@@ -2623,3 +2623,228 @@ h1 span {
   }
 }
 
+/* ========================================================
+   INORGANIC SALT DIAGNOSIS & REASONING PATH STYLES
+   ======================================================== */
+
+.options-grid.start-mode-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+  gap: 16px;
+}
+
+.salt-how-container {
+  margin-top: 15px;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 16px;
+  backdrop-filter: blur(8px);
+}
+
+.salt-how-header-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.how-btn {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  border: 1px solid #3b82f6;
+  color: #ffffff;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transition: all 0.25s ease;
+  font-family: 'Noto Sans Arabic', sans-serif;
+}
+
+.how-btn:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border-color: #60a5fa;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+  transform: translateY(-2px);
+}
+
+.how-btn .how-icon {
+  font-size: 16px;
+}
+
+.how-btn .how-arrow {
+  font-size: 12px;
+  transition: transform 0.25s ease;
+}
+
+.how-btn.active .how-arrow {
+  transform: rotate(180deg);
+}
+
+.salt-how-panel {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: appear 0.35s ease both;
+}
+
+.salt-how-modal-content {
+  max-width: 820px;
+  width: 92%;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: #0f172a;
+  border: 1px solid #334155;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.how-phase-card {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.how-phase-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.how-phase-card.phase-physical::before {
+  background: #f59e0b;
+}
+
+.how-phase-card.phase-anion::before {
+  background: #3b82f6;
+}
+
+.how-phase-card.phase-cation::before {
+  background: #10b981;
+}
+
+.how-phase-card.phase-salt::before {
+  background: #8b5cf6;
+}
+
+.how-phase-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-family: 'Noto Sans Arabic', sans-serif;
+}
+
+.how-phase-badge {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.badge-physical {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.badge-anion {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+}
+
+.badge-cation {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.badge-salt {
+  background: rgba(139, 92, 246, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+}
+
+.how-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #1f2937;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.how-step-item:last-child {
+  border-bottom: none;
+}
+
+.how-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #1f2937;
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.how-step-content {
+  flex: 1;
+}
+
+.how-step-name {
+  color: #94a3b8;
+  margin-bottom: 2px;
+  font-size: 12px;
+}
+
+.how-step-obs {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.how-result-box {
+  background: #1e293b;
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  border: 1px solid #334155;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.how-result-badge {
+  font-size: 16px;
+}
+
+.how-result-text {
+  font-size: 13px;
+  color: #f8fafc;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+

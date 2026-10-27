@@ -53,8 +53,31 @@ def get_all_data():
             }
         },
         "confirmatory_tests": kb.CONFIRMATORY_TESTS,
-        "initial_color_hints": kb.INITIAL_COLOR_HINTS
+        "initial_color_hints": kb.INITIAL_COLOR_HINTS,
+        "anions_data": kb.ANIONS_DATA,
+        "cations_data": kb.CATIONS_DATA,
+        "salts_database": {
+            f"{c}_{a}": s for (c, a), s in kb.SALTS_DATABASE.items()
+        },
+        "incompatible_salts": {
+            f"{c}_{a}": s for (c, a), s in kb.INCOMPATIBLE_SALTS.items()
+        }
     })
+
+@app.route("/api/salt_outcome", methods=["POST"])
+def salt_outcome():
+    """Endpoint for inorganic salt diagnosis final outcome generation."""
+    payload = request.get_json(silent=True) or {}
+    cation = payload.get("cation", "")
+    anion = payload.get("anion", "")
+    
+    if not cation or not anion:
+        return jsonify({
+            "error": "Both 'cation' and 'anion' fields are required."
+        }), 400
+        
+    result = kb.build_final_salt_outcome(cation, anion)
+    return jsonify(result)
 
 @app.route("/api/predict", methods=["POST"])
 def predict():

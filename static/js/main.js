@@ -6,6 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const refModal = document.getElementById("ref-modal");
     const refModalClose = document.getElementById("ref-modal-close");
 
+    // Inorganic Salt Diagnosis Elements
+    const saltDirectHeaderBtn = document.getElementById("salt-direct-header-btn");
+    const saltHowContainer = document.getElementById("salt-how-container");
+    const saltHowBtn = document.getElementById("salt-how-btn");
+    const saltHowArrow = document.getElementById("salt-how-arrow");
+    const saltHowPanel = document.getElementById("salt-how-panel");
+    const saltHowModal = document.getElementById("salt-how-modal");
+    const saltHowModalBody = document.getElementById("salt-how-modal-body");
+    const saltHowModalClose = document.getElementById("salt-how-modal-close");
+
     // Main Workspace Containers
     const diagnosticWorkspace = document.getElementById("diagnostic-workspace");
     const questionContainer = document.getElementById("question-container");
@@ -173,11 +183,16 @@ document.addEventListener("DOMContentLoaded", () => {
     let sessionData = {
         color: "غير محدد",
         state: "محلول مائي",
+        solubility: "غير محدد",
         stepsTrail: [],
         suspectedKey: null,
         suspectedData: null,
         confirmatory: null,
-        confirmed: false
+        confirmed: false,
+        isSaltDiagnosis: false,
+        detected_anion: null,
+        detected_cation: null,
+        saltOutcome: null
     };
     let selectedIon = null;
     let selectedReagent = null;
@@ -190,6 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!res.ok) throw new Error("Failed to load knowledge base");
             knowledgeBase = await res.json();
             setupPredictorControls();
+            setupSaltDiagnosisListeners();
             startConsultation();
         } catch (err) {
             console.error("Error loading knowledge base:", err);
@@ -207,11 +223,16 @@ document.addEventListener("DOMContentLoaded", () => {
         sessionData = {
             color: "غير محدد",
             state: "محلول مائي",
+            solubility: "غير محدد",
             stepsTrail: [],
             suspectedKey: null,
             suspectedData: null,
             confirmatory: null,
-            confirmed: false
+            confirmed: false,
+            isSaltDiagnosis: false,
+            detected_anion: null,
+            detected_cation: null,
+            saltOutcome: null
         };
 
         historyStack = [];
@@ -225,8 +246,24 @@ document.addEventListener("DOMContentLoaded", () => {
         questionContainer.hidden = false;
         stage4Container.hidden = true;
         stage5Container.hidden = true;
+        if (saltHowContainer) saltHowContainer.style.display = "none";
+        if (saltHowPanel) saltHowPanel.style.display = "none";
+        if (saltHowBtn) saltHowBtn.classList.remove("active");
         stepBackBtn.style.display = "none";
 
+        renderCurrentQuestion();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function startSaltDiagnosis() {
+        startConsultation();
+        sessionData.isSaltDiagnosis = true;
+        historyStack = [{
+            type: "question",
+            id: "SALT_START",
+            label: "الخطوة 1: الفحص الفيزيائي للملح"
+        }];
+        stepBackBtn.style.display = "none";
         renderCurrentQuestion();
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -262,9 +299,14 @@ document.addEventListener("DOMContentLoaded", () => {
             optionsGrid.innerHTML = "";
 
             if (currentStep.id === "start_mode") {
-                optionsGrid.classList.add("grid-cols-3");
+                optionsGrid.classList.add("start-mode-grid");
             } else {
-                optionsGrid.classList.remove("grid-cols-3");
+                optionsGrid.classList.remove("start-mode-grid");
+            }
+
+            // Flag if we are in inorganic salt diagnosis mode
+            if (currentStep.id.startsWith("SALT_") || currentStep.id.startsWith("ANION_") || currentStep.id.startsWith("CATION_")) {
+                sessionData.isSaltDiagnosis = true;
             }
 
             qData.options.forEach(opt => {
@@ -298,7 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 arrowSpan.className = "arrow";
                 arrowSpan.textContent = "←";
 
-                // Special start-mode 3-choice presentation
+                // Special start-mode 4-card presentation
                 if (currentStep.id === "start_mode") {
                     btn.classList.add("start-mode-btn");
                     swatchSpan.style.display = "none";
@@ -309,12 +351,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     const descDiv = document.createElement("div");
                     descDiv.className = "start-mode-desc";
 
-                    if (opt.next === "org_q_state") {
+                    if (opt.next === "SALT_START") {
+                        iconDiv.textContent = "🧂";
+                        descDiv.textContent = "تشخيص شامل لـ 30 ملحاً غير عضوي عبر 3 مراحل (فحص فيزيائي، شق حامضي، شق قاعدي)";
+                    } else if (opt.next === "org_q_state") {
                         iconDiv.textContent = "🧪";
                         descDiv.textContent = "تشخيص 25 مركباً عضوياً (سوائل ومواد صلبة)";
                     } else if (opt.next === "start_color") {
                         iconDiv.textContent = "⚗️";
-                        descDiv.textContent = "الكشف عن الكاتيونات والأنيونات غير العضوية";
+                        descDiv.textContent = "الكشف عن الكاتيونات والأنيونات غير العضوية المنفردة";
                     } else {
                         iconDiv.textContent = "🔥";
                         descDiv.textContent = "فحص مبدئي بالتسخين واللهب للتوجيه التلقائي";
@@ -343,21 +388,79 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const obsText = opt.arabic_label || opt.label;
 
-        // Save initial physical observations
-        if (parentStep.id === "start_color") {
+        // Save physical observations
+        if (parentStep.id === "start_color" || parentStep.id === "SALT_START") {
             sessionData.color = obsText;
         } else if (parentStep.id === "q_physical_state" || parentStep.id === "org_q_state") {
             sessionData.state = obsText;
+        } else if (parentStep.id === "SALT_SOLUBILITY") {
+            sessionData.solubility = obsText;
+            sessionData.state = "ملح صلب / محلول مائي";
         }
 
+        // Determine analytical phase
+        let phase = "inorganic";
+        if (parentStep.id.startsWith("SALT_")) phase = "physical";
+        else if (parentStep.id.startsWith("ANION_")) phase = "anion";
+        else if (parentStep.id.startsWith("CATION_")) phase = "cation";
+        else if (parentStep.id.startsWith("org_")) phase = "organic";
+
         // Record in chronological analytical trail
-        const testLabel = parentStep.label || (tree[parentStep.id] ? tree[parentStep.id].arabic_text : "اختبار كيميائي");
+        const testLabel = parentStep.label || (tree[parentStep.id] ? (tree[parentStep.id].arabic_text || tree[parentStep.id].text) : "اختبار كيميائي");
         sessionData.stepsTrail.push({
             test: testLabel,
-            observation: obsText
+            observation: obsText,
+            phase: phase,
+            stepId: parentStep.id
         });
 
         if (tree && tree[nextKey]) {
+            const nextNode = tree[nextKey];
+
+            // ================== المرحلة 1 -> 2: تسجيل الأنيون والانتقال التلقائي ==================
+            if (nextNode.kind === "set_anion") {
+                sessionData.isSaltDiagnosis = true;
+                sessionData.detected_anion = nextNode.anion;
+                const aData = (knowledgeBase.anions_data && knowledgeBase.anions_data[nextNode.anion]) || null;
+                const aName = aData ? `${aData.name_ar} (${aData.symbol})` : nextNode.anion;
+                sessionData.stepsTrail.push({
+                    test: "الشق الحامضي المشخص (Anion)",
+                    observation: `✓ تم رصد وتحديد الشق الحامضي بنجاح: ${aName}`,
+                    phase: "anion",
+                    isCheckpoint: true,
+                    anionKey: nextNode.anion
+                });
+
+                // الانتقال التلقائي فوراً ودون توقف للعقدة المحددة في next (CATION_START)
+                historyStack.push({
+                    type: "question",
+                    id: nextNode.next,
+                    label: `الانتقال لشجرة الشق القاعدي (${aName})`,
+                    autoFrom: nextKey
+                });
+                renderCurrentQuestion();
+                return;
+            }
+
+            // ================== المرحلة 2 -> 3: تسجيل الكاتيون وإنهاء تشخيص الملح ==================
+            if (nextNode.kind === "finalize_salt") {
+                sessionData.isSaltDiagnosis = true;
+                sessionData.detected_cation = nextNode.cation;
+                const cData = (knowledgeBase.cations_data && knowledgeBase.cations_data[nextNode.cation]) || null;
+                const cName = cData ? `${cData.name_ar} (${cData.symbol})` : nextNode.cation;
+                sessionData.stepsTrail.push({
+                    test: "الشق القاعدي المشخص (Cation)",
+                    observation: `✓ تم رصد وتحديد الشق القاعدي بنجاح: ${cName}`,
+                    phase: "cation",
+                    isCheckpoint: true,
+                    cationKey: nextNode.cation
+                });
+
+                // استدعاء دالة بناء النتيجة النهائية للملح وعرض التقرير
+                finalizeSaltDiagnosis(nextNode.cation, sessionData.detected_anion);
+                return;
+            }
+
             historyStack.push({
                 type: "question",
                 id: nextKey,
@@ -410,8 +513,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     stepBackBtn.addEventListener("click", () => {
         if (historyStack.length > 1) {
-            historyStack.pop();
-            sessionData.stepsTrail.pop();
+            const popped = historyStack.pop();
+            if (popped && popped.autoFrom) {
+                sessionData.detected_anion = null;
+                if (sessionData.stepsTrail.length > 0 && sessionData.stepsTrail[sessionData.stepsTrail.length - 1].isCheckpoint) {
+                    sessionData.stepsTrail.pop();
+                }
+            }
+            if (sessionData.stepsTrail.length > 0) {
+                sessionData.stepsTrail.pop();
+            }
             renderCurrentQuestion();
         }
     });
@@ -566,6 +677,296 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ========================================================
+    // INORGANIC SALT DIAGNOSIS FINALE & INFERENCE REASONING
+    // ========================================================
+
+    async function finalizeSaltDiagnosis(cation, anion) {
+        let outcomeData = null;
+        try {
+            const res = await fetch("/api/salt_outcome", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ cation, anion })
+            });
+            if (res.ok) {
+                outcomeData = await res.json();
+            }
+        } catch (e) {
+            console.warn("Server salt outcome failed, falling back to client generation", e);
+        }
+
+        if (!outcomeData) {
+            outcomeData = buildLocalSaltOutcome(cation, anion);
+        }
+
+        sessionData.suspectedKey = `SALT_${cation}_${anion}`;
+        sessionData.suspectedData = outcomeData;
+        sessionData.saltOutcome = outcomeData;
+        sessionData.confirmed = true;
+
+        // Skip stage 4 confirmatory prompt and go directly to stage 5 final report
+        triggerStage5Report();
+    }
+
+    function buildLocalSaltOutcome(cationKey, anionKey) {
+        const aData = (knowledgeBase.anions_data && knowledgeBase.anions_data[anionKey]) || {
+            symbol: anionKey, name_ar: anionKey, name_en: anionKey, group: "غير محدد", equations: [], summary: ""
+        };
+        const cData = (knowledgeBase.cations_data && knowledgeBase.cations_data[cationKey]) || {
+            symbol: cationKey, name_ar: cationKey, name_en: cationKey, group: "غير محدد", equations: [], summary: ""
+        };
+
+        const pairKey = `${cationKey}_${anionKey}`;
+
+        // 1. Incompatible salts
+        if (knowledgeBase.incompatible_salts && knowledgeBase.incompatible_salts[pairKey]) {
+            const inc = knowledgeBase.incompatible_salts[pairKey];
+            return {
+                kind: "result",
+                title: inc.title,
+                subtitle: inc.subtitle,
+                summary: inc.reason,
+                equations: [...(inc.equations || []), ...(aData.equations || []), ...(cData.equations || [])],
+                notes: [
+                    `الشق الحامضي الذي تم رصده: ${aData.name_ar} (${aData.symbol})`,
+                    `الشق القاعدي الذي تم رصده: ${cData.name_ar} (${cData.symbol})`,
+                    "تحقق من عدم حدوث تلوث في أنابيب الاختبار أو تأكسد العينة."
+                ],
+                swatch: "#9a4a25",
+                formula: false,
+                badge: "تحذير علمي: عدم توافق كيميائي"
+            };
+        }
+
+        // 2. Reference 30 salts
+        if (knowledgeBase.salts_database && knowledgeBase.salts_database[pairKey]) {
+            const salt = knowledgeBase.salts_database[pairKey];
+            const allEqs = [
+                `معادلة الملح: ${salt.ionic_equation}`,
+                `--- معادلات الشق الحامضي (${aData.name_ar}) ---`,
+                ...(aData.equations || []),
+                `--- معادلات الشق القاعدي (${cData.name_ar}) ---`,
+                ...(cData.equations || [])
+            ];
+            const allNotes = [
+                `الشق الحامضي (Anion): ${aData.name_ar} (${aData.symbol}) — ${aData.group}`,
+                `الشق القاعدي (Cation): ${cData.name_ar} (${cData.symbol}) — ${cData.group}`,
+                `المظهر الفيزيائي: ${salt.appearance}`,
+                `الذوبانية في الماء: ${salt.solubility}`,
+                ...(salt.info || [])
+            ];
+            return {
+                kind: "result",
+                title: salt.formula,
+                subtitle: `${salt.name_ar} — ${salt.name_en}`,
+                summary: `${aData.summary} كما أن الكاتيون ${cData.summary}`,
+                equations: allEqs,
+                notes: allNotes,
+                swatch: salt.swatch || "#ffffff",
+                formula: true,
+                badge: "تم تشخيص الملح بنجاح"
+            };
+        }
+
+        // 3. Dynamic salt
+        return {
+            kind: "result",
+            title: `${cData.symbol}${aData.symbol}`,
+            subtitle: `${aData.name_ar} ${cData.name_ar} — ${cData.name_en} ${aData.name_en}`,
+            summary: `تم استنتاج الملح من دمج الشق الحامضي (${aData.name_ar}) مع الشق القاعدي (${cData.name_ar}).`,
+            equations: [
+                `الصيغة المستنتجة: ${cData.symbol}${aData.symbol}`,
+                `--- معادلات الشق الحامضي (${aData.name_ar}) ---`,
+                ...(aData.equations || []),
+                `--- معادلات الشق القاعدي (${cData.name_ar}) ---`,
+                ...(cData.equations || [])
+            ],
+            notes: [
+                `الشق الحامضي (Anion): ${aData.name_ar} (${aData.symbol}) — ${aData.group}`,
+                `الشق القاعدي (Cation): ${cData.name_ar} (${cData.symbol}) — ${cData.group}`,
+                `تفسير الأنيون: ${aData.summary}`,
+                `تفسير الكاتيون: ${cData.summary}`
+            ],
+            swatch: "#ffffff",
+            formula: true,
+            badge: "تشخيص قياسي مكتمل"
+        };
+    }
+
+    function buildSaltHowBreakdown() {
+        if (!saltHowPanel) return;
+
+        const physicalSteps = sessionData.stepsTrail.filter(s => s.phase === "physical");
+        const anionSteps = sessionData.stepsTrail.filter(s => s.phase === "anion");
+        const cationSteps = sessionData.stepsTrail.filter(s => s.phase === "cation");
+        const outData = sessionData.suspectedData;
+        const aData = (knowledgeBase.anions_data && knowledgeBase.anions_data[sessionData.detected_anion]) || null;
+        const cData = (knowledgeBase.cations_data && knowledgeBase.cations_data[sessionData.detected_cation]) || null;
+
+        let html = `
+            <!-- Phase 0: Physical Examination -->
+            <div class="how-phase-card phase-physical">
+                <div class="how-phase-title">
+                    <span>🧊 المرحلة الأولى: الفحص الفيزيائي للملح (Physical Examination)</span>
+                    <span class="how-phase-badge badge-physical">المرحلة 1</span>
+                </div>
+                <div class="how-step-item">
+                    <span class="how-step-num">1</span>
+                    <div class="how-step-content">
+                        <div class="how-step-name">لون الملح الصلب الأصلي:</div>
+                        <div class="how-step-obs">${sessionData.color || "أبيض / عديم اللون"}</div>
+                    </div>
+                </div>
+                <div class="how-step-item">
+                    <span class="how-step-num">2</span>
+                    <div class="how-step-content">
+                        <div class="how-step-name">الذوبانية في الماء البارد:</div>
+                        <div class="how-step-obs">${sessionData.solubility || sessionData.state || "يذوب في الماء البارد مكوناً محلولاً رائقاً"}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 1: Anion Diagnostic Tree -->
+            <div class="how-phase-card phase-anion">
+                <div class="how-phase-title">
+                    <span>🧪 المرحلة الثانية: شجرة الكشف عن الشق الحامضي (Anion Tree)</span>
+                    <span class="how-phase-badge badge-anion">المرحلة 2</span>
+                </div>
+        `;
+
+        anionSteps.forEach((s, idx) => {
+            html += `
+                <div class="how-step-item">
+                    <span class="how-step-num">${idx + 1}</span>
+                    <div class="how-step-content">
+                        <div class="how-step-name">${s.test}:</div>
+                        <div class="how-step-obs">${s.observation}</div>
+                    </div>
+                </div>
+            `;
+        });
+
+        if (aData) {
+            html += `
+                <div class="how-result-box">
+                    <span class="how-result-badge">🎯</span>
+                    <div class="how-result-text">
+                        <strong>الشق الحامضي المستنتج:</strong> ${aData.name_ar} (${aData.symbol}) — ${aData.group}
+                        <div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">${aData.summary}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        html += `
+            </div>
+
+            <!-- Phase 2: Cation Diagnostic Tree -->
+            <div class="how-phase-card phase-cation">
+                <div class="how-phase-title">
+                    <span>⚗️ المرحلة الثالثة: شجرة الكشف عن الشق القاعدي (Cation Tree)</span>
+                    <span class="how-phase-badge badge-cation">المرحلة 3</span>
+                </div>
+        `;
+
+        cationSteps.forEach((s, idx) => {
+            html += `
+                <div class="how-step-item">
+                    <span class="how-step-num">${idx + 1}</span>
+                    <div class="how-step-content">
+                        <div class="how-step-name">${s.test}:</div>
+                        <div class="how-step-obs">${s.observation}</div>
+                    </div>
+                </div>
+            `;
+        });
+
+        if (cData) {
+            html += `
+                <div class="how-result-box">
+                    <span class="how-result-badge">🎯</span>
+                    <div class="how-result-text">
+                        <strong>الشق القاعدي المستنتج:</strong> ${cData.name_ar} (${cData.symbol}) — ${cData.group}
+                        <div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">${cData.summary}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        html += `
+            </div>
+
+            <!-- Phase 3: Final Synthesis & Compatibility Check -->
+            <div class="how-phase-card phase-salt">
+                <div class="how-phase-title">
+                    <span>⚛️ المرحلة الرابعة: دمج الشقين والاستقرار الكيميائي (Salt Integration & Verification)</span>
+                    <span class="how-phase-badge badge-salt">النتيجة النهائية</span>
+                </div>
+                <div class="how-result-box" style="background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.4);">
+                    <span class="how-result-badge">🧂</span>
+                    <div class="how-result-text">
+                        <div style="font-size: 15px; color: #e9d5ff; font-weight: 800; font-family: 'JetBrains Mono', monospace;">
+                            ${outData ? outData.title : ''} — ${outData ? outData.subtitle : ''}
+                        </div>
+                        <div style="margin-top: 6px; font-size: 12px; color: #ddd; line-height: 1.6;">
+                            ${outData ? outData.summary : ''}
+                        </div>
+                        <div style="margin-top: 6px; font-size: 11px; color: #a78bfa;">
+                            حالة الاستقرار: ${outData ? (outData.badge || 'تم تشخيص الملح بنجاح') : ''}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        saltHowPanel.innerHTML = html;
+        if (saltHowModalBody) saltHowModalBody.innerHTML = html;
+    }
+
+    function toggleSaltHowPanel() {
+        if (!saltHowPanel) return;
+        const isHidden = saltHowPanel.style.display === "none" || saltHowPanel.style.display === "";
+        saltHowPanel.style.display = isHidden ? "flex" : "none";
+        if (saltHowBtn) {
+            saltHowBtn.classList.toggle("active", isHidden);
+        }
+        if (saltHowArrow) {
+            saltHowArrow.textContent = isHidden ? "▲" : "▼";
+        }
+        if (isHidden) {
+            saltHowPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+    }
+
+    function setupSaltDiagnosisListeners() {
+        if (saltDirectHeaderBtn) {
+            saltDirectHeaderBtn.addEventListener("click", () => {
+                startSaltDiagnosis();
+            });
+        }
+
+        if (saltHowBtn) {
+            saltHowBtn.addEventListener("click", () => {
+                toggleSaltHowPanel();
+            });
+        }
+
+        if (saltHowModalClose) {
+            saltHowModalClose.addEventListener("click", () => {
+                if (saltHowModal) saltHowModal.classList.remove("active");
+            });
+        }
+
+        if (saltHowModal) {
+            saltHowModal.addEventListener("click", (e) => {
+                if (e.target === saltHowModal) {
+                    saltHowModal.classList.remove("active");
+                }
+            });
+        }
+    }
+
+    // ========================================================
     // STAGE 5: FINAL LABORATORY REPORT
     // ========================================================
 
@@ -588,28 +989,53 @@ document.addEventListener("DOMContentLoaded", () => {
         reportId.textContent = `REPORT ID: ${reportNum}`;
         reportDate.textContent = `DATE: ${dateStr}`;
 
-        if (sessionData.confirmed) {
-            reportStatus.textContent = "STATUS: VERIFIED (مؤكد معملياً)";
-            reportStatus.style.color = "#69bd78";
-            reportConfirmVal.textContent = "مؤكد معملياً بنجاح ✓";
-            reportConfirmVal.style.color = "#69bd78";
+        if (sessionData.isSaltDiagnosis) {
+            reportTypeVal.textContent = outData ? (outData.badge || "ملح غير عضوي (Inorganic Salt)") : "ملح غير عضوي";
+            reportStateVal.textContent = sessionData.solubility || sessionData.state || "يذوب في الماء البارد";
+            if (outData && outData.badge && outData.badge.includes("عدم توافق")) {
+                reportStatus.textContent = "STATUS: CHEMICAL INCOMPATIBILITY (عدم توافق كيميائي)";
+                reportStatus.style.color = "#ef4444";
+                reportConfirmVal.textContent = "مركب غير مستقر كيميائياً ⚠️";
+                reportConfirmVal.style.color = "#ef4444";
+            } else {
+                reportStatus.textContent = "STATUS: VERIFIED (تشخيص ملح مكتمل)";
+                reportStatus.style.color = "#69bd78";
+                reportConfirmVal.textContent = "تم تشخيص الملح بنجاح ✓";
+                reportConfirmVal.style.color = "#69bd78";
+            }
+            if (saltHowContainer) {
+                saltHowContainer.style.display = "block";
+                buildSaltHowBreakdown();
+            }
         } else {
-            reportStatus.textContent = "STATUS: UNCONFIRMED (غير مؤكد)";
-            reportStatus.style.color = "#f0cf2e";
-            reportConfirmVal.textContent = "غير مؤكد (يوصى بإعادة الفحص) ⚠️";
-            reportConfirmVal.style.color = "#f0cf2e";
+            if (saltHowContainer) {
+                saltHowContainer.style.display = "none";
+            }
+            if (sessionData.confirmed) {
+                reportStatus.textContent = "STATUS: VERIFIED (مؤكد معملياً)";
+                reportStatus.style.color = "#69bd78";
+                reportConfirmVal.textContent = "مؤكد معملياً بنجاح ✓";
+                reportConfirmVal.style.color = "#69bd78";
+            } else {
+                reportStatus.textContent = "STATUS: UNCONFIRMED (غير مؤكد)";
+                reportStatus.style.color = "#f0cf2e";
+                reportConfirmVal.textContent = "غير مؤكد (يوصى بإعادة الفحص) ⚠️";
+                reportConfirmVal.style.color = "#f0cf2e";
+            }
+            reportStateVal.textContent = sessionData.state || "محلول مائي";
         }
 
         reportColorVal.textContent = sessionData.color || "غير محدد";
-        reportStateVal.textContent = sessionData.state || "محلول مائي";
 
         if (outData) {
             reportFormulaVal.textContent = outData.title;
             reportNameVal.textContent = outData.subtitle || outData.title;
-            if (sessionData.suspectedKey && sessionData.suspectedKey.startsWith("ORG_")) {
-                reportTypeVal.textContent = outData.badge ? `مركب عضوي — ${outData.badge}` : "مركب عضوي (Organic Compound)";
-            } else {
-                reportTypeVal.textContent = outData.formula ? "أيون كيميائي نوعي" : "مركب غير عضوي";
+            if (!sessionData.isSaltDiagnosis) {
+                if (sessionData.suspectedKey && sessionData.suspectedKey.startsWith("ORG_")) {
+                    reportTypeVal.textContent = outData.badge ? `مركب عضوي — ${outData.badge}` : "مركب عضوي (Organic Compound)";
+                } else {
+                    reportTypeVal.textContent = outData.formula ? "أيون كيميائي نوعي" : "مركب غير عضوي";
+                }
             }
         } else {
             reportFormulaVal.textContent = "—";
@@ -636,6 +1062,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const testSpan = document.createElement("span");
             testSpan.className = "node-test";
             testSpan.textContent = `${idx + 1}. ${step.test}`;
+
+            if (step.phase) {
+                const phaseTag = document.createElement("span");
+                phaseTag.className = `how-phase-badge badge-${step.phase}`;
+                if (step.phase === "physical") phaseTag.textContent = "فحص فيزيائي";
+                else if (step.phase === "anion") phaseTag.textContent = "الشق الحامضي";
+                else if (step.phase === "cation") phaseTag.textContent = "الشق القاعدي";
+                else if (step.phase === "organic") phaseTag.textContent = "فحص عضوي";
+                testSpan.appendChild(phaseTag);
+            }
 
             const obsSpan = document.createElement("span");
             obsSpan.className = "node-obs";

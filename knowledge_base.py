@@ -4,15 +4,24 @@ Qualitative Inorganic Analysis and Reaction Prediction
 """
 
 # 1. Color Constants
-BLUE = "#3b82d6"
-GREEN = "#6f9a4f"
-BROWN = "#9a4a25"
-WHITE = "#ffffff"
-NONE = "none"
-PALE_YELLOW = "#efe6a0"
-YELLOW = "#f0cf2e"
-BRICK_RED = "#c84630"
-VIOLET = "#9b5de5"
+BLUE = "#3b82d6"           # راسب أزرق / أملاح النحاس المائية
+DEEP_BLUE = "#1d4ed8"      # محلول أزرق قاتم (معقد النحاس النشادرى)
+BLUE_GREEN = "#0d9488"     # بلورات زرقاء مخضرة (كلوريد النحاس)
+GREEN = "#6f9a4f"          # راسب أخضر / أملاح الحديد الثنائي
+APPLE_GREEN = "#84cc16"    # لهب أخضر تفاحي (الباريوم)
+BROWN = "#9a4a25"          # راسب بني محمر (الحديد الثلاثي / نيسلر / الحلقة البنية)
+WHITE = "#ffffff"          # راسب أبيض / ملح أبيض
+NONE = "none"              # عديم اللون / لا يوجد راسب
+PALE_YELLOW = "#efe6a0"    # راسب أبيض مصفر (كريمي - بروميد الفضة)
+YELLOW = "#f0cf2e"         # راسب أصفر (يوديد الفضة / فوسفات الفضة / كرومات الباريوم / كبريت)
+GOLDEN_YELLOW = "#fbbf24"  # لهب أصفر ذهبي (الصوديوم)
+ORANGE = "#f97316"         # أبخرة برتقالية حمراء (البروم)
+BRICK_RED = "#b91c1c"      # لهب أحمر طوبي (الكالسيوم)
+BLOOD_RED = "#7f1d1d"      # لون أحمر دامي (ثيوسيانات الحديد الثلاثي)
+VIOLET = "#8b5cf6"         # أبخرة اليود البنفسجية / برمنجنات البوتاسيوم
+LILAC = "#c084fc"          # لهب بنفسجي فاتح (البوتاسيوم)
+BLACK = "#1f2937"          # راسب أسود (الكبريتيدات / أكسيد النحاس)
+GRAY_BLACK = "#374151"     # صلب أسود رمادي (كبريتيد الحديد)
 
 
 # 2. Knowledge Base Helper Functions
@@ -672,6 +681,19 @@ from organic_kb import (
     ORGANIC_DECISION_TREE
 )
 
+from salt_kb import (
+    ANIONS_DATA,
+    CATIONS_DATA,
+    SALT_DIAGNOSIS_NODES,
+    SALTS_DATABASE,
+    INCOMPATIBLE_SALTS,
+    ION_VALENCES,
+    SUBSCRIPTS,
+    format_ion_part,
+    auto_balance_formula,
+    build_final_salt_outcome
+)
+
 ALL_OUTCOMES = {
     **CATION_OUTCOMES,
     **ANION_OUTCOMES,
@@ -684,11 +706,12 @@ UNIFIED_DECISION_TREE = {
         "start_mode",
         "Select the analytical path for the unknown sample:",
         [
-            option("كشف عضوي (Organic Analysis)", "org_q_state", arabic_label="كشف عضوي"),
-            option("كشف غير عضوي (Inorganic Analysis)", "start_color", arabic_label="كشف غير عضوي"),
-            option("غير محدد — فحص تفحم اللهب", "unified_q_charring_heat", arabic_label="غير محدد (فحص اللهب)")
+            option("تشخيص ملح غير عضوي مجهول (Complete Salt Diagnosis)", "SALT_START", swatch=WHITE, arabic_label="تشخيص ملح غير عضوي كامل"),
+            option("كشف غير عضوي (Inorganic Analysis)", "start_color", swatch=BLUE, arabic_label="كشف غير عضوي (أيونات)"),
+            option("كشف عضوي (Organic Analysis)", "org_q_state", swatch=GREEN, arabic_label="كشف عضوي"),
+            option("غير محدد — فحص تفحم اللهب", "unified_q_charring_heat", swatch=YELLOW, arabic_label="غير محدد (فحص اللهب)")
         ],
-        hint="اختر المسار العضوي أو غير العضوي مباشرة إذا كان نوع العينة معروفاً، أو اختر 'غير محدد' لإجراء تجربة تسخين مبدئية تفصل بينهما تلقائياً.",
+        hint="اختر 'تشخيص ملح غير عضوي كامل' للكشف عن الملح بشقيه الحامضي والقاعدي واكتشاف الـ 30 ملحاً المرجعية، أو اختر كشف الأيونات المنفردة أو المركبات العضوية.",
         arabic_text="المرحلة 1: حدد مسار الفحص التحليلي للعينة المجهولة"
     ),
 
@@ -942,8 +965,9 @@ UNIFIED_DECISION_TREE = {
     )
 }
 
-# Integrate Organic Decision Tree into Unified Diagnostic Tree
+# Integrate Organic & Salt Diagnosis Decision Trees into Unified Diagnostic Tree
 UNIFIED_DECISION_TREE.update(ORGANIC_DECISION_TREE)
+UNIFIED_DECISION_TREE.update(SALT_DIAGNOSIS_NODES)
 
 
 # 4.5 Confirmatory Tests & Initial Color Mapping for 5-Stage Protocol
