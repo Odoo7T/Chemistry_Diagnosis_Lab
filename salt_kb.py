@@ -26,8 +26,8 @@ BLACK = "#1f2937"          # راسب أسود (الكبريتيدات / أكس�
 GRAY_BLACK = "#374151"     # صلب أسود رمادي (كبريتيد الحديد)
 
 
-def outcome(title, subtitle, summary, equations=(), notes=(), swatch=None, formula=False, badge=None, arabic_summary=None):
-    return {
+def outcome(title, subtitle, summary, equations=(), notes=(), swatch=None, formula=False, badge=None, arabic_summary=None, **kwargs):
+    res = {
         "kind": "result",
         "title": title,
         "subtitle": subtitle,
@@ -39,6 +39,8 @@ def outcome(title, subtitle, summary, equations=(), notes=(), swatch=None, formu
         "formula": formula,
         "badge": badge
     }
+    res.update(kwargs)
+    return res
 
 
 # 2. بيانات الأنيونات والكاتيونات ومعادلاتها (ANIONS_DATA & CATIONS_DATA)
@@ -1000,79 +1002,480 @@ def auto_balance_formula(cation_key, anion_key):
     return f"{format_ion_part(c_sym, c_count, c_poly)}{format_ion_part(a_sym, a_count, a_poly)}"
 
 
+# -*- coding: utf-8 -*-
+"""
+Enrich salt_kb.py with bilingual English data for:
+- 12 anions (group_en, summary_en)
+- 12 cations (group_en, summary_en)
+- 30 salts (appearance_en, solubility_en, info_en)
+- build_final_salt_outcome (equations_en, notes_en, summary_en)
+"""
+
+ANION_EN = {
+    "CO3": {
+        "group_en": "Dilute Hydrochloric Acid (Dil. HCl) Group",
+        "summary_en": "Evolves carbon dioxide gas with effervescence, turning clear lime water turbid. Forms a white precipitate with magnesium sulfate in the cold."
+    },
+    "HCO3": {
+        "group_en": "Dilute Hydrochloric Acid (Dil. HCl) Group",
+        "summary_en": "Evolves carbon dioxide gas with effervescence, turning clear lime water turbid. Forms a white precipitate with magnesium sulfate only upon boiling."
+    },
+    "SO3": {
+        "group_en": "Dilute Hydrochloric Acid (Dil. HCl) Group",
+        "summary_en": "Evolves pungent sulfur dioxide gas turning acidified potassium dichromate paper green. Forms a white precipitate with silver nitrate that blackens on heating."
+    },
+    "S2O3": {
+        "group_en": "Dilute Hydrochloric Acid (Dil. HCl) Group",
+        "summary_en": "Evolves sulfur dioxide gas with a yellow precipitate of colloidal sulfur. Instantly decolorizes brown iodine solution."
+    },
+    "S": {
+        "group_en": "Dilute Hydrochloric Acid (Dil. HCl) Group",
+        "summary_en": "Evolves foul-smelling hydrogen sulfide gas that blackens lead acetate paper. Forms a black precipitate with silver nitrate."
+    },
+    "NO2": {
+        "group_en": "Dilute Hydrochloric Acid (Dil. HCl) Group",
+        "summary_en": "Evolves colorless nitric oxide gas turning into reddish-brown NO₂ at the tube mouth. Decolorizes acidified potassium permanganate."
+    },
+    "CL": {
+        "group_en": "Concentrated Sulfuric Acid (Conc. H₂SO₄) Group",
+        "summary_en": "Evolves hydrogen chloride gas forming dense white fumes with ammonia. Forms a white precipitate with silver nitrate, readily soluble in dilute ammonia."
+    },
+    "BR": {
+        "group_en": "Concentrated Sulfuric Acid (Conc. H₂SO₄) Group",
+        "summary_en": "Evolves orange-red bromine vapors turning starch paper yellow. Forms a pale-yellow precipitate with silver nitrate, slowly soluble in conc. ammonia."
+    },
+    "I": {
+        "group_en": "Concentrated Sulfuric Acid (Conc. H₂SO₄) Group",
+        "summary_en": "Evolves violet iodine vapors turning starch paper blue. Forms a yellow precipitate with silver nitrate, insoluble in ammonia."
+    },
+    "NO3": {
+        "group_en": "Concentrated Sulfuric Acid (Conc. H₂SO₄) Group",
+        "summary_en": "Evolves dense reddish-brown nitrogen dioxide fumes upon heating with copper turnings. Gives a characteristic brown ring with iron(II) sulfate."
+    },
+    "SO4": {
+        "group_en": "Barium Chloride (BaCl₂) Solution Group",
+        "summary_en": "Forms a white precipitate with barium chloride, insoluble in dilute mineral acids. Forms a white precipitate with lead acetate."
+    },
+    "PO4": {
+        "group_en": "Barium Chloride (BaCl₂) Solution Group",
+        "summary_en": "Forms a white precipitate with barium chloride, soluble in dilute HCl. Forms a canary-yellow precipitate with silver nitrate, soluble in ammonia and nitric acid."
+    }
+}
+
+CATION_EN = {
+    "PB": {
+        "group_en": "Analytical Group I (Insoluble Chlorides / Dil. HCl Group)",
+        "summary_en": "Precipitates as white lead(II) chloride soluble in hot water. Forms a bright yellow precipitate with potassium iodide."
+    },
+    "CU": {
+        "group_en": "Analytical Group II (Acidic H₂S Group)",
+        "summary_en": "Precipitates as black copper(II) sulfide in acidic medium. Forms a deep royal blue tetraammine complex [Cu(NH₃)₄]²⁺ in excess aqueous ammonia."
+    },
+    "FE2": {
+        "group_en": "Analytical Group III (Ammonium Hydroxide Group)",
+        "summary_en": "Forms a dirty-green precipitate of iron(II) hydroxide with alkali, rapidly oxidizing to reddish-brown in air."
+    },
+    "FE3": {
+        "group_en": "Analytical Group III (Ammonium Hydroxide Group)",
+        "summary_en": "Forms a reddish-brown precipitate of iron(III) hydroxide with alkali. Imparts a characteristic blood-red coloration with potassium thiocyanate."
+    },
+    "AL": {
+        "group_en": "Analytical Group III (Ammonium Hydroxide Group)",
+        "summary_en": "Forms a white gelatinous precipitate of aluminium hydroxide, amphoterically soluble in excess NaOH but insoluble in excess ammonia."
+    },
+    "ZN": {
+        "group_en": "Analytical Group III / IV (Basic Sulfide Group)",
+        "summary_en": "Forms a white precipitate of zinc hydroxide, amphoterically soluble in excess NaOH and also soluble in excess ammonia."
+    },
+    "CA": {
+        "group_en": "Analytical Group V (Ammonium Carbonate Group)",
+        "summary_en": "Precipitates as white calcium carbonate with ammonium carbonate. Imparts a characteristic brick-red coloration to the Bunsen flame."
+    },
+    "BA": {
+        "group_en": "Analytical Group V (Ammonium Carbonate Group)",
+        "summary_en": "Precipitates as white barium carbonate with ammonium carbonate and white barium sulfate with dil. H₂SO₄. Imparts an apple-green flame."
+    },
+    "MG": {
+        "group_en": "Analytical Group VI (Soluble / Magnesium Group)",
+        "summary_en": "Precipitates as white crystalline magnesium ammonium phosphate (MgNH₄PO₄) in ammoniacal medium."
+    },
+    "NH4": {
+        "group_en": "Analytical Group VI (Volatile Cation Group)",
+        "summary_en": "Evolves pungent ammonia gas upon warming with NaOH, turning moist red litmus blue and forming a brown precipitate with Nessler's reagent."
+    },
+    "NA": {
+        "group_en": "Analytical Group VI (Alkali Metals Group)",
+        "summary_en": "All common salts are water-soluble. Imparts an intense, persistent golden-yellow coloration to the non-luminous Bunsen flame."
+    },
+    "K": {
+        "group_en": "Analytical Group VI (Alkali Metals Group)",
+        "summary_en": "All common salts are water-soluble. Imparts a characteristic lilac / pale violet coloration to the Bunsen flame (viewed through cobalt glass)."
+    }
+}
+
+SALT_EN = {
+    ("CU", "SO4"): {
+        "appearance_en": "Bright blue crystals (turns white upon strong heating due to loss of water of crystallization).",
+        "solubility_en": "Readily soluble in cold water; aqueous solution is weakly acidic.",
+        "info_en": [
+            "Commercially known as Blue Vitriol.",
+            "Used in preparing Fehling's reagent, as an agricultural fungicide, and in electroplating."
+        ]
+    },
+    ("CU", "CL"): {
+        "appearance_en": "Deliquescent blue-green crystals.",
+        "solubility_en": "Highly soluble in water and alcohol.",
+        "info_en": [
+            "Concentrated solution is yellowish-green due to [CuCl₄]²⁻, turning sky blue upon dilution with water.",
+            "Imparts a characteristic azure blue-green color to the Bunsen flame."
+        ]
+    },
+    ("CU", "NO3"): {
+        "appearance_en": "Deliquescent dark blue crystals.",
+        "solubility_en": "Extremely soluble in water.",
+        "info_en": [
+            "Decomposes upon strong heating into black CuO, brown NO₂ fumes, and oxygen gas.",
+            "Strong oxidizing agent."
+        ]
+    },
+    ("FE2", "SO4"): {
+        "appearance_en": "Pale green crystals.",
+        "solubility_en": "Soluble in cold water.",
+        "info_en": [
+            "Traditionally known as Green Vitriol.",
+            "Strong reducing agent used as the primary reagent in the Brown Ring test for nitrate identification.",
+            "Slowly oxidizes upon air exposure, forming a brownish-yellow basic iron(III) sulfate crust."
+        ]
+    },
+    ("FE3", "CL"): {
+        "appearance_en": "Highly deliquescent brownish-yellow crystalline masses.",
+        "solubility_en": "Readily dissolves in water with heat release.",
+        "info_en": [
+            "Aqueous solution is strongly acidic due to cationic hydrolysis.",
+            "Key diagnostic reagent for phenols (violet color), acetates (reddish-brown), and thiocyanate (blood-red)."
+        ]
+    },
+    ("NA", "CO3"): {
+        "appearance_en": "White powder or clear efflorescent crystals.",
+        "solubility_en": "Easily soluble in cold water; aqueous solution is alkaline.",
+        "info_en": [
+            "Thermally stable; does not decompose upon standard laboratory heating.",
+            "Commercially known as Washing Soda; used in glass, paper manufacturing, and water softening."
+        ]
+    },
+    ("NA", "HCO3"): {
+        "appearance_en": "Fine white crystalline powder.",
+        "solubility_en": "Moderately soluble in cold water; weakly alkaline.",
+        "info_en": [
+            "Decomposes on gentle heating into sodium carbonate, water vapor, and CO₂ gas.",
+            "Used in laboratories as the standard effervescence test for carboxylic acids (Bicarbonate Test)."
+        ]
+    },
+    ("NH4", "CO3"): {
+        "appearance_en": "White solid crystals with a distinct ammonia odor in air.",
+        "solubility_en": "Completely soluble in cold water.",
+        "info_en": [
+            "Primary group reagent for precipitating Analytical Group V cations (Ca²⁺, Ba²⁺, Sr²⁺).",
+            "Completely volatilizes on heating into ammonia, carbon dioxide, and water vapor with zero residue."
+        ]
+    },
+    ("NA", "SO3"): {
+        "appearance_en": "White powder or crystals.",
+        "solubility_en": "Readily soluble in cold water.",
+        "info_en": [
+            "Powerful reducing agent that decolorizes acidified KMnO₄ and turns K₂Cr₂O₇ emerald green.",
+            "Gradually oxidizes in atmospheric air to sodium sulfate (Na₂SO₄)."
+        ]
+    },
+    ("NA", "S2O3"): {
+        "appearance_en": "Colorless transparent or white prismatic crystals.",
+        "solubility_en": "Highly soluble in cold water.",
+        "info_en": [
+            "Standard primary reagent in iodometric titrations due to instantaneous quantitative reduction of iodine.",
+            "Used as a photographic fixer (hypo) to dissolve unreacted silver halides."
+        ]
+    },
+    ("NA", "NO2"): {
+        "appearance_en": "White to slightly yellowish crystalline granules.",
+        "solubility_en": "Highly soluble in cold water.",
+        "info_en": [
+            "Essential reagent in diazotization reactions with primary aromatic amines to form azo dyes.",
+            "Exhibits both oxidizing and reducing behaviors depending on the chemical environment."
+        ]
+    },
+    ("NA", "CL"): {
+        "appearance_en": "White cubic crystals or colorless transparent cubes.",
+        "solubility_en": "Soluble in water with neutral pH; solubility barely changes with temperature.",
+        "info_en": [
+            "Common table salt and rock salt (Halite).",
+            "Primary source of chlorine and sodium in chemical industries; colors Bunsen flame intense golden-yellow."
+        ]
+    },
+    ("NH4", "CL"): {
+        "appearance_en": "White crystalline powder or fibrous masses.",
+        "solubility_en": "Readily soluble in cold water with significant heat absorption.",
+        "info_en": [
+            "Sublimes completely upon direct heating into NH₃ and HCl, reforming white fumes at cooler tube surfaces.",
+            "Constituent of buffer solutions with NH₄OH for Group III cation precipitation."
+        ]
+    },
+    ("ZN", "CL"): {
+        "appearance_en": "Extremely deliquescent white granular solid.",
+        "solubility_en": "Highly soluble in water with heat release; strongly acidic solution.",
+        "info_en": [
+            "Active component of Lucas reagent (anhydrous ZnCl₂ + conc. HCl) used to distinguish primary, secondary, and tertiary alcohols."
+        ]
+    },
+    ("AL", "CL"): {
+        "appearance_en": "White to yellowish-white deliquescent crystalline powder.",
+        "solubility_en": "Very soluble in water with strong acidic hydrolysis.",
+        "info_en": [
+            "Aqueous solution turns blue litmus red; forms gelatinous white Al(OH)₃ with NaOH, soluble in excess."
+        ]
+    },
+    ("CA", "CL"): {
+        "appearance_en": "Highly hygroscopic white granules or fused masses.",
+        "solubility_en": "Very soluble in water with high heat liberation.",
+        "info_en": [
+            "Potent laboratory desiccant in desiccators; imparts brick-red flame coloration; used to precipitate calcium oxalate and sulfate."
+        ]
+    },
+    ("BA", "CL"): {
+        "appearance_en": "Heavy white crystalline platelets.",
+        "solubility_en": "Readily soluble in cold water.",
+        "info_en": [
+            "Primary laboratory reagent for detecting sulfate (SO₄²⁻) and phosphate (PO₄³⁻) anions.",
+            "Toxic compound that imparts an apple-green coloration to the Bunsen flame."
+        ]
+    },
+    ("K", "BR"): {
+        "appearance_en": "White cubic crystals.",
+        "solubility_en": "Readily soluble in water with neutral pH.",
+        "info_en": [
+            "Standard laboratory bromide source and matrix for IR spectroscopy pellets.",
+            "Imparts a characteristic lilac / pale violet flame coloration."
+        ]
+    },
+    ("K", "I"): {
+        "appearance_en": "White crystals, may slightly yellow upon prolonged atmospheric exposure.",
+        "solubility_en": "Highly soluble in cold water.",
+        "info_en": [
+            "Used to dissolve elemental iodine via formation of the triiodide ion (I₃⁻).",
+            "Excellent confirmatory reagent for lead (yellow PbI₂) and copper (white CuI + brown I₂)."
+        ]
+    },
+    ("PB", "NO3"): {
+        "appearance_en": "Heavy, non-deliquescent white crystals.",
+        "solubility_en": "The only common lead salt (along with lead acetate) readily soluble in cold water.",
+        "info_en": [
+            "Decrepitates (crackles) upon dry heating, yielding brown NO₂ gas and yellow lead(II) oxide (PbO)."
+        ]
+    },
+    ("NH4", "NO3"): {
+        "appearance_en": "White deliquescent granules or prills.",
+        "solubility_en": "Extremely soluble in water with marked endothermic cooling.",
+        "info_en": [
+            "Contains nitrogen in two oxidation states: reduced ammonium cation (-3) and oxidized nitrate anion (+5)."
+        ]
+    },
+    ("MG", "SO4"): {
+        "appearance_en": "Colorless or white needle-like crystals.",
+        "solubility_en": "Highly soluble in cold water.",
+        "info_en": [
+            "Medically and commercially known as Epsom Salt.",
+            "Key laboratory reagent for differentiating carbonate (white precipitate in the cold) from bicarbonate (white precipitate only on boiling)."
+        ]
+    },
+    ("ZN", "SO4"): {
+        "appearance_en": "Colorless or efflorescent white crystals.",
+        "solubility_en": "Easily soluble in cold water.",
+        "info_en": [
+            "Historically known as White Vitriol.",
+            "Yields white Zn(OH)₂ with NaOH, soluble in excess NaOH and in excess aqueous ammonia."
+        ]
+    },
+    ("AL", "SO4"): {
+        "appearance_en": "White crystalline powder or plates.",
+        "solubility_en": "Soluble in water with acidic reaction.",
+        "info_en": [
+            "Key constituent of potassium alum used in municipal drinking water coagulation and purification."
+        ]
+    },
+    ("NH4", "SO4"): {
+        "appearance_en": "White transparent crystals.",
+        "solubility_en": "Readily soluble in cold water.",
+        "info_en": [
+            "Widely used in biochemical protein salting-out and in synthesis of Mohr's salt (ferrous ammonium sulfate)."
+        ]
+    },
+    ("NA", "PO4"): {
+        "appearance_en": "White crystalline powder.",
+        "solubility_en": "Easily soluble in cold water; strongly alkaline solution.",
+        "info_en": [
+            "Used as a confirmatory test reagent for magnesium cations in ammoniacal medium (forming crystalline MgNH₄PO₄)."
+        ]
+    },
+    ("CA", "CO3"): {
+        "appearance_en": "Fine white amorphous or microcrystalline powder.",
+        "solubility_en": "Insoluble in pure water, but dissolves immediately in dilute HCl with vigorous effervescence.",
+        "info_en": [
+            "Natural form of limestone, calcite, and marble.",
+            "Forms as the temporary white precipitate when CO₂ is bubbled into clear lime water."
+        ]
+    },
+    ("MG", "CO3"): {
+        "appearance_en": "Light, fragile white powder.",
+        "solubility_en": "Insoluble in water; dissolves in dilute acids with effervescence.",
+        "info_en": [
+            "Precipitates as a white solid when magnesium sulfate is treated with sodium carbonate in the cold."
+        ]
+    },
+    ("CA", "SO4"): {
+        "appearance_en": "White powder or fibrous crystals.",
+        "solubility_en": "Sparingly soluble in water (insoluble for qualitative precipitation).",
+        "info_en": [
+            "Naturally occurs as gypsum (CaSO₄·2H₂O); partial dehydration yields Plaster of Paris (CaSO₄·0.5H₂O)."
+        ]
+    },
+    ("FE2", "S"): {
+        "appearance_en": "Dark grayish-black solid lumps or coarse powder.",
+        "solubility_en": "Insoluble in water; dissolves in dilute HCl evolving H₂S gas.",
+        "info_en": [
+            "Used in Kipp's apparatus in qualitative laboratories to generate H₂S gas for Group II and IV cation precipitation."
+        ]
+    }
+}
+
+
+for _k, _v in ANION_EN.items():
+    if _k in ANIONS_DATA:
+        ANIONS_DATA[_k].update(_v)
+
+for _k, _v in CATION_EN.items():
+    if _k in CATIONS_DATA:
+        CATIONS_DATA[_k].update(_v)
+
+for _k, _v in SALT_EN.items():
+    if _k in SALTS_DATABASE:
+        SALTS_DATABASE[_k].update(_v)
+
+
 def build_final_salt_outcome(cation_key, anion_key):
-    """تبني النتيجة النهائية الكاملة للملح بعد انتهاء شجرتي الأنيون والكاتيون"""
+    """تبني النتيجة النهائية الكاملة للملح بعد انتهاء شجرتي الأنيون والكاتيون مع دعم كامل للغتين العربية والإنجليزية"""
     c_data = CATIONS_DATA[cation_key]
     a_data = ANIONS_DATA[anion_key]
 
     # 1. التحقق من الاستقرار الكيميائي أولاً
     if (cation_key, anion_key) in INCOMPATIBLE_SALTS:
         inc = INCOMPATIBLE_SALTS[(cation_key, anion_key)]
+        all_eqs_ar = inc["equations"] + a_data["equations"] + c_data["equations"]
+        all_eqs_en = inc.get("equations_en", inc["equations"]) + a_data["equations"] + c_data["equations"]
+        all_notes_ar = [
+            f"الشق الحامضي الذي تم رصده: {a_data['name_ar']} ({a_data['symbol']})",
+            f"الشق القاعدي الذي تم رصده: {c_data['name_ar']} ({c_data['symbol']})",
+            "تحقق من عدم حدوث تلوث في أنابيب الاختبار أو تأكسد العينة."
+        ]
+        all_notes_en = [
+            f"Detected Acidic Radical: {a_data['name_en']} ({a_data['symbol']})",
+            f"Detected Basic Radical: {c_data['name_en']} ({c_data['symbol']})",
+            "Verify test tube cleanliness and sample integrity against oxidation or cross-contamination."
+        ]
         return outcome(
             title=inc["title"],
             subtitle=inc["subtitle"],
             summary=inc["reason"],
-            equations=inc["equations"] + a_data["equations"] + c_data["equations"],
-            notes=[
-                f"الشق الحامضي الذي تم رصده: {a_data['name_ar']} ({a_data['symbol']})",
-                f"الشق القاعدي الذي تم رصده: {c_data['name_ar']} ({c_data['symbol']})",
-                "تحقق من عدم حدوث تلوث في أنابيب الاختبار أو تأكسد العينة."
-            ],
+            equations=all_eqs_ar,
+            notes=all_notes_ar,
             swatch=BROWN,
             formula=False,
-            badge="تحذير علمي: عدم توافق كيميائي"
+            badge="تحذير علمي: عدم توافق كيميائي",
+            equations_en=all_eqs_en,
+            notes_en=all_notes_en,
+            summary_en=inc.get("reason_en", inc["reason"]),
+            badge_en="Scientific Warning: Incompatible Salt"
         )
 
     # 2. إذا كان الملح ضمن قائمة الـ 30 ملحاً المرجعية المفصلة
     if (cation_key, anion_key) in SALTS_DATABASE:
         salt = SALTS_DATABASE[(cation_key, anion_key)]
-        all_equations = (
+        all_equations_ar = (
             [f"معادلة الملح: {salt['ionic_equation']}"] +
             [f"--- معادلات الشق الحامضي ({a_data['name_ar']}) ---"] + a_data["equations"] +
             [f"--- معادلات الشق القاعدي ({c_data['name_ar']}) ---"] + c_data["equations"]
         )
-        all_notes = [
+        all_equations_en = (
+            [f"Salt Formation Equation: {salt['ionic_equation']}"] +
+            [f"--- Acidic Radical Reactions ({a_data['name_en']}) ---"] + a_data["equations"] +
+            [f"--- Basic Radical Reactions ({c_data['name_en']}) ---"] + c_data["equations"]
+        )
+
+        all_notes_ar = [
             f"الشق الحامضي (Anion): {a_data['name_ar']} ({a_data['symbol']}) — {a_data['group']}",
             f"الشق القاعدي (Cation): {c_data['name_ar']} ({c_data['symbol']}) — {c_data['group']}",
             f"المظهر الفيزيائي: {salt['appearance']}",
             f"الذوبانية في الماء: {salt['solubility']}"
-        ] + salt["info"]
+        ] + salt.get("info", [])
+
+        all_notes_en = [
+            f"Acidic Radical (Anion): {a_data['name_en']} ({a_data['symbol']}) — {a_data.get('group_en', a_data['group'])}",
+            f"Basic Radical (Cation): {c_data['name_en']} ({c_data['symbol']}) — {c_data.get('group_en', c_data['group'])}",
+            f"Physical Appearance: {salt.get('appearance_en', salt['appearance'])}",
+            f"Solubility in Water: {salt.get('solubility_en', salt['solubility'])}"
+        ] + salt.get("info_en", salt.get("info", []))
 
         return outcome(
             title=salt["formula"],
             subtitle=f"{salt['name_ar']} — {salt['name_en']}",
             summary=f"{a_data['summary']} كما أن الكاتيون {c_data['summary']}",
-            equations=all_equations,
-            notes=all_notes,
+            equations=all_equations_ar,
+            notes=all_notes_ar,
             swatch=salt["swatch"],
             formula=True,
-            badge="تم تشخيص الملح بنجاح"
+            badge="تم تشخيص الملح بنجاح",
+            equations_en=all_equations_en,
+            notes_en=all_notes_en,
+            summary_en=f"{a_data.get('summary_en', a_data['summary'])} Furthermore, {c_data.get('summary_en', c_data['summary'])}",
+            badge_en="Salt Identified Successfully"
         )
 
     # 3. توليد ديناميكي لأي ملح آخر صحيح من تقاطع الـ 12 كاتيون × 12 أنيون
     formula = auto_balance_formula(cation_key, anion_key)
     name_ar = f"{a_data['name_ar']} {c_data['name_ar']}"
     name_en = f"{c_data['name_en']} {a_data['name_en']}"
-    all_equations = (
+    all_equations_ar = (
         [f"الصيغة الموزونة المستنتجة: {formula}"] +
         [f"--- معادلات الشق الحامضي ({a_data['name_ar']}) ---"] + a_data["equations"] +
         [f"--- معادلات الشق القاعدي ({c_data['name_ar']}) ---"] + c_data["equations"]
     )
-    all_notes = [
+    all_equations_en = (
+        [f"Balanced Salt Formula: {formula}"] +
+        [f"--- Acidic Radical Reactions ({a_data['name_en']}) ---"] + a_data["equations"] +
+        [f"--- Basic Radical Reactions ({c_data['name_en']}) ---"] + c_data["equations"]
+    )
+    all_notes_ar = [
         f"الشق الحامضي (Anion): {a_data['name_ar']} ({a_data['symbol']}) — {a_data['group']}",
         f"الشق القاعدي (Cation): {c_data['name_ar']} ({c_data['symbol']}) — {c_data['group']}",
         f"تفسير الأنيون: {a_data['summary']}",
         f"تفسير الكاتيون: {c_data['summary']}"
+    ]
+    all_notes_en = [
+        f"Acidic Radical (Anion): {a_data['name_en']} ({a_data['symbol']}) — {a_data.get('group_en', a_data['group'])}",
+        f"Basic Radical (Cation): {c_data['name_en']} ({c_data['symbol']}) — {c_data.get('group_en', c_data['group'])}",
+        f"Anion Diagnostics: {a_data.get('summary_en', a_data['summary'])}",
+        f"Cation Diagnostics: {c_data.get('summary_en', c_data['summary'])}"
     ]
 
     return outcome(
         title=formula,
         subtitle=f"{name_ar} — {name_en}",
         summary=f"تم استنتاج الملح من دمج الشق الحامضي ({a_data['name_ar']}) مع الشق القاعدي ({c_data['name_ar']}).",
-        equations=all_equations,
-        notes=all_notes,
+        equations=all_equations_ar,
+        notes=all_notes_ar,
         swatch=WHITE,
         formula=True,
-        badge="تشخيص قياسي مكتمل"
+        badge="تشخيص قياسي مكتمل",
+        equations_en=all_equations_en,
+        notes_en=all_notes_en,
+        summary_en=f"Salt deduced by combining acidic radical ({a_data['name_en']}) and basic radical ({c_data['name_en']}).",
+        badge_en="Standard Diagnostic Deduction"
     )
-

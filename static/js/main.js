@@ -1303,10 +1303,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function buildLocalSaltOutcome(cationKey, anionKey) {
         const aData = (knowledgeBase.anions_data && knowledgeBase.anions_data[anionKey]) || {
-            symbol: anionKey, name_ar: anionKey, name_en: anionKey, group: "غير محدد", equations: [], summary: ""
+            symbol: anionKey, name_ar: anionKey, name_en: anionKey, group: "غير محدد", group_en: "Unspecified", equations: [], summary: "", summary_en: ""
         };
         const cData = (knowledgeBase.cations_data && knowledgeBase.cations_data[cationKey]) || {
-            symbol: cationKey, name_ar: cationKey, name_en: cationKey, group: "غير محدد", equations: [], summary: ""
+            symbol: cationKey, name_ar: cationKey, name_en: cationKey, group: "غير محدد", group_en: "Unspecified", equations: [], summary: "", summary_en: ""
         };
 
         const pairKey = `${cationKey}_${anionKey}`;
@@ -1314,75 +1314,124 @@ document.addEventListener("DOMContentLoaded", () => {
         // 1. Incompatible salts
         if (knowledgeBase.incompatible_salts && knowledgeBase.incompatible_salts[pairKey]) {
             const inc = knowledgeBase.incompatible_salts[pairKey];
+            const allEqsAr = [...(inc.equations || []), ...(aData.equations || []), ...(cData.equations || [])];
+            const allEqsEn = [...(inc.equations_en || inc.equations || []), ...(aData.equations || []), ...(cData.equations || [])];
+            const allNotesAr = [
+                `الشق الحامضي الذي تم رصده: ${aData.name_ar} (${aData.symbol})`,
+                `الشق القاعدي الذي تم رصده: ${cData.name_ar} (${cData.symbol})`,
+                "تحقق من عدم حدوث تلوث في أنابيب الاختبار أو تأكسد العينة."
+            ];
+            const allNotesEn = [
+                `Detected Acidic Radical: ${aData.name_en} (${aData.symbol})`,
+                `Detected Basic Radical: ${cData.name_en} (${cData.symbol})`,
+                "Verify test tube cleanliness and sample integrity against oxidation or cross-contamination."
+            ];
             return {
                 kind: "result",
                 title: inc.title,
                 subtitle: inc.subtitle,
                 summary: inc.reason,
-                equations: [...(inc.equations || []), ...(aData.equations || []), ...(cData.equations || [])],
-                notes: [
-                    `الشق الحامضي الذي تم رصده: ${aData.name_ar} (${aData.symbol})`,
-                    `الشق القاعدي الذي تم رصده: ${cData.name_ar} (${cData.symbol})`,
-                    "تحقق من عدم حدوث تلوث في أنابيب الاختبار أو تأكسد العينة."
-                ],
+                summary_en: inc.reason_en || inc.reason,
+                equations: allEqsAr,
+                equations_en: allEqsEn,
+                notes: allNotesAr,
+                notes_en: allNotesEn,
                 swatch: "#9a4a25",
                 formula: false,
-                badge: "تحذير علمي: عدم توافق كيميائي"
+                badge: "تحذير علمي: عدم توافق كيميائي",
+                badge_en: "Scientific Warning: Incompatible Salt"
             };
         }
 
         // 2. Reference 30 salts
         if (knowledgeBase.salts_database && knowledgeBase.salts_database[pairKey]) {
             const salt = knowledgeBase.salts_database[pairKey];
-            const allEqs = [
+            const allEqsAr = [
                 `معادلة الملح: ${salt.ionic_equation}`,
                 `--- معادلات الشق الحامضي (${aData.name_ar}) ---`,
                 ...(aData.equations || []),
                 `--- معادلات الشق القاعدي (${cData.name_ar}) ---`,
                 ...(cData.equations || [])
             ];
-            const allNotes = [
+            const allEqsEn = [
+                `Salt Formation Equation: ${salt.ionic_equation}`,
+                `--- Acidic Radical Reactions (${aData.name_en}) ---`,
+                ...(aData.equations || []),
+                `--- Basic Radical Reactions (${cData.name_en}) ---`,
+                ...(cData.equations || [])
+            ];
+            const allNotesAr = [
                 `الشق الحامضي (Anion): ${aData.name_ar} (${aData.symbol}) — ${aData.group}`,
                 `الشق القاعدي (Cation): ${cData.name_ar} (${cData.symbol}) — ${cData.group}`,
                 `المظهر الفيزيائي: ${salt.appearance}`,
                 `الذوبانية في الماء: ${salt.solubility}`,
                 ...(salt.info || [])
             ];
+            const allNotesEn = [
+                `Acidic Radical (Anion): ${aData.name_en} (${aData.symbol}) — ${aData.group_en || aData.group}`,
+                `Basic Radical (Cation): ${cData.name_en} (${cData.symbol}) — ${cData.group_en || cData.group}`,
+                `Physical Appearance: ${salt.appearance_en || salt.appearance}`,
+                `Solubility in Water: ${salt.solubility_en || salt.solubility}`,
+                ...(salt.info_en || salt.info || [])
+            ];
             return {
                 kind: "result",
                 title: salt.formula,
                 subtitle: `${salt.name_ar} — ${salt.name_en}`,
                 summary: `${aData.summary} كما أن الكاتيون ${cData.summary}`,
-                equations: allEqs,
-                notes: allNotes,
+                summary_en: `${aData.summary_en || aData.summary} Furthermore, ${cData.summary_en || cData.summary}`,
+                equations: allEqsAr,
+                equations_en: allEqsEn,
+                notes: allNotesAr,
+                notes_en: allNotesEn,
                 swatch: salt.swatch || "#ffffff",
                 formula: true,
-                badge: "تم تشخيص الملح بنجاح"
+                badge: "تم تشخيص الملح بنجاح",
+                badge_en: "Salt Identified Successfully"
             };
         }
 
         // 3. Dynamic salt
+        const allEqsAr = [
+            `الصيغة المستنتجة: ${cData.symbol}${aData.symbol}`,
+            `--- معادلات الشق الحامضي (${aData.name_ar}) ---`,
+            ...(aData.equations || []),
+            `--- معادلات الشق القاعدي (${cData.name_ar}) ---`,
+            ...(cData.equations || [])
+        ];
+        const allEqsEn = [
+            `Balanced Salt Formula: ${cData.symbol}${aData.symbol}`,
+            `--- Acidic Radical Reactions (${aData.name_en}) ---`,
+            ...(aData.equations || []),
+            `--- Basic Radical Reactions (${cData.name_en}) ---`,
+            ...(cData.equations || [])
+        ];
+        const allNotesAr = [
+            `الشق الحامضي (Anion): ${aData.name_ar} (${aData.symbol}) — ${aData.group}`,
+            `الشق القاعدي (Cation): ${cData.name_ar} (${cData.symbol}) — ${cData.group}`,
+            `تفسير الأنيون: ${aData.summary}`,
+            `تفسير الكاتيون: ${cData.summary}`
+        ];
+        const allNotesEn = [
+            `Acidic Radical (Anion): ${aData.name_en} (${aData.symbol}) — ${aData.group_en || aData.group}`,
+            `Basic Radical (Cation): ${cData.name_en} (${cData.symbol}) — ${cData.group_en || cData.group}`,
+            `Anion Diagnostics: ${aData.summary_en || aData.summary}`,
+            `Cation Diagnostics: ${cData.summary_en || cData.summary}`
+        ];
         return {
             kind: "result",
             title: `${cData.symbol}${aData.symbol}`,
             subtitle: `${aData.name_ar} ${cData.name_ar} — ${cData.name_en} ${aData.name_en}`,
             summary: `تم استنتاج الملح من دمج الشق الحامضي (${aData.name_ar}) مع الشق القاعدي (${cData.name_ar}).`,
-            equations: [
-                `الصيغة المستنتجة: ${cData.symbol}${aData.symbol}`,
-                `--- معادلات الشق الحامضي (${aData.name_ar}) ---`,
-                ...(aData.equations || []),
-                `--- معادلات الشق القاعدي (${cData.name_ar}) ---`,
-                ...(cData.equations || [])
-            ],
-            notes: [
-                `الشق الحامضي (Anion): ${aData.name_ar} (${aData.symbol}) — ${aData.group}`,
-                `الشق القاعدي (Cation): ${cData.name_ar} (${cData.symbol}) — ${cData.group}`,
-                `تفسير الأنيون: ${aData.summary}`,
-                `تفسير الكاتيون: ${cData.summary}`
-            ],
+            summary_en: `Salt deduced by combining acidic radical (${aData.name_en}) and basic radical (${cData.name_en}).`,
+            equations: allEqsAr,
+            equations_en: allEqsEn,
+            notes: allNotesAr,
+            notes_en: allNotesEn,
             swatch: "#ffffff",
             formula: true,
-            badge: "تشخيص قياسي مكتمل"
+            badge: "تشخيص قياسي مكتمل",
+            badge_en: "Standard Diagnostic Deduction"
         };
     }
 
@@ -1711,19 +1760,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Chemical Equations
         reportEquationList.innerHTML = "";
-        const allEquations = [];
-        if (outData && outData.equations) {
-            allEquations.push(...outData.equations);
+        let rawEquations = [];
+        if (isEn && outData && outData.equations_en && outData.equations_en.length > 0) {
+            rawEquations = [...outData.equations_en];
+        } else if (outData && outData.equations) {
+            rawEquations = [...outData.equations];
         }
         if (confTest && confTest.equations && sessionData.confirmed) {
-            allEquations.push(...confTest.equations);
+            rawEquations.push(...confTest.equations);
         }
 
-        if (allEquations.length > 0) {
-            allEquations.forEach(eq => {
+        if (rawEquations.length > 0) {
+            rawEquations.forEach(eq => {
                 const item = document.createElement("div");
                 item.className = "equation-item";
-                item.textContent = eq;
+                item.textContent = isEn ? formatEquationEn(eq) : eq;
                 reportEquationList.appendChild(item);
             });
         } else {
@@ -1735,11 +1786,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Notes
         reportNotesList.innerHTML = "";
-        if (outData && outData.notes && outData.notes.length > 0) {
-            outData.notes.forEach(note => {
+        let rawNotes = [];
+        if (isEn && outData && outData.notes_en && outData.notes_en.length > 0) {
+            rawNotes = [...outData.notes_en];
+        } else if (outData && outData.notes && outData.notes.length > 0) {
+            rawNotes = [...outData.notes];
+        }
+
+        if (rawNotes.length > 0) {
+            rawNotes.forEach(note => {
                 const li = document.createElement("li");
                 li.className = "note-item";
-                li.textContent = note;
+                li.textContent = isEn ? formatNoteEn(note) : note;
                 reportNotesList.appendChild(li);
             });
         } else {
@@ -1750,6 +1808,68 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         window.scrollTo({ top: stage5Container.offsetTop - 30, behavior: "smooth" });
+    }
+
+    function formatEquationEn(eq) {
+        if (!eq) return "";
+        let str = eq;
+        str = str.replace(/^معادلة الملح:\s*/, "Salt Formation Equation: ");
+        str = str.replace(/^الصيغة الموزونة المستنتجة:\s*/, "Balanced Salt Formula: ");
+        str = str.replace(/^الصيغة المستنتجة:\s*/, "Deducted Formula: ");
+        str = str.replace(/--- معادلات الشق الحامضي \((.*?)\) ---/, (m, p1) => {
+            const aNameEn = lookupAnionNameEn(p1) || p1;
+            return `--- Acidic Radical Reactions (${aNameEn}) ---`;
+        });
+        str = str.replace(/--- معادلات الشق القاعدي \((.*?)\) ---/, (m, p1) => {
+            const cNameEn = lookupCationNameEn(p1) || p1;
+            return `--- Basic Radical Reactions (${cNameEn}) ---`;
+        });
+        str = str.replace(/\(أخضر\)/g, "(Green)");
+        str = str.replace(/\(أبيض\)/g, "(White)");
+        str = str.replace(/\(أحمر طوبي\)/g, "(Brick-red)");
+        str = str.replace(/\(راسب أصفر\)/g, "(Yellow precipitate)");
+        str = str.replace(/\(راسب أسود\)/g, "(Black precipitate)");
+        str = str.replace(/\(لون بنفسجي\)/g, "(Violet coloration)");
+        str = str.replace(/\(أصفر\)/g, "(Yellow)");
+        str = str.replace(/\(أزرق\)/g, "(Blue)");
+        str = str.replace(/\(بني\)/g, "(Brown)");
+        str = str.replace(/\(يتكون أثناء الغليان فقط\)/g, "(Forms during boiling only)");
+        return str;
+    }
+
+    function lookupAnionNameEn(arName) {
+        if (!knowledgeBase || !knowledgeBase.anions_data) return arName;
+        for (const [k, v] of Object.entries(knowledgeBase.anions_data)) {
+            if (v.name_ar === arName || v.name_ar.includes(arName) || arName.includes(v.name_ar)) {
+                return v.name_en || arName;
+            }
+        }
+        return arName;
+    }
+
+    function lookupCationNameEn(arName) {
+        if (!knowledgeBase || !knowledgeBase.cations_data) return arName;
+        for (const [k, v] of Object.entries(knowledgeBase.cations_data)) {
+            if (v.name_ar === arName || v.name_ar.includes(arName) || arName.includes(v.name_ar)) {
+                return v.name_en || arName;
+            }
+        }
+        return arName;
+    }
+
+    function formatNoteEn(note) {
+        if (!note) return "";
+        let str = note;
+        str = str.replace(/^الشق الحامضي \(Anion\):\s*/, "Acidic Radical (Anion): ");
+        str = str.replace(/^الشق القاعدي \(Cation\):\s*/, "Basic Radical (Cation): ");
+        str = str.replace(/^المظهر الفيزيائي:\s*/, "Physical Appearance: ");
+        str = str.replace(/^الذوبانية في الماء:\s*/, "Solubility in Water: ");
+        str = str.replace(/^تفسير الأنيون:\s*/, "Anion Diagnostics: ");
+        str = str.replace(/^تفسير الكاتيون:\s*/, "Cation Diagnostics: ");
+        str = str.replace(/^الشق الحامضي الذي تم رصده:\s*/, "Detected Acidic Radical: ");
+        str = str.replace(/^الشق القاعدي الذي تم رصده:\s*/, "Detected Basic Radical: ");
+        str = str.replace(/^تحقق من عدم حدوث تلوث في أنابيب الاختبار أو تأكسد العينة\./, "Verify test tube cleanliness and sample integrity against oxidation or cross-contamination.");
+        return str;
     }
 
     reportPrintBtn.addEventListener("click", () => {

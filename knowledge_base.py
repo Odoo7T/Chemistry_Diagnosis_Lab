@@ -46,8 +46,8 @@ def question(id_key, text, options, hint=None, arabic_text=None, arabic_hint=Non
     }
 
 
-def outcome(title, subtitle, summary, equations=(), notes=(), swatch=None, formula=False, badge=None, arabic_summary=None):
-    return {
+def outcome(title, subtitle, summary, equations=(), notes=(), swatch=None, formula=False, badge=None, arabic_summary=None, **kwargs):
+    res = {
         "kind": "result",
         "title": title,
         "subtitle": subtitle,
@@ -59,6 +59,8 @@ def outcome(title, subtitle, summary, equations=(), notes=(), swatch=None, formu
         "formula": formula,
         "badge": badge
     }
+    res.update(kwargs)
+    return res
 
 
 def ion(formula, name, summary, equations, notes=(), swatch=None, arabic_summary=None, badge=None):
