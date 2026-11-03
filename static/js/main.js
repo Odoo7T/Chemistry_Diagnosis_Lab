@@ -222,8 +222,8 @@ document.addEventListener("DOMContentLoaded", () => {
             setActiveModeTab(activeMode);
         }
 
-        // Re-render question if active
-        if (questionContainer && !questionContainer.hidden) {
+        // Re-render question if active and initialized
+        if (questionContainer && !questionContainer.hidden && historyStack && historyStack.length > 0) {
             renderCurrentQuestion();
         }
 
@@ -466,8 +466,8 @@ document.addEventListener("DOMContentLoaded", () => {
             setupPredictorControls();
             setupSaltDiagnosisListeners();
             setupModeSelectorListeners();
-            setupLanguageSwitcher();
             startSaltDiagnosis();
+            setupLanguageSwitcher();
         } catch (err) {
             console.error("Error loading knowledge base:", err);
         }
@@ -658,8 +658,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderCurrentQuestion() {
         if (!knowledgeBase || !knowledgeBase.unified) return;
+        if (!historyStack || historyStack.length === 0) return;
 
         const currentStep = historyStack[historyStack.length - 1];
+        if (!currentStep) return;
         const tree = knowledgeBase.unified.tree;
         const outcomes = knowledgeBase.unified.outcomes;
 
