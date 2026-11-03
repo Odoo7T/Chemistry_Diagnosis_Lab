@@ -264,11 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "ref-modal-desc": "ref_modal_desc",
         "structure-modal-title": "structure_modal_title",
         "page-footer-text": "page_footer",
-        "tab-nav-diag-text": "tab_nav_diag_text",
-        "tab-nav-exp-text": "tab_nav_exp_text",
-        "tab-explorer-text": "tab_explorer_text",
         "explorer-back-btn-text": "explorer_back_btn",
-        "header-explorer-btn-text": "header_explorer_btn",
         "explorer-eyebrow": "explorer_eyebrow",
         "explorer-title": "explorer_title",
         "explorer-description": "explorer_desc",
@@ -370,7 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const modeSaltBtn = document.getElementById("mode-salt-btn");
     const modeOrganicBtn = document.getElementById("mode-organic-btn");
     const modeIonsBtn = document.getElementById("mode-ions-btn");
-    const modeExplorerBtn = document.getElementById("mode-explorer-btn");
+    
     let activeMode = "all";
 
     // DOM Elements - Shell
@@ -656,10 +652,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 startIonDiagnosis();
             });
         }
-        if (modeExplorerBtn) {
-            modeExplorerBtn.addEventListener("click", () => {
-                startExplorerMode();
-            });
+        );
         }
     }
 
@@ -2850,9 +2843,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // DIRECT SALT EXPLORER & SYNTHESIS RECIPE PLANNER
     // ========================================================
 
-    const tabNavDiagnostic = document.getElementById("tab-nav-diagnostic");
-    const tabNavExplorer = document.getElementById("tab-nav-explorer");
-    const explorerHeaderBtn = document.getElementById("explorer-header-btn");
+    
+    
+    
     const saltExplorerWorkspace = document.getElementById("salt-explorer-workspace");
 
     const explorerCationSelect = document.getElementById("explorer-cation-select");
@@ -2893,15 +2886,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentExplorerDossier = null;
 
     function startExplorerMode() {
-        setActiveModeTab("explorer");
-        if (tabNavExplorer) {
-            tabNavExplorer.classList.add("active");
-            tabNavExplorer.setAttribute("aria-selected", "true");
-        }
-        if (tabNavDiagnostic) {
-            tabNavDiagnostic.classList.remove("active");
-            tabNavDiagnostic.setAttribute("aria-selected", "false");
-        }
         if (questionContainer) questionContainer.hidden = true;
         if (stage4Container) stage4Container.hidden = true;
         if (stage5Container) stage5Container.hidden = true;
@@ -3161,15 +3145,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 startConsultation();
             });
         }
-        if (tabNavDiagnostic) {
-            tabNavDiagnostic.addEventListener("click", () => startConsultation());
-        }
-        if (tabNavExplorer) {
-            tabNavExplorer.addEventListener("click", () => startExplorerMode());
-        }
-        if (explorerHeaderBtn) {
-            explorerHeaderBtn.addEventListener("click", () => startExplorerMode());
-        }
+
         if (explorerGenerateBtn) {
             explorerGenerateBtn.addEventListener("click", () => generateSaltDossier());
         }

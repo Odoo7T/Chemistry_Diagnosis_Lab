@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chemistry Diagnosis Lab | معمل تشخيص الكيمياء (عضوي وغير عضوي)</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css?v=2.9') }}?v=2.1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=3.0">
 </head>
 <body>
 
@@ -25,10 +25,6 @@
                 <button type="button" class="lang-btn" id="lang-btn-en" data-lang="en" title="Switch to English">English</button>
             </div>
         </div>
-
-                <button id="explorer-header-btn" class="ref-toggle-btn" title="مستكشف وتحضير الأملاح بالاختيار المباشر">
-            <span id="header-explorer-btn-text">🧭 مستكشف الأملاح</span>
-        </button>
         <button id="salt-direct-header-btn" class="ref-toggle-btn" title="تشخيص ملح غير عضوي كامل عبر 3 مراحل">
             <span id="header-salt-btn-text">🧂 تشخيص ملح كامل</span>
         </button>
@@ -49,18 +45,6 @@
 </header>
 
 <main class="consultation-wrapper">
-
-    <!-- PRIMARY OPERATIONAL WORKSPACE SELECTOR -->
-    <div class="primary-nav-bar" id="primary-nav-bar" role="tablist" aria-label="Main Operational Mode">
-        <button type="button" class="primary-nav-tab active" id="tab-nav-diagnostic" role="tab" aria-selected="true">
-            <span class="tab-icon">🔬</span>
-            <span id="tab-nav-diag-text">فحص وتشخيص العينة المجهولة (Inquiry Diagnosis)</span>
-        </button>
-        <button type="button" class="primary-nav-tab" id="tab-nav-explorer" role="tab" aria-selected="false">
-            <span class="tab-icon">🧭</span>
-            <span id="tab-nav-exp-text">مستكشف وتحضير الأملاح المباشر (Direct Salt Explorer & Planner)</span>
-        </button>
-    </div>
 
     <!-- PRIMARY DIAGNOSTIC WORKSPACE (UNKNOWN SAMPLE INQUIRY) -->
     <section id="diagnostic-workspace" class="diagnostic-card">
@@ -85,9 +69,6 @@
             </button>
             <button type="button" class="mode-tab" id="mode-ions-btn" title="الكشف عن الأيونات المنفردة">
                 <span id="tab-ions-text">⚗️ كشف أيونات منفردة</span>
-            </button>
-            <button type="button" class="mode-tab" id="mode-explorer-btn" title="مستكشف وتحضير الأملاح بالاختيار المباشر">
-                <span id="tab-explorer-text">🧭 مستكشف وتحضير الأملاح</span>
             </button>
         </div>
 
