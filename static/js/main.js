@@ -409,7 +409,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const questionHomeTopBtn = document.getElementById("question-home-top-btn");
     const stepHomeBtn = document.getElementById("step-home-btn");
     const consultationWrapper = document.querySelector(".consultation-wrapper");
-    const qFloatBgLeft = document.getElementById("global-bg-left");
+        const qFloatBgLeft = document.getElementById("global-bg-left");
     const qFloatBgRight = document.getElementById("global-bg-right");
 
     const BG_IMAGES = [
@@ -609,7 +609,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (modeSaltBtn) modeSaltBtn.classList.toggle("active", mode === "salt");
         if (modeOrganicBtn) modeOrganicBtn.classList.toggle("active", mode === "organic");
         if (modeIonsBtn) modeIonsBtn.classList.toggle("active", mode === "ions");
-        if (modeExplorerBtn) modeExplorerBtn.classList.toggle("active", mode === "explorer");
+        // modeExplorerBtn removed
 
         const isEn = currentLang === "en";
         const titleEl = document.getElementById("workspace-title");
@@ -1549,22 +1549,22 @@ document.addEventListener("DOMContentLoaded", () => {
                         iconDiv.textContent = "🧂";
                         descDiv.textContent = isEn
                             ? "Comprehensive diagnosis of 30 inorganic salts across 3 automated stages (physical, anion, cation)"
-                            : "تشخيص شامل لـ 30 ملحاً عبر 3 مراحل (فحص فيزيائي، شق حامضي، شق قاعدي)";
+                            : "فحص شامل للملح بشقيه الحامضي والقاعدي واكتشاف الـ 30 ملحاً المرجعية مع المعادلات الموزونة";
                     } else if (opt.next === "start_color") {
                         iconDiv.textContent = "⚗️";
                         descDiv.textContent = isEn
-                            ? "Detection of single inorganic cations and anions"
-                            : "الكشف عن الكاتيونات والأنيونات غير العضوية المنفردة";
+                            ? "Detection of single inorganic cations and anions through qualitative precipitation series"
+                            : "الكشف عن الكاتيونات والأنيونات غير العضوية المنفردة عبر سلسلة كواشف المجموعات النوعية";
                     } else if (opt.next === "org_q_state") {
                         iconDiv.textContent = "🧪";
                         descDiv.textContent = isEn
-                            ? "Identification of 25 organic compounds (liquids & solids)"
-                            : "تشخيص 25 مركباً عضوياً (سوائل ومواد صلبة)";
+                            ? "Identification of 25 organic laboratory compounds (liquids & solids) via functional tests"
+                            : "تشخيص كيفي لـ 25 مركباً عضوياً معملياً (سوائل ومواد صلبة) عبر فحوصات المجموعات الوظيفية";
                     } else if (opt.next === "EXPLORER_MODE_DIRECT") {
                         iconDiv.textContent = "🧭";
                         descDiv.textContent = isEn
-                            ? "Direct salt synthesis recipe, balanced equations, and lab steps"
-                            : "توليد وصفة تحضير وتخليق الملح الموزونة بالاختيار المباشر للشقين";
+                            ? "Direct salt synthesis recipe, balanced equations, and lab verification protocol"
+                            : "اختر الكاتيون والأنيون يدوياً لتوليد بطاقة الهوية ووصفة التخليق المعملي وبروتوكول التحقق";
                     } else {
                         iconDiv.textContent = "🔥";
                         descDiv.textContent = isEn
