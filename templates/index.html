@@ -8,10 +8,10 @@
 </head>
 <body>
 
-<!-- Full-Screen Global Floating Background Watermarks -->
-<div id="global-floating-bg" class="global-floating-bg" aria-hidden="true">
-    <img id="global-bg-left" class="global-float-img pos-left" src="{{ url_for('static', filename='images/bg1.png') }}" alt="">
-    <img id="global-bg-right" class="global-float-img pos-right" src="{{ url_for('static', filename='images/bg2.png') }}" alt="">
+<!-- Full-Screen Global Floating Background Watermarks (with defensive inline styles) -->
+<div id="global-floating-bg" class="global-floating-bg" aria-hidden="true" style="position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; overflow: hidden; z-index: 0;">
+    <img id="global-bg-left" class="global-float-img pos-left" src="{{ url_for('static', filename='images/bg1.png') }}" alt="" style="position: absolute; max-width: 340px; max-height: 340px; pointer-events: none;">
+    <img id="global-bg-right" class="global-float-img pos-right" src="{{ url_for('static', filename='images/bg2.png') }}" alt="" style="position: absolute; max-width: 340px; max-height: 340px; pointer-events: none;">
 </div>
 
 <header class="site-header">
