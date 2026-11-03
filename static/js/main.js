@@ -843,6 +843,392 @@ document.addEventListener("DOMContentLoaded", () => {
     "لا يعطي أي لون بنفسجي مع مسحوق القصر، ويعطي تلوناً أخضر باهتاً مع FeCl3 وصبغة آزو حمراء ساطعة مع الأنيلين (بيتا-نافثول)": "No violet color with bleaching powder; pale green with FeCl₃, brilliant scarlet azo dye with diazotized aniline (Beta-Naphthol)"
 };
 
+
+    const OPTION_TRANSLATIONS_AR = {
+    "White precipitate insoluble in dilute HCl (+ white ppt with lead acetate)": "يتكون راسب أبيض لا يذوب في حمض الهيدروكلوريك المخفف (+ راسب أبيض مع أسيتات الرصاص)",
+    "White precipitate soluble in dilute HCl (+ yellow ppt with silver nitrate AgNO₃)": "يتكون راسب أبيض يذوب في حمض الهيدروكلوريك المخفف (+ راسب أصفر مع نترات الفضة AgNO₃)",
+    "White precipitate forms immediately in the cold": "يتكون راسب أبيض فوراً على البارد",
+    "No precipitate in the cold; white precipitate forms only after boiling and heating": "لا يتكون راسب على البارد، ويتكون الراسب الأبيض بعد الغليان والتسخين",
+    "Colorless gas (HCl) forming dense white fumes with ammonia-dipped rod (+ white ppt with AgNO₃)": "تصاعد غاز عديم اللون (HCl) يكون سحباً بيضاء كثيفة مع ساق مبللة بالنشادر (+ راسب أبيض مع AgNO₃)",
+    "Orange-red vapors (Br₂) that turn starch-moistened paper yellow (+ cream ppt with AgNO₃)": "تصاعد أبخرة برتقالية حمراء (Br₂) تصفر ورقة مبللة بالنشا (+ راسب كريمي مع AgNO₃)",
+    "Dense violet vapors (I₂) that turn starch-moistened paper blue (+ yellow ppt with AgNO₃)": "تصاعد أبخرة بنفسجية كثيفة (I₂) تزرق ورقة مبللة بالنشا (+ راسب أصفر مع AgNO₃)",
+    "Reddish-brown fumes (NO₂) increasing upon adding copper turnings (+ brown ring test with FeSO₄)": "تصاعد أبخرة بنية حمراء (NO₂) تزداد كثافتها بإضافة خراطة نحاس (+ حلقة بنية مع FeSO₄)",
+    "No gases or vapors evolved with concentrated sulfuric acid": "لم تتصاعد أي غازات أو أبخرة مع حمض الكبريتيك المركز",
+    "Effervescence with colorless, odorless gas that turns clear lime water milky (CO₂)": "حدوث فوران وتصاعد غاز عديم اللون والرائحة يعكر ماء الجير الرائق (CO₂)",
+    "Choking pungent gas (SO₂) that turns acidified potassium dichromate paper green": "تصاعد غاز ذي رائحة نفاذة خانقة (SO₂) يخضر ورقة مبللة بثاني كرومات البوتاسيوم المحمضة",
+    "Foul rotten-egg odor gas (H₂S) that turns lead acetate paper black": "تصاعد غاز كريه الرائحة (رائحة البيض الفاسد H₂S) يسود ورقة مبللة بأسيتات الرصاص",
+    "Colorless gas turning into reddish-brown fumes (NO₂) at the mouth of the tube": "تصاعد غاز عديم اللون يتحول عند فوهة الأنبوبة إلى أبخرة بنية حمراء (NO₂)",
+    "No effervescence and no gas evolved": "لم يحدث فوران ولم يتصاعد أي غاز",
+    "No yellow precipitate (solution gives white ppt with AgNO₃ turning black upon heating)": "لا يوجد راسب أصفر (والمحلول يعطي راسباً أبيض يسود بالتسخين مع AgNO₃)",
+    "Yes, yellow suspended sulfur precipitate appears (solution decolorizes brown iodine)": "نعم، ظهر راسب أصفر معلق من الكبريت (والمحلول يزيل لون اليود البني)",
+    "White gelatinous precipitate insoluble in excess ammonia": "يتكون راسب أبيض جيلاتيني لا يذوب في الزيادة من محلول النشادر",
+    "White precipitate dissolves completely in excess ammonia": "يتكون راسب أبيض يذوب تماماً في الزيادة من محلول النشادر",
+    "Brick-red flame; gives white precipitate with dilute H₂SO₄": "يلون اللهب باللون الأحمر الطوبي، ويعطي راسباً أبيض مع حمض الكبريتيك المخفف",
+    "Apple-green flame; gives yellow precipitate with K₂CrO₄": "يلون اللهب باللون الأخضر التفاحي، ويعطي راسباً أصفر مع كرومات البوتاسيوم (K₂CrO₄)",
+    "No distinctive flame coloration; gives white crystalline ppt with ammoniacal sodium phosphate": "لا يلون اللهب بأي لون مميز، ويعطي راسباً أبيض بلورياً مع فوسفات الصوديوم النشادرية",
+    "Blue precipitate turning black on heating; dissolves in excess ammonia to royal deep blue solution": "راسب أزرق يسود بالتسخين، ويذوب في الزيادة من النشادر مكوناً محلولاً أزرق قاتماً",
+    "Dirty white-green precipitate insoluble in excess; blue ppt with potassium ferricyanide": "راسب أبيض مخضر لا يذوب في الزيادة، ويعطي راسباً أزرق مع حديديسيانيد البوتاسيوم",
+    "Reddish-brown gelatinous precipitate insoluble in excess; blood-red color with KSCN": "راسب جيلاتيني بني محمر لا يذوب في الزيادة، ويعطي لوناً أحمر دامياً مع ثيوسيانات البوتاسيوم (KSCN)",
+    "White precipitate": "راسب أبيض",
+    "No precipitate formed": "لا يتكون أي راسب",
+    "Ammonia gas (NH₃) evolved, turning litmus blue and giving reddish-brown ppt with Nessler's reagent": "يتصاعد غاز النشادر (NH₃) الذي يزرق ورقة عباد الشمس ويعطي راسباً بنياً محمراً مع كاشف نيسلر",
+    "No gas evolved; dry salt colors Bunsen flame persistent golden-yellow": "لا يتصاعد غاز، والملح الجاف يلون لهب بنزن باللون الأصفر الذهبي الساطع",
+    "No gas evolved; dry salt colors Bunsen flame pale violet / lilac": "لا يتصاعد غاز، والملح الجاف يلون لهب بنزن باللون البنفسجي الفاتح (الليلكي)",
+    "Yes, white precipitate soluble in hot water, giving bright yellow ppt with KI": "نعم، تكون راسب أبيض يذوب في الماء الساخن، ويعطي راسباً أصفر فاقعاً مع يوديد البوتاسيوم (KI)",
+    "No, no precipitate formed with dilute HCl": "لا، لم يتكون أي راسب مع حمض HCl المخفف",
+    "White precipitate dissolves in excess NaOH forming clear solution": "يذوب الراسب الأبيض في الزيادة من NaOH مكوناً محلولاً رائقاً",
+    "White precipitate does not dissolve in excess NaOH": "لا يذوب الراسب الأبيض في الزيادة من NaOH",
+    "Dissolves in cold water forming a clear solution": "يذوب في الماء البارد مكوناً محلولاً رائقاً",
+    "Insoluble or sparingly soluble in cold water": "لا يذوب أو شحيح الذوبان جداً في الماء البارد",
+    "White or colorless crystals": "أبيض أو بلورات عديمة اللون",
+    "Blue or blue-green": "أزرق أو أزرق مخضر",
+    "Pale green": "أخضر باهت",
+    "Yellow, reddish-brown, or grayish-black": "أصفر أو بني محمر / أسود رمادي",
+    "Decolorizes acidified purple KMnO₄ or forms silver mirror with Tollens' (Reducing properties, Formic acid)": "يختزل KMnO4 المحمضة أو كاشف تولن (فورميك)",
+    "Does not decolorize KMnO₄; distinct vinegar odor (Blood-red with neutral FeCl₃, Acetic acid)": "رائحة الخل المميزة ولا يزيل KMnO4 (أسيتيك)",
+    "Very viscous and heavy syrupy liquid, non-volatile; decolorizes borax-phenolphthalein in the cold (Glycerol)": "سائل لزج جداً غير متطاير (الجليسرول)",
+    "Light, volatile liquid with characteristic alcohol odor (Monohydric alcohol)": "سائل خفيف سريع التطاير (كحول أحادي)",
+    "Formation of a yellow crystalline iodoform (CHI₃) precipitate with antiseptic odor (Acetaldehyde)": "راسب أصفر في اختبار اليودوفورم (أسيتالدهيد)",
+    "Negative with iodoform; pungent lacrimatory odor, red ppt with Fehling (Formaldehyde)": "سلبي مع اليودوفورم ورائحة خانقة (فورمالدهيد)",
+    "Distinctive bitter almond odor; forms silver mirror with Tollens', negative with iodoform and Fehling's (Benzaldehyde)": "رائحة اللوز المر ومرآة فضية مع تولن (بنزالدهيد)",
+    "Negative with Tollens; yellow iodoform ppt, freezes below 20°C (Acetophenone)": "راسب يودوفورم أصفر وسلبي مع تولن (أسيتوفينون)",
+    "Formation of a shining silver mirror on the tube wall or grey precipitate (Reducing aldehyde)": "تكوّن مرآة فضية Ag (ألدهيد)",
+    "No silver mirror forms; solution remains clear (Ketone — Acetone)": "سلبي مع تولن وفهلنج (الأسيتون)",
+    "Completely soluble in dilute HCl; yellow oily liquid darkening in air, sooty flame (Basic amine — Aniline)": "يذوب في حمض HCl المخفف (الأنيلين)",
+    "Insoluble in dilute HCl; neutral aromatic compound positive with 2,4-DNP (Aromatic carbonyl)": "لا يذوب في HCl ويتفاعل مع 2,4-DNP (كربونيل أروماتي)",
+    "Effervescence with CO₂ bubbles (Liquid carboxylic acid)": "فوران وتصاعد غاز CO2 (حمض كربوكسيلي)",
+    "No effervescence (Neutral compound: Aldehyde, Ketone, or Alcohol)": "لا يحدث فوران (متعادل)",
+    "Forms yellow crystalline iodoform precipitate with antiseptic odor; turns dichromate green (Ethanol)": "راسب أصفر في اختبار اليودوفورم (إيثانول)",
+    "Negative with iodoform; heating with salicylic acid yields wintergreen ester odor (Methanol)": "سلبي مع اليودوفورم ورائحة زيت الكافور (ميثانول)",
+    "Forms an immediate yellow or orange crystalline precipitate (Carbonyl compound: Aldehyde or Ketone)": "راسب أصفر / برتقالي فوري (ألدهيد أو كيتون)",
+    "No precipitate; solution remains clear transparent yellow (Aliphatic alcohol)": "لا يتكون راسب (كحول أليفاتي)",
+    "Completely miscible with cold water (Single clear layer)": "يمتزج تماماً بالماء البارد",
+    "Immiscible / sparingly soluble (Separates into two layers or oily droplets)": "لا يمتزج / شحيح الذوبان (طبقتين)",
+    "Liquid": "سائل (Liquid)",
+    "Solid Substance": "مادة صلبة",
+    "Immediate white precipitate with CaCl₂ in the cold, insoluble in acetic acid; decolorizes warm KMnO₄ (Oxalic acid)": "راسب أبيض على البارد لا يذوب بالأسيتيك (أكساليك)",
+    "White precipitate with CaCl₂ soluble in NaOH; positive in Fenton's test (violet) and chars with burnt sugar odor (Tartaric acid)": "راسب أبيض يذوب في NaOH وتفاعل فنتون بنفسجي (طرطريك)",
+    "No precipitate in the cold; white ppt forms only after boiling for several minutes (Citric acid)": "راسب أبيض يتكون بالغليان فقط (ستريك)",
+    "Flesh-colored buff precipitate of ferric benzoate with neutral FeCl₃ (Benzoic acid)": "راسب بيج / بني مصفر لحمي مع FeCl3 (بنزويك)",
+    "Intense, deep, persistent violet coloration with neutral FeCl₃ that does not fade (Salicylic acid)": "لون بنفسجي كثيف وثابت جداً مع FeCl3 (ساليسيليك)",
+    "Dissolves in NaHCO₃ with effervescence evolving CO₂ bubbles (Solid aromatic acid)": "فوران وذوبان في بيكربونات الصوديوم (حمض أروماتي)",
+    "Does not effervesce with NaHCO₃ but completely dissolves in NaOH (Phenols and Naphthols)": "لا تفور مع NaHCO3 ولكن تذوب في NaOH (فينولات ونافثولات)",
+    "Does not effervesce or dissolve in cold NaOH; forms colloidal solution on boiling (Starch)": "معلق غروي بالماء الساخن وأزرق مع اليود (نشا)",
+    "Transient deep violet color instantly turning into a dense reddish-brown precipitate with bleaching powder (Alpha-Naphthol)": "تلون بنفسجي داكن مع مسحوق القصر / الهيبوكلوريت (ألفا-نافثول)",
+    "No violet color with bleaching powder; pale green with FeCl₃, brilliant scarlet azo dye with diazotized aniline (Beta-Naphthol)": "سلبي مع مسحوق القصر وصبغة آزو حمراء قرمزية ساطعة (بيتا-نافثول)",
+    "Formation of a characteristic purple ring at interface with Molisch test; chars with burnt sugar odor (Carbohydrate / Soluble sugar)": "حلقة بنفسجية مميزة وتفحم بالسكر المحروق (كربوهيدرات)",
+    "No purple ring (Negative with Molisch: Resorcinol or Urea)": "سلبي مع موليش (ريسورسينول أو يوريا)",
+    "Immediate deep violet coloration with FeCl₃; phthalein reaction yields fluorescent green fluorescein (Resorcinol)": "لون بنفسجي داكن مع FeCl3 وفلورسين أخضر مشع (ريسورسينول)",
+    "No violet color with FeCl₃; melts on dry heating evolving ammonia, positive biuret test (violet-pink, Urea)": "تصاعد النشادر وتفاعل البيوريت وردي بنفسجي (يوريا)",
+    "Pinkish deliquescent crystals with carbolic odor; partially soluble in cold water; white ppt with bromine water, violet with FeCl₃ (Phenol)": "رائحة كربولية وراسب أبيض مع ماء البروم ولون بنفسجي (الفينول)",
+    "Solid powder completely insoluble in cold water; burns with heavy smoky sooty flame (Aromatic naphthols)": "مسحوق عديم الذوبان في الماء ولهب مدخن شديد (نافثولات)",
+    "Easily and completely soluble in cold water (Water-soluble organic solids)": "تذوب تماماً في الماء البارد (ذائبة)",
+    "Sparingly or insoluble in cold water (Insoluble / Sparingly soluble solids)": "لا تذوب / شحيحة الذوبان في الماء البارد",
+    "Rapid intense cherry-red color within 1-2 minutes (Ketose sugar — Fructose)": "لون أحمر كرزي سريع خلال دقيقة أو دقيقتين (فركتوز)",
+    "No red color within first 2 minutes; remains colorless or very faint pink after prolonged boiling (Aldose sugar — Glucose)": "سلبي خلال أول دقيقتين، وبلورات أوزازون إبرية (جلوكوز)",
+    "Vigorous effervescence with CO₂ bubbles (Water-soluble solid aliphatic carboxylic acid)": "فوران شديد وتصاعد CO2 (حمض أليفاتي ذائب)",
+    "No effervescence with NaHCO₃ (Neutral compound, sugar, or soluble phenol)": "لا يحدث فوران (متعادل أو سكر أو ريسورسينول)",
+    "Immediate dense brick-red precipitate of Cu₂O (Reducing monosaccharide)": "راسب أحمر طوبي مباشر مع فهلنج (سكر مختزل)",
+    "No red precipitate; solution remains clear blue (Non-reducing sugar — Sucrose)": "سلبي مع فهلنج مباشرة (السكروز)",
+    "Yes, precipitate dissolves in excess ammonia": "نعم، يذوب في زيادة الأمونيا (Zn²⁺)",
+    "No, precipitate does not dissolve in excess ammonia": "لا، لا يذوب في زيادة الأمونيا (Al³⁺)",
+    "Precipitate is completely insoluble in dilute or concentrated HCl": "لا يذوب في حمض مخفف (كبريتات SO₄²⁻)",
+    "Precipitate dissolves in HCl with effervescence evolving CO₂ gas": "يذوب في الحمض مع فوران (كربونات CO₃²⁻)",
+    "Precipitate dissolves in HCl without gas (Forms yellow precipitate with ammonium molybdate)": "يذوب دون فوران (فوسفات PO₄³⁻)",
+    "Precipitate dissolves in HCl evolving suffocating SO₂ gas": "يذوب مع غاز SO₂ (كبريتيت SO₃²⁻)",
+    "No precipitate forms / no change": "لا يتكون راسب / لا تغيير",
+    "Formation of a brown ring at the liquid junction (Brown Ring Test, Nitrate)": "تكون حلقة بنية فاصلة (نترات NO₃⁻)",
+    "Appearance of characteristic blood-red coloration with neutral FeCl₃": "لون أحمر دامي مع FeCl₃ (أسيتات CH₃COO⁻)",
+    "No obvious change / no reaction": "لا تفاعل / عينة غير محددة",
+    "Deep royal blue solution (Tetraamminecopper complex)": "أزرق داكن (محلول معقد أزرق ملكي)",
+    "No change / remains as precipitate": "لا تغيير / يظل راسباً",
+    "Surface gradually turns reddish-brown due to oxidation": "يتحول إلى بني محمر بالأكسدة",
+    "Remains green and stable": "يظل أخضر ثابتاً",
+    "Effervescence and gas evolution": "فوران وتصاعد غاز",
+    "No change / no precipitate or gas formed": "لا تغيير / لا يتكون راسب أو غاز",
+    "Solution color changes": "تغير لون المحلول",
+    "Other observation": "أخرى",
+    "Brick-red flame and white precipitate with ammonium oxalate (Ca²⁺)": "لهب أحمر طوبي (Ca²⁺)",
+    "No distinctive flame color (White precipitate giving blue color with Magneson, Mg²⁺)": "لا لون مميز للهب (Mg²⁺)",
+    "Dissolves in hot water and recrystallizes on cooling": "يذوب في الماء الساخن (Pb²⁺)",
+    "Colorless gas turning clear lime water turbid temporarily (CO₂)": "غاز عديم اللون يعكر ماء الجير (CO₂)",
+    "Rapid instantaneous effervescence with CO₂ (No MgSO₄ ppt in the cold, HCO₃⁻)": "فوران سريع ولحظي (HCO₃⁻)",
+    "Rotten-egg odor gas turning lead acetate paper black (H₂S)": "رائحة بيض فاسد يسود أسيتات الرصاص (H₂S)",
+    "Suffocating pungent gas turning acidified K₂Cr₂O₇ paper green (SO₂)": "رائحة خانقة تخضر ثاني كرومات البوتاسيوم (SO₂)",
+    "SO₂ gas evolution with yellow suspended sulfur turbidity (Thiosulfate)": "تعكر كبريتي أصفر مع غاز SO₂ (ثيوكبريتات)",
+    "Reddish-brown fumes at the tube mouth (NO₂)": "أبخرة بنية حمراء عند فوهة الأنبوبة (NO₂)",
+    "No gas / other": "لا غاز / أخرى",
+    "Yes (dissolves in boiling hot water and recrystallizes upon cooling)": "نعم (يذوب بالماء الساخن)",
+    "Does not dissolve in hot water, but dissolves in dilute ammonia": "لا (يذوب في النشادر المخفف)",
+    "Does not dissolve in hot water, and precipitate blackens with ammonia": "لا (ويسود بمحلول النشادر)",
+    "Evolution of ammonia gas (Pungent odor turning moist red litmus blue)": "تصاعد غاز النشادر ذو الرائحة النفاذة (NH₄⁺)",
+    "No change / no gas evolved after heating": "لا تغيير / الانتقال لكواشف الترسيب",
+    "Blue precipitate": "راسب أزرق",
+    "Green precipitate": "راسب أخضر",
+    "Reddish-brown gelatinous precipitate": "راسب بني محمر",
+    "White precipitate oxidizing and turning brown in air": "راسب أبيض يتحول لبني",
+    "No change / no precipitate in the cold": "لا يتكون راسب على البارد",
+    "Yes, precipitate dissolves in excess NaOH with shaking": "نعم، يذوب في الزيادة من NaOH",
+    "No, precipitate does not dissolve in excess NaOH": "لا، لا يذوب في الزيادة من NaOH",
+    "Aqueous Solution": "محلول مائي",
+    "Slowly soluble in dilute ammonia, dissolves in concentrated ammonia": "يذوب في النشادر المركز (بروميد Br⁻)",
+    "Does not dissolve in dilute or concentrated ammonia": "شحيح الذوبان جداً",
+    "White curdy precipitate (AgCl)": "راسب أبيض",
+    "Cream / pale-yellow precipitate (AgBr)": "راسب كريمي / أصفر باهت",
+    "Bright yellow precipitate (AgI)": "راسب أصفر فاقع",
+    "Black precipitate of silver sulfide (Ag₂S)": "راسب أسود (S²⁻)",
+    "Brick-red / reddish-brown precipitate of silver chromate": "راسب أحمر طوبي (CrO₄²⁻)",
+    "Yes, completely and rapidly dissolves in dilute ammonia": "نعم، يذوب في النشادر المخفف (كلوريد Cl⁻)",
+    "Does not dissolve in dilute ammonia": "لا يذوب في المخفف",
+    "Completely insoluble in both dilute and concentrated ammonia (Iodide)": "لا يذوب نهائياً في النشادر (يوديد I⁻)",
+    "Dissolves in dilute ammonia and dilute nitric acid (Phosphate)": "يذوب في النشادر وحمض النيتريك (فوسفات PO₄³⁻)",
+    "White": "أبيض",
+    "Colorless": "عديم اللون",
+    "Blue": "أزرق",
+    "Green": "أخضر",
+    "Yellow": "أصفر",
+    "Brown": "بني",
+    "Pink": "وردي",
+    "Black": "أسود",
+    "Orange": "برتقالي",
+    "Unspecified / Other": "غير محدد",
+    "Organic Chemical Analysis (25 Compounds)": "كشف المركبات العضوية (25 مركباً)",
+    "Complete Inorganic Salt Diagnosis (30 Salts)": "تشخيص الأملاح غير العضوية الكامل (30 ملحاً)",
+    "Single Inorganic Ion Analysis (Cations & Anions)": "كشف الأيونات غير العضوية المنفردة",
+    "Unknown Sample (Flame & Charring Test)": "عينة مجهولة: فحص التفحم والتسخين (عضوي / غير عضوي)",
+    "Melting, charring, and evolution of fumes or burnt sugar smell (Organic Compound)": "انصهار وتفحم / رائحة سكر محروق (عضوي)",
+    "No charring, stable mineral residue with color change on heating or non-charring vapors (Inorganic Compound)": "لا تفحم / بقاء مادة معدنية ثابتة (غير عضوي)"
+};
+    const QUESTION_TRANSLATIONS_EN = {
+    "الخطوة 5 (المجموعة الثالثة): أضف محلول كلوريد الباريوم (BaCl₂) إلى محلول الملح، ثم اختبر ذوبان الراسب الأبيض في حمض HCl المخفف:": "Step 5 (Group 3 Anions): Add barium chloride (BaCl₂) solution to salt solution, then test precipitate solubility in dilute HCl:",
+    "تجربة تأكيدية للتفرقة بين الكربونات والبيكربونات: أضف محلول كبريتات المغنيسيوم (MgSO₄) إلى محلول الملح:": "Confirmatory test to distinguish Carbonate from Bicarbonate: Add magnesium sulfate (MgSO₄) solution to salt solution:",
+    "الخطوة 4 (المجموعة الثانية): أضف حمض الكبريتيك المركز (Conc. H₂SO₄) إلى عينة جافة من الملح الصلب مع التسخين الهادئ:": "Step 4 (Group 2 Anions): Add concentrated sulfuric acid (Conc. H₂SO₄) to a dry salt sample with gentle heating:",
+    "الخطوة 3 (كشف الشق الحامضي - المجموعة الأولى): أضف حمض الهيدروكلوريك المخفف (Dil. HCl) إلى الملح الصلب، ماذا تلاحظ؟": "Step 3 (Acidic Radical - Group 1): Add dilute hydrochloric acid (Dil. HCl) to the solid salt. What do you observe?",
+    "افحص محلول الأنبوبة أثناء تصاعد غاز SO₂، هل تلاحظ تكون راسب أصفر معلق من الكبريت؟": "Inspect the solution during SO₂ gas evolution. Do you observe a yellow colloidal sulfur precipitate?",
+    "خذ عينة جديدة من محلول الملح وأضف إليها محلول النشادر (NH₄OH) تدريجياً ثم بزيادة:": "Take a fresh sample and add aqueous ammonia (NH₄OH) dropwise then in excess:",
+    "أجرِ اختبار اللهب الجاف (Flame Test) والتجارب التأكيدية للكاتيون ذي الراسب الأبيض غير الذائب في الزيادة:": "Perform dry flame test and confirmatory tests for the cation with white precipitate insoluble in excess NaOH:",
+    "أضف محلول هيدروكسيد الصوديوم (NaOH) تدريجياً إلى محلول الملح، ما هو لون الراسب المتكون؟": "Add sodium hydroxide (NaOH) solution dropwise to the salt solution. What is the color of the precipitate?",
+    "سخّن أنبوبة الاختبار المحتوية على الملح مع هيدروكسيد الصوديوم (NaOH)، أو أجرِ كشف اللهب الجاف:": "Heat the test tube containing the salt with NaOH, or perform dry flame test:",
+    "الآن ننتقل لتحديد الشق القاعدي (Cation): أضف قطرات من حمض HCl المخفف إلى محلول الملح المائي، هل تكون راسب؟": "Now proceeding to identify the Basic Radical (Cation): Add drops of dilute HCl to the aqueous salt solution. Does a precipitate form?",
+    "أضف الزيادة من محلول هيدروكسيد الصوديوم (Excess NaOH) إلى الراسب الأبيض مع الرج:": "Add excess sodium hydroxide (Excess NaOH) solution to the white precipitate with shaking:",
+    "الخطوة 2 (الذوبانية): أضف عينة صغيرة من الملح إلى الماء المقطر البارد مع الرج، ماذا تلاحظ؟": "Step 2 (Solubility): Add a small sample of the salt to cold distilled water with shaking. What do you observe?",
+    "الخطوة 1 (الفحص الفيزيائي): ما هو لون الملح الصلب المجهول أمامك؟": "Step 1 (Physical Examination): What is the color of the unknown solid salt?",
+    "الأحماض السائلة — تجربة التمييز الفاصلة بين حمض الفورميك وحمض الأسيتيك:": "Test with acidified Potassium Permanganate (KMnO4) or Tollen's reagent, and observe the odor:",
+    "الكحولات السائلة — الخطوة 5: فحص اللزوجة وقوام السائل العضوي:": "Observe the physical viscosity of the alcohol, its volatility, and response to the Borax-Phenolphthalein test:",
+    "الألدهيدات السائلة — التجربة التأكيدية الفاصلة بين الأسيتالدهيد والفورمالدهيد:": "Perform the Iodoform test (add Iodine solution + NaOH drops with mild warming to 60°C):",
+    "مركبات الكربونيل الأروماتية غير الذائبة — التجربة الفاصلة بين البنزالدهيد والأسيتوفينون:": "Perform Tollen's test and the Iodoform test on the insoluble aromatic liquid:",
+    "مركبات الكربونيل السائلة — الخطوة 5: اختبار تولن (Tollen's Test) للتمييز بين الألدهيد والكيتون:": "Add Tollen's reagent (ammoniacal silver nitrate) and warm gently in a water bath for 2-3 minutes:",
+    "السوائل غير الممتزجة بالماء — الخطوة 3: اختبار الذوبان في حمض الهيدروكلوريك المخفف (HCl):": "Test solubility in dilute Hydrochloric Acid (HCl 10%), and observe color and flame behavior:",
+    "السوائل الممتزجة بالماء — الخطوة 3: أضف محلول بيكربونات الصوديوم (NaHCO₃) إلى السائل:": "Add a few drops of 5% Sodium Bicarbonate (NaHCO3) solution to the miscible liquid. What do you observe?",
+    "الكحولات الأحادية الخفيفة — التجربة التأكيدية الفاصلة بين الإيثانول والميثانول:": "Perform the Iodoform test (Iodine solution + NaOH with gentle warming), and check oxidation behavior:",
+    "السوائل المتعادلة الممتزجة — الخطوة 4: أضف كاشف 2,4-ثنائي نيتروفينيل هيدرازين (2,4-DNP):": "Add 2,4-Dinitrophenylhydrazine (2,4-DNP) reagent to the liquid sample. What do you observe?",
+    "السوائل العضوية — الخطوة 2: اختبر قابلية امتزاج السائل بالماء البارد:": "Is the liquid organic sample miscible with cold distilled water?",
+    "الكشف العضوي — الخطوة 1: ما هي الحالة الفيزيائية للعينة أمامك؟": "What is the physical state of the organic sample at room temperature?",
+    "الأحماض الأليفاتية الذائبة — التجربة الفاصلة بكلوريد الكالسيوم (CaCl₂):": "Neutralize the acid solution with dilute ammonia and add Calcium Chloride (CaCl2) solution. Observe cold and boil:",
+    "الأحماض الأروماتية غير الذائبة بالماء البارد — التجربة التأكيدية الفاصلة بين البنزويك والساليسيليك:": "Neutralize the acid solution with dilute ammonia, boil off excess NH3, and add neutral FeCl3 solution:",
+    "المواد الصلبة غير الذائبة بالماء — الخطوة 3: اختبار الذوبان في NaHCO₃ وهيدروكسيد الصوديوم NaOH:": "Test solubility of the solid in 5% NaHCO3 solution and in 10% NaOH solution:",
+    "النافثولات — التجربة التأكيدية الفاصلة بين ألفا-نافثول وبيتا-نافثول:": "Add filtered Bleaching Powder solution (or NaOCl) / FeCl3 to the naphthol sample in dilute alkali or alcohol:",
+    "المواد الذائبة المتعادلة — الخطوة 4: اختبار موليش (Molisch Test) العام للكشف عن السكريات:": "Perform Molisch's test (add alpha-naphthol solution, then pour concentrated H2SO4 down the inner tube wall):",
+    "المواد الذائبة غير السكرية — التجربة الفاصلة بين الريسورسينول واليوريا:": "Add neutral Ferric Chloride (FeCl3) solution to the sample, and test behavior upon dry heating:",
+    "الفينولات والنافثولات — الخطوة 4: التمييز بين الفينول أحادي الحلقة والنافثولات ثنائية الحلقات:": "Observe sample appearance, carbolic odor, and reaction with Bromine Water and neutral FeCl3:",
+    "المواد الصلبة العضوية — الخطوة 2: اختبر قابلية ذوبان المادة الصلبة في الماء البارد:": "Is the solid organic sample soluble in cold distilled water?",
+    "السكريات المختزلة — التجربة التأكيدية الفاصلة بين الجلوكوز والفركتوز (اختبار سيلوانوف):": "Perform Seliwanoff's test (add Resorcinol in 6M HCl and boil in a water bath for 1-2 minutes):",
+    "المواد الصلبة الذائبة بالماء — الخطوة 3: أضف محلول بيكربونات الصوديوم (NaHCO₃):": "Add Sodium Bicarbonate (NaHCO3) solution to the aqueous solution of the soluble solid. What do you observe?",
+    "السكريات الذائبة — الخطوة 5: اختبار فهلنج (Fehling's Test) للتمييز بين السكر المختزل وغير المختزل:": "Add Fehling's reagent (A+B) and heat in a boiling water bath for 3-5 minutes. What do you observe?",
+    "المرحلة 3: هل يذوب الراسب في زيادة الأمونيا؟": "Step 3: Does the yellow precipitate dissolve in aqueous ammonia?",
+    "المرحلة 3: هل يذوب الراسب في حمض مخفف؟": "Step 3: Does the precipitate dissolve in dilute acid?",
+    "المرحلة 3: أضف محلول كلوريد الباريوم (BaCl₂). ماذا تلاحظ؟": "Step 3: Add barium chloride (BaCl₂) solution to a fresh neutral sample. What do you observe?",
+    "المرحلة 3: أضف كواشف النترات والأسيتات. ماذا تلاحظ؟": "Step 3: Carefully add concentrated sulfuric acid (H₂SO₄) with fresh FeSO₄, or test with neutral FeCl₃. What do you observe?",
+    "المرحلة 3: هل يتغير لون المحلول بعد إضافة زيادة من الأمونيا (NH₃)؟ إلى أي لون؟": "Step 3: Does the solution color change upon adding excess aqueous ammonia (NH₃)? What color?",
+    "المرحلة 3: هل يتغير لون الراسب عند تركه معرضاً للهواء؟": "Step 3: Does the precipitate color change upon standing exposed to air?",
+    "المرحلة 2: أضف حمض الهيدروكلوريك المخفف (HCl) قطرة قطرة إلى العينة. ماذا تلاحظ؟": "Step 2: Add dilute hydrochloric acid (Dil. HCl) dropwise to the sample. What do you observe?",
+    "المرحلة 3: قم بإجراء كشف اللهب الجاف. ما هي الملاحظة؟": "Step 3: Perform dry flame test or solubility test. What is the observed sign?",
+    "المرحلة 3: هل يتصاعد غاز؟ وما لونه أو رائحته؟": "Step 3: Is a gas evolved? What is its color or odor?",
+    "المرحلة 3: هل يذوب الراسب في الماء الساخن؟": "Step 3: Does the white precipitate dissolve in boiling water?",
+    "المرحلة 3: هل تحتاج لتسخين الأنبوب؟ ماذا تلاحظ بعد التسخين؟": "Step 3: Gently heat the test tube. What do you observe upon heating?",
+    "المرحلة 3: أضف هيدروكسيد الصوديوم (NaOH) قطرة قطرة. ماذا تلاحظ؟": "Step 3: Add sodium hydroxide (NaOH) solution dropwise with shaking. What do you observe?",
+    "المرحلة 3: هل يذوب الراسب عند إضافة زيادة من هيدروكسيد الصوديوم (NaOH)؟": "Step 3: Does the precipitate dissolve upon adding excess sodium hydroxide (NaOH)?",
+    "المرحلة 1: هل العينة صلبة أم محلول؟": "Step 1: Is the sample a solid substance or an aqueous solution?",
+    "المرحلة 3: أضف محلول نترات الفضة (AgNO₃). ماذا تلاحظ؟": "Step 3: Add silver nitrate (AgNO₃) solution to sample acidified with dilute HNO₃. What do you observe?",
+    "المرحلة 1: ما لون المادة أو المحلول أمامك؟": "Step 1: What is the initial color of the sample or solution?",
+    "الخطوة 1: حدد مسار الفحص التحليلي للعينة المجهولة (عضوي أم غير عضوي)": "Step 1: Select the analytical pathway for the unknown sample (Organic or Inorganic):",
+    "فحص الفصل الأولي: سخّن كمية صغيرة جداً من العينة على لهب مباشر أو في أنبوبة جافة. ماذا تلاحظ؟": "Heat a small quantity of the sample directly in a dry test tube or on a flame. What do you observe?"
+};
+    const QUESTION_TRANSLATIONS_AR = {
+    "Step 5 (Group 3 Anions): Add barium chloride (BaCl₂) solution to salt solution, then test precipitate solubility in dilute HCl:": "الخطوة 5 (المجموعة الثالثة): أضف محلول كلوريد الباريوم (BaCl₂) إلى محلول الملح، ثم اختبر ذوبان الراسب الأبيض في حمض HCl المخفف:",
+    "Confirmatory test to distinguish Carbonate from Bicarbonate: Add magnesium sulfate (MgSO₄) solution to salt solution:": "تجربة تأكيدية للتفرقة بين الكربونات والبيكربونات: أضف محلول كبريتات المغنيسيوم (MgSO₄) إلى محلول الملح:",
+    "Step 4 (Group 2 Anions): Add concentrated sulfuric acid (Conc. H₂SO₄) to a dry salt sample with gentle heating:": "الخطوة 4 (المجموعة الثانية): أضف حمض الكبريتيك المركز (Conc. H₂SO₄) إلى عينة جافة من الملح الصلب مع التسخين الهادئ:",
+    "Step 3 (Acidic Radical - Group 1): Add dilute hydrochloric acid (Dil. HCl) to the solid salt. What do you observe?": "الخطوة 3 (كشف الشق الحامضي - المجموعة الأولى): أضف حمض الهيدروكلوريك المخفف (Dil. HCl) إلى الملح الصلب، ماذا تلاحظ؟",
+    "Inspect the solution during SO₂ gas evolution. Do you observe a yellow colloidal sulfur precipitate?": "افحص محلول الأنبوبة أثناء تصاعد غاز SO₂، هل تلاحظ تكون راسب أصفر معلق من الكبريت؟",
+    "Take a fresh sample and add aqueous ammonia (NH₄OH) dropwise then in excess:": "خذ عينة جديدة من محلول الملح وأضف إليها محلول النشادر (NH₄OH) تدريجياً ثم بزيادة:",
+    "Perform dry flame test and confirmatory tests for the cation with white precipitate insoluble in excess NaOH:": "أجرِ اختبار اللهب الجاف (Flame Test) والتجارب التأكيدية للكاتيون ذي الراسب الأبيض غير الذائب في الزيادة:",
+    "Add sodium hydroxide (NaOH) solution dropwise to the salt solution. What is the color of the precipitate?": "أضف محلول هيدروكسيد الصوديوم (NaOH) تدريجياً إلى محلول الملح، ما هو لون الراسب المتكون؟",
+    "Heat the test tube containing the salt with NaOH, or perform dry flame test:": "سخّن أنبوبة الاختبار المحتوية على الملح مع هيدروكسيد الصوديوم (NaOH)، أو أجرِ كشف اللهب الجاف:",
+    "Now proceeding to identify the Basic Radical (Cation): Add drops of dilute HCl to the aqueous salt solution. Does a precipitate form?": "الآن ننتقل لتحديد الشق القاعدي (Cation): أضف قطرات من حمض HCl المخفف إلى محلول الملح المائي، هل تكون راسب؟",
+    "Add excess sodium hydroxide (Excess NaOH) solution to the white precipitate with shaking:": "أضف الزيادة من محلول هيدروكسيد الصوديوم (Excess NaOH) إلى الراسب الأبيض مع الرج:",
+    "Step 2 (Solubility): Add a small sample of the salt to cold distilled water with shaking. What do you observe?": "الخطوة 2 (الذوبانية): أضف عينة صغيرة من الملح إلى الماء المقطر البارد مع الرج، ماذا تلاحظ؟",
+    "Step 1 (Physical Examination): What is the color of the unknown solid salt?": "الخطوة 1 (الفحص الفيزيائي): ما هو لون الملح الصلب المجهول أمامك؟",
+    "Test with acidified Potassium Permanganate (KMnO4) or Tollen's reagent, and observe the odor:": "الأحماض السائلة — تجربة التمييز الفاصلة بين حمض الفورميك وحمض الأسيتيك:",
+    "Observe the physical viscosity of the alcohol, its volatility, and response to the Borax-Phenolphthalein test:": "الكحولات السائلة — الخطوة 5: فحص اللزوجة وقوام السائل العضوي:",
+    "Perform the Iodoform test (add Iodine solution + NaOH drops with mild warming to 60°C):": "الألدهيدات السائلة — التجربة التأكيدية الفاصلة بين الأسيتالدهيد والفورمالدهيد:",
+    "Perform Tollen's test and the Iodoform test on the insoluble aromatic liquid:": "مركبات الكربونيل الأروماتية غير الذائبة — التجربة الفاصلة بين البنزالدهيد والأسيتوفينون:",
+    "Add Tollen's reagent (ammoniacal silver nitrate) and warm gently in a water bath for 2-3 minutes:": "مركبات الكربونيل السائلة — الخطوة 5: اختبار تولن (Tollen's Test) للتمييز بين الألدهيد والكيتون:",
+    "Test solubility in dilute Hydrochloric Acid (HCl 10%), and observe color and flame behavior:": "السوائل غير الممتزجة بالماء — الخطوة 3: اختبار الذوبان في حمض الهيدروكلوريك المخفف (HCl):",
+    "Add a few drops of 5% Sodium Bicarbonate (NaHCO3) solution to the miscible liquid. What do you observe?": "السوائل الممتزجة بالماء — الخطوة 3: أضف محلول بيكربونات الصوديوم (NaHCO₃) إلى السائل:",
+    "Perform the Iodoform test (Iodine solution + NaOH with gentle warming), and check oxidation behavior:": "الكحولات الأحادية الخفيفة — التجربة التأكيدية الفاصلة بين الإيثانول والميثانول:",
+    "Add 2,4-Dinitrophenylhydrazine (2,4-DNP) reagent to the liquid sample. What do you observe?": "السوائل المتعادلة الممتزجة — الخطوة 4: أضف كاشف 2,4-ثنائي نيتروفينيل هيدرازين (2,4-DNP):",
+    "Is the liquid organic sample miscible with cold distilled water?": "السوائل العضوية — الخطوة 2: اختبر قابلية امتزاج السائل بالماء البارد:",
+    "What is the physical state of the organic sample at room temperature?": "الكشف العضوي — الخطوة 1: ما هي الحالة الفيزيائية للعينة أمامك؟",
+    "Neutralize the acid solution with dilute ammonia and add Calcium Chloride (CaCl2) solution. Observe cold and boil:": "الأحماض الأليفاتية الذائبة — التجربة الفاصلة بكلوريد الكالسيوم (CaCl₂):",
+    "Neutralize the acid solution with dilute ammonia, boil off excess NH3, and add neutral FeCl3 solution:": "الأحماض الأروماتية غير الذائبة بالماء البارد — التجربة التأكيدية الفاصلة بين البنزويك والساليسيليك:",
+    "Test solubility of the solid in 5% NaHCO3 solution and in 10% NaOH solution:": "المواد الصلبة غير الذائبة بالماء — الخطوة 3: اختبار الذوبان في NaHCO₃ وهيدروكسيد الصوديوم NaOH:",
+    "Add filtered Bleaching Powder solution (or NaOCl) / FeCl3 to the naphthol sample in dilute alkali or alcohol:": "النافثولات — التجربة التأكيدية الفاصلة بين ألفا-نافثول وبيتا-نافثول:",
+    "Perform Molisch's test (add alpha-naphthol solution, then pour concentrated H2SO4 down the inner tube wall):": "المواد الذائبة المتعادلة — الخطوة 4: اختبار موليش (Molisch Test) العام للكشف عن السكريات:",
+    "Add neutral Ferric Chloride (FeCl3) solution to the sample, and test behavior upon dry heating:": "المواد الذائبة غير السكرية — التجربة الفاصلة بين الريسورسينول واليوريا:",
+    "Observe sample appearance, carbolic odor, and reaction with Bromine Water and neutral FeCl3:": "الفينولات والنافثولات — الخطوة 4: التمييز بين الفينول أحادي الحلقة والنافثولات ثنائية الحلقات:",
+    "Is the solid organic sample soluble in cold distilled water?": "المواد الصلبة العضوية — الخطوة 2: اختبر قابلية ذوبان المادة الصلبة في الماء البارد:",
+    "Perform Seliwanoff's test (add Resorcinol in 6M HCl and boil in a water bath for 1-2 minutes):": "السكريات المختزلة — التجربة التأكيدية الفاصلة بين الجلوكوز والفركتوز (اختبار سيلوانوف):",
+    "Add Sodium Bicarbonate (NaHCO3) solution to the aqueous solution of the soluble solid. What do you observe?": "المواد الصلبة الذائبة بالماء — الخطوة 3: أضف محلول بيكربونات الصوديوم (NaHCO₃):",
+    "Add Fehling's reagent (A+B) and heat in a boiling water bath for 3-5 minutes. What do you observe?": "السكريات الذائبة — الخطوة 5: اختبار فهلنج (Fehling's Test) للتمييز بين السكر المختزل وغير المختزل:",
+    "Step 3: Does the precipitate dissolve in excess aqueous ammonia?": "المرحلة 3: هل يذوب الراسب في زيادة الأمونيا؟",
+    "Step 3: Does the precipitate dissolve in dilute acid?": "المرحلة 3: هل يذوب الراسب في حمض مخفف؟",
+    "Step 3: Add barium chloride (BaCl₂) solution to a fresh neutral sample. What do you observe?": "المرحلة 3: أضف محلول كلوريد الباريوم (BaCl₂). ماذا تلاحظ؟",
+    "Step 3: Carefully add concentrated sulfuric acid (H₂SO₄) with fresh FeSO₄, or test with neutral FeCl₃. What do you observe?": "المرحلة 3: أضف كواشف النترات والأسيتات. ماذا تلاحظ؟",
+    "Step 3: Does the solution color change upon adding excess aqueous ammonia (NH₃)? What color?": "المرحلة 3: هل يتغير لون المحلول بعد إضافة زيادة من الأمونيا (NH₃)؟ إلى أي لون؟",
+    "Step 3: Does the precipitate color change upon standing exposed to air?": "المرحلة 3: هل يتغير لون الراسب عند تركه معرضاً للهواء؟",
+    "Step 2: Add dilute hydrochloric acid (Dil. HCl) dropwise to the sample. What do you observe?": "المرحلة 2: أضف حمض الهيدروكلوريك المخفف (HCl) قطرة قطرة إلى العينة. ماذا تلاحظ؟",
+    "Step 3: Perform dry flame test or solubility test. What is the observed sign?": "المرحلة 3: قم بإجراء كشف اللهب الجاف. ما هي الملاحظة؟",
+    "Step 3: Is a gas evolved? What is its color or odor?": "المرحلة 3: هل يتصاعد غاز؟ وما لونه أو رائحته؟",
+    "Step 3: Does the white precipitate dissolve in boiling water?": "المرحلة 3: هل يذوب الراسب في الماء الساخن؟",
+    "Step 3: Gently heat the test tube. What do you observe upon heating?": "المرحلة 3: هل تحتاج لتسخين الأنبوب؟ ماذا تلاحظ بعد التسخين؟",
+    "Step 3: Add sodium hydroxide (NaOH) solution dropwise with shaking. What do you observe?": "المرحلة 3: أضف هيدروكسيد الصوديوم (NaOH) قطرة قطرة. ماذا تلاحظ؟",
+    "Step 3: Does the precipitate dissolve upon adding excess sodium hydroxide (NaOH)?": "المرحلة 3: هل يذوب الراسب عند إضافة زيادة من هيدروكسيد الصوديوم (NaOH)؟",
+    "Step 1: Is the sample a solid substance or an aqueous solution?": "المرحلة 1: هل العينة صلبة أم محلول؟",
+    "Step 3: Does the pale yellow / cream precipitate dissolve in excess ammonia?": "المرحلة 3: هل يذوب الراسب في زيادة الأمونيا؟",
+    "Step 3: Add silver nitrate (AgNO₃) solution to sample acidified with dilute HNO₃. What do you observe?": "المرحلة 3: أضف محلول نترات الفضة (AgNO₃). ماذا تلاحظ؟",
+    "Step 3: Does the white precipitate dissolve in excess aqueous ammonia?": "المرحلة 3: هل يذوب الراسب في زيادة الأمونيا؟",
+    "Step 3: Does the yellow precipitate dissolve in aqueous ammonia?": "المرحلة 3: هل يذوب الراسب في زيادة الأمونيا؟",
+    "Step 1: What is the initial color of the sample or solution?": "المرحلة 1: ما لون المادة أو المحلول أمامك؟",
+    "Step 1: Select the analytical pathway for the unknown sample (Organic or Inorganic):": "الخطوة 1: حدد مسار الفحص التحليلي للعينة المجهولة (عضوي أم غير عضوي)",
+    "Heat a small quantity of the sample directly in a dry test tube or on a flame. What do you observe?": "فحص الفصل الأولي: سخّن كمية صغيرة جداً من العينة على لهب مباشر أو في أنبوبة جافة. ماذا تلاحظ؟"
+};
+
+    function formatStepTitle(step, isEn) {
+        if (!step) return "";
+        const isArChar = (s) => /[؀-ۿ]/.test(s || "");
+
+        // 1. Checkpoint steps
+        if (step.isCheckpoint || step.stepId === "anion_identified" || step.stepId === "cation_identified" || step.stepId === "confirmatory_passed") {
+            if (step.phase === "anion" || step.stepId === "anion_identified") {
+                return isEn ? "Identified Acidic Radical (Anion)" : "الشق الحامضي المشخص (Anion)";
+            }
+            if (step.phase === "cation" || step.stepId === "cation_identified") {
+                return isEn ? "Identified Basic Radical (Cation)" : "الشق القاعدي المشخص (Cation)";
+            }
+            if (step.phase === "confirm" || step.stepId === "confirmatory_passed") {
+                return isEn ? "Confirmatory Test" : "الاختبار التأكيدي";
+            }
+        }
+
+        // 2. Question node lookup via stepId
+        const tree = knowledgeBase && knowledgeBase.unified && knowledgeBase.unified.tree;
+        if (step.stepId && tree && tree[step.stepId]) {
+            const q = tree[step.stepId];
+            if (isEn) {
+                if (q.text_en) return q.text_en;
+                if (q.text && !isArChar(q.text)) return q.text;
+                if (QUESTION_TRANSLATIONS_EN[q.arabic_text || q.text]) return QUESTION_TRANSLATIONS_EN[q.arabic_text || q.text];
+            } else {
+                if (q.arabic_text) return q.arabic_text;
+                if (q.text && isArChar(q.text)) return q.text;
+                if (QUESTION_TRANSLATIONS_AR[q.text_en || q.text]) return QUESTION_TRANSLATIONS_AR[q.text_en || q.text];
+            }
+        }
+
+        // 3. Fallback using step.test_en / step.test_ar / step.test
+        if (isEn) {
+            if (step.test_en && !isArChar(step.test_en)) return step.test_en;
+            if (step.test && !isArChar(step.test)) return step.test;
+            if (QUESTION_TRANSLATIONS_EN[step.test_ar || step.test]) return QUESTION_TRANSLATIONS_EN[step.test_ar || step.test];
+            return step.test_en || step.test || "Analytical Step";
+        } else {
+            if (step.test_ar && isArChar(step.test_ar)) return step.test_ar;
+            if (step.test && isArChar(step.test)) return step.test;
+            if (QUESTION_TRANSLATIONS_AR[step.test_en || step.test]) return QUESTION_TRANSLATIONS_AR[step.test_en || step.test];
+            return step.test_ar || step.test || "خطوة تحليلية";
+        }
+    }
+
+    function formatStepObservation(step, isEn) {
+        if (!step) return "";
+        const isArChar = (s) => /[؀-ۿ]/.test(s || "");
+
+        // 1. Checkpoint observations for anion / cation
+        if (step.isCheckpoint || step.stepId === "anion_identified" || step.stepId === "cation_identified") {
+            if (step.anionKey && knowledgeBase && knowledgeBase.anions_data && knowledgeBase.anions_data[step.anionKey]) {
+                const a = knowledgeBase.anions_data[step.anionKey];
+                return isEn
+                    ? `✓ Successfully identified acidic radical: ${a.name_en} (${a.symbol})`
+                    : `✓ تم رصد وتحديد الشق الحامضي بنجاح: ${a.name_ar} (${a.symbol})`;
+            }
+            if (step.cationKey && knowledgeBase && knowledgeBase.cations_data && knowledgeBase.cations_data[step.cationKey]) {
+                const c = knowledgeBase.cations_data[step.cationKey];
+                return isEn
+                    ? `✓ Successfully identified basic radical: ${c.name_en} (${c.symbol})`
+                    : `✓ تم رصد وتحديد الشق القاعدي بنجاح: ${c.name_ar} (${c.symbol})`;
+            }
+        }
+
+        // 2. Confirmatory test observations
+        if (step.phase === "confirm") {
+            const raw = step.observation_en || step.observation_ar || step.observation || "";
+            if (raw.includes("Skipped") || raw.includes("تخطي")) {
+                return isEn
+                    ? "Skipped confirmatory test, relying on primary inference observations"
+                    : "تم تخطي الاختبار التأكيدي، والاعتماد على ملاحظات الاستدلال الأولية";
+            }
+            if (raw.startsWith("✓")) {
+                const sign = step.expected_sign_en || step.expected_sign || "";
+                return isEn
+                    ? `✓ Confirmatory sign successfully observed${sign ? ": " + sign : ""}`
+                    : `✓ ظهرت العلامة التأكيدية بنجاح${sign ? ": " + sign : ""}`;
+            }
+            if (raw.startsWith("✗")) {
+                const sign = step.expected_sign_en || step.expected_sign || "";
+                return isEn
+                    ? `✗ Expected sign did not appear${sign ? ": " + sign : ""}`
+                    : `✗ لم تظهر العلامة المتوقعة${sign ? ": " + sign : ""}`;
+            }
+        }
+
+        // 3. Regular observations from chosen options
+        if (isEn) {
+            if (step.observation_en && !isArChar(step.observation_en)) return step.observation_en;
+            if (step.observation && !isArChar(step.observation)) return step.observation;
+            const lookup = OPTION_TRANSLATIONS_EN[step.observation_ar] || OPTION_TRANSLATIONS_EN[step.observation] || OPTION_TRANSLATIONS_EN[step.observation_en];
+            if (lookup) return lookup;
+
+            let s = step.observation_en || step.observation || "";
+            s = s.replace(/^✓ تم رصد وتحديد الشق الحامضي بنجاح:\s*/, "✓ Successfully identified acidic radical: ");
+            s = s.replace(/^✓ تم رصد وتحديد الشق القاعدي بنجاح:\s*/, "✓ Successfully identified basic radical: ");
+            s = s.replace(/^✓ ظهرت العلامة التأكيدية بنجاح:\s*/, "✓ Confirmatory sign successfully observed: ");
+            s = s.replace(/^✗ لم تظهر العلامة المتوقعة:\s*/, "✗ Expected sign did not appear: ");
+            return s;
+        } else {
+            if (step.observation_ar && isArChar(step.observation_ar)) return step.observation_ar;
+            if (step.observation && isArChar(step.observation)) return step.observation;
+            const lookup = OPTION_TRANSLATIONS_AR[step.observation_en] || OPTION_TRANSLATIONS_AR[step.observation] || OPTION_TRANSLATIONS_AR[step.observation_ar];
+            if (lookup) return lookup;
+
+            let s = step.observation_ar || step.observation || "";
+            s = s.replace(/^✓ Successfully identified acidic radical:\s*/, "✓ تم رصد وتحديد الشق الحامضي بنجاح: ");
+            s = s.replace(/^✓ Successfully identified basic radical:\s*/, "✓ تم رصد وتحديد الشق القاعدي بنجاح: ");
+            s = s.replace(/^✓ Confirmatory sign successfully observed:\s*/, "✓ ظهرت العلامة التأكيدية بنجاح: ");
+            s = s.replace(/^✗ Expected sign did not appear:\s*/, "✗ لم تظهر العلامة المتوقعة: ");
+            return s;
+        }
+    }
+
     function renderCurrentQuestion() {
         if (!knowledgeBase || !knowledgeBase.unified) return;
         if (!historyStack || historyStack.length === 0) return;
@@ -996,8 +1382,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const nextKey = opt.next;
 
         const isEn = currentLang === "en";
-        const obsTextAr = opt.arabic_label || opt.label;
-        const obsTextEn = opt.label || opt.arabic_label;
+        const isArChar = (s) => /[\u0600-\u06FF]/.test(s || "");
+
+        let obsTextEn = opt.label_en || "";
+        if (!obsTextEn) {
+            if (opt.label && !isArChar(opt.label)) obsTextEn = opt.label;
+            else obsTextEn = OPTION_TRANSLATIONS_EN[opt.label] || OPTION_TRANSLATIONS_EN[opt.arabic_label] || opt.label;
+        }
+        let obsTextAr = opt.arabic_label || "";
+        if (!obsTextAr) {
+            if (opt.arabic_label && isArChar(opt.arabic_label)) obsTextAr = opt.arabic_label;
+            else if (opt.label && isArChar(opt.label)) obsTextAr = opt.label;
+            else obsTextAr = OPTION_TRANSLATIONS_AR[opt.label] || opt.label;
+        }
         const obsText = isEn ? obsTextEn : obsTextAr;
 
         // Save physical observations
@@ -1027,8 +1424,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Record in chronological analytical trail
         const parentQ = tree[parentStep.id];
-        const testLabelAr = parentStep.label_ar || parentStep.label || (parentQ ? (parentQ.arabic_text || parentQ.text) : "اختبار كيميائي");
-        const testLabelEn = parentStep.label_en || (parentQ ? (parentQ.text || parentQ.arabic_text) : "Chemical Test");
+        let testLabelAr = "اختبار كيميائي";
+        let testLabelEn = "Chemical Test";
+        if (parentQ) {
+            testLabelAr = parentQ.arabic_text || (parentQ.text && isArChar(parentQ.text) ? parentQ.text : (QUESTION_TRANSLATIONS_AR[parentQ.text] || "اختبار كيميائي"));
+            testLabelEn = parentQ.text_en || (parentQ.text && !isArChar(parentQ.text) ? parentQ.text : (QUESTION_TRANSLATIONS_EN[parentQ.arabic_text] || "Chemical Test"));
+        }
         const testLabel = isEn ? testLabelEn : testLabelAr;
 
         sessionData.stepsTrail.push({
@@ -1641,8 +2042,8 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
         anionSteps.forEach((s, idx) => {
-            const stepName = isEn ? (s.test_en || s.test) : (s.test_ar || s.test);
-            const stepObs = isEn ? (s.observation_en || s.observation) : (s.observation_ar || s.observation);
+            const stepName = formatStepTitle(s, isEn);
+            const stepObs = formatStepObservation(s, isEn);
             html += `
                 <div class="how-step-item">
                     <span class="how-step-num">${idx + 1}</span>
@@ -1656,13 +2057,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (aData) {
             const aName = isEn ? `${aData.name_en} (${aData.symbol})` : `${aData.name_ar} (${aData.symbol})`;
+            const aGroup = isEn ? (aData.group_en || aData.group) : aData.group;
+            const aSummary = isEn ? (aData.summary_en || aData.summary) : aData.summary;
             const aLabel = isEn ? "Deduced Acidic Radical:" : "الشق الحامضي المستنتج:";
             html += `
                 <div class="how-result-box">
                     <span class="how-result-badge">🎯</span>
                     <div class="how-result-text">
-                        <strong>${aLabel}</strong> ${aName} — ${aData.group}
-                        <div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">${aData.summary}</div>
+                        <strong>${aLabel}</strong> ${aName} — ${aGroup}
+                        <div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">${aSummary}</div>
                     </div>
                 </div>
             `;
@@ -1680,8 +2083,8 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
         cationSteps.forEach((s, idx) => {
-            const stepName = isEn ? (s.test_en || s.test) : (s.test_ar || s.test);
-            const stepObs = isEn ? (s.observation_en || s.observation) : (s.observation_ar || s.observation);
+            const stepName = formatStepTitle(s, isEn);
+            const stepObs = formatStepObservation(s, isEn);
             html += `
                 <div class="how-step-item">
                     <span class="how-step-num">${idx + 1}</span>
@@ -1695,13 +2098,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (cData) {
             const cName = isEn ? `${cData.name_en} (${cData.symbol})` : `${cData.name_ar} (${cData.symbol})`;
+            const cGroup = isEn ? (cData.group_en || cData.group) : cData.group;
+            const cSummary = isEn ? (cData.summary_en || cData.summary) : cData.summary;
             const cLabel = isEn ? "Deduced Basic Radical:" : "الشق القاعدي المستنتج:";
             html += `
                 <div class="how-result-box">
                     <span class="how-result-badge">🎯</span>
                     <div class="how-result-text">
-                        <strong>${cLabel}</strong> ${cName} — ${cData.group}
-                        <div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">${cData.summary}</div>
+                        <strong>${cLabel}</strong> ${cName} — ${cGroup}
+                        <div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">${cSummary}</div>
                     </div>
                 </div>
             `;
@@ -1846,8 +2251,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         reportColorVal.textContent = isEn
-            ? (sessionData.color_en || sessionData.color || "Not specified")
-            : (sessionData.color || "غير محدد");
+            ? (formatStepObservation({ observation_en: sessionData.color_en, observation: sessionData.color }, true) || "Not specified")
+            : (formatStepObservation({ observation_ar: sessionData.color_ar, observation: sessionData.color }, false) || "غير محدد");
 
         if (outData) {
             reportFormulaVal.textContent = outData.title;
@@ -1875,7 +2280,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        // Timeline of steps
+        // Timeline of steps (dynamically bilingual)
         reportTimelineList.innerHTML = "";
         sessionData.stepsTrail.forEach((step, idx) => {
             const node = document.createElement("div");
@@ -1883,7 +2288,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const testSpan = document.createElement("span");
             testSpan.className = "node-test";
-            const stepTitle = isEn ? (step.test_en || step.test) : (step.test_ar || step.test);
+            const stepTitle = formatStepTitle(step, isEn);
             testSpan.textContent = `${idx + 1}. ${stepTitle}`;
 
             if (step.phase) {
@@ -1893,12 +2298,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 else if (step.phase === "anion") phaseTag.textContent = isEn ? "Acidic Radical" : "الشق الحامضي";
                 else if (step.phase === "cation") phaseTag.textContent = isEn ? "Basic Radical" : "الشق القاعدي";
                 else if (step.phase === "organic") phaseTag.textContent = isEn ? "Organic Exam" : "فحص عضوي";
+                else if (step.phase === "confirm") phaseTag.textContent = isEn ? "Confirmation" : "تأكيد معملي";
+                else if (step.phase === "inorganic") phaseTag.textContent = isEn ? "Inorganic Exam" : "فحص غير عضوي";
+                else phaseTag.textContent = isEn ? "Analytical Step" : "خطوة تحليلية";
                 testSpan.appendChild(phaseTag);
             }
 
             const obsSpan = document.createElement("span");
             obsSpan.className = "node-obs";
-            obsSpan.textContent = isEn ? (step.observation_en || step.observation) : (step.observation_ar || step.observation);
+            obsSpan.textContent = formatStepObservation(step, isEn);
 
             node.appendChild(testSpan);
             node.appendChild(obsSpan);
