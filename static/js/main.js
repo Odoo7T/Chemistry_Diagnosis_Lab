@@ -70,6 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
             ref_modal_desc: "دليل كشف اللهب للفلزات القلوية وملاحظات التحليل النوعي.",
             structure_modal_title: "الصيغة البنائية للمركب (Chemical Structure)",
             page_footer: "CHEMLAB — نظام خبير الكيمياء غير العضوية الاستدلالي وتشخيص العينات المجهولة",
+            question_badge_default: "الخطوة التحليلية",
+            question_home_btn: "🏠 العودة للرئيسية",
             tab_nav_diag_text: "فحص وتشخيص العينة المجهولة (Inquiry Diagnosis)",
             tab_nav_exp_text: "مستكشف وتحضير الأملاح المباشر (Direct Salt Explorer & Planner)",
             tab_explorer_text: "🧭 مستكشف وتحضير الأملاح",
@@ -166,6 +168,8 @@ document.addEventListener("DOMContentLoaded", () => {
             ref_modal_desc: "Flame test guide for alkali/alkaline earth metals and qualitative analysis notes.",
             structure_modal_title: "Chemical Structure",
             page_footer: "CHEMLAB — Expert Diagnostic System for Qualitative Chemical Analysis",
+            question_badge_default: "Analytical Step",
+            question_home_btn: "🏠 Main Menu",
             tab_nav_diag_text: "Unknown Sample Chemical Diagnosis (Inquiry)",
             tab_nav_exp_text: "Direct Salt Explorer & Synthesis Recipe Planner",
             tab_explorer_text: "🧭 Salt Explorer & Synthesis",
@@ -264,6 +268,9 @@ document.addEventListener("DOMContentLoaded", () => {
         "ref-modal-desc": "ref_modal_desc",
         "structure-modal-title": "structure_modal_title",
         "page-footer-text": "page_footer",
+        "question-badge-text": "question_badge_default",
+        "question-home-top-text": "question_home_btn",
+        "step-home-text": "question_home_btn",
         "explorer-back-btn-text": "explorer_back_btn",
         "explorer-eyebrow": "explorer_eyebrow",
         "explorer-title": "explorer_title",
@@ -397,6 +404,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const optionsGrid = document.getElementById("options-grid");
     const stepBackBtn = document.getElementById("step-back-btn");
     const breadcrumbTrail = document.getElementById("breadcrumb-trail");
+    const questionPageHeader = document.getElementById("question-page-header");
+    const questionBadgeText = document.getElementById("question-badge-text");
+    const questionHomeTopBtn = document.getElementById("question-home-top-btn");
+    const stepHomeBtn = document.getElementById("step-home-btn");
+    const consultationWrapper = document.querySelector(".consultation-wrapper");
     const qFloatBgLeft = document.getElementById("global-bg-left");
     const qFloatBgRight = document.getElementById("global-bg-right");
 
@@ -689,13 +701,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }];
 
         // Show question container, hide confirmatory & report
+        if (consultationWrapper) {
+            consultationWrapper.classList.add("is-start-mode");
+            consultationWrapper.classList.remove("is-question-page");
+        }
+        if (diagnosticWorkspace) {
+            diagnosticWorkspace.classList.add("is-start-mode");
+            diagnosticWorkspace.classList.remove("is-question-page", "is-stage4-page", "is-report-page", "is-explorer-page");
+        }
+
         questionContainer.hidden = false;
         stage4Container.hidden = true;
         stage5Container.hidden = true;
+        if (saltExplorerWorkspace) saltExplorerWorkspace.hidden = true;
         if (saltHowContainer) saltHowContainer.style.display = "none";
         if (saltHowPanel) saltHowPanel.style.display = "none";
         if (saltHowBtn) saltHowBtn.classList.remove("active");
         stepBackBtn.style.display = "none";
+        if (stepHomeBtn) stepHomeBtn.style.display = "none";
+        if (questionPageHeader) questionPageHeader.style.display = "none";
 
         renderCurrentQuestion();
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1367,9 +1391,63 @@ document.addEventListener("DOMContentLoaded", () => {
         const tree = knowledgeBase.unified.tree;
         const outcomes = knowledgeBase.unified.outcomes;
 
-        stepBackBtn.style.display = historyStack.length > 1 ? "inline-flex" : "none";
+        const isStartMode = currentStep.id === "start_mode";
+
+        if (consultationWrapper) {
+            consultationWrapper.classList.toggle("is-start-mode", isStartMode);
+            consultationWrapper.classList.toggle("is-question-page", !isStartMode);
+        }
+        if (diagnosticWorkspace) {
+            diagnosticWorkspace.classList.toggle("is-start-mode", isStartMode);
+            diagnosticWorkspace.classList.toggle("is-question-page", !isStartMode);
+            diagnosticWorkspace.classList.remove("is-stage4-page", "is-report-page", "is-explorer-page");
+        }
+
+        if (questionPageHeader) {
+            questionPageHeader.style.display = isStartMode ? "none" : "flex";
+        }
+        if (stepHomeBtn) {
+            stepHomeBtn.style.display = isStartMode ? "none" : "inline-flex";
+        }
+        if (breadcrumbTrail) {
+            breadcrumbTrail.style.display = isStartMode ? "none" : (sessionData.stepsTrail.length > 0 ? "flex" : "none");
+        }
+
+        stepBackBtn.style.display = (!isStartMode && historyStack.length > 1) ? "inline-flex" : "none";
 
         if (currentStep.type === "question") {
+            const isEn = currentLang === "en";
+
+            if (!isStartMode) {
+                // Update question badge
+                if (questionBadgeText) {
+                    const stepNum = historyStack.length - 1;
+                    let badgeLabel = "";
+                    if (currentStep.id.startsWith("SALT_")) {
+                        badgeLabel = isEn ? ("Salt Analysis • Step " + stepNum) : ("تشخيص الملح • الخطوة " + stepNum);
+                    } else if (currentStep.id.startsWith("ANION_")) {
+                        badgeLabel = isEn ? ("Acidic Radical (Anion) • Step " + stepNum) : ("كشف الشق الحامضي • الخطوة " + stepNum);
+                    } else if (currentStep.id.startsWith("CATION_")) {
+                        badgeLabel = isEn ? ("Basic Radical (Cation) • Step " + stepNum) : ("كشف الشق القاعدي • الخطوة " + stepNum);
+                    } else if (currentStep.id.startsWith("org_")) {
+                        badgeLabel = isEn ? ("Organic Analysis • Step " + stepNum) : ("كشف المركبات العضوية • الخطوة " + stepNum);
+                    } else {
+                        badgeLabel = isEn ? ("Analytical Step " + stepNum) : ("الخطوة التحليلية " + stepNum);
+                    }
+                    questionBadgeText.textContent = badgeLabel;
+                }
+
+                // Trigger question page animation
+                if (questionContainer) {
+                    questionContainer.classList.remove("question-page-anim");
+                    void questionContainer.offsetWidth;
+                    questionContainer.classList.add("question-page-anim");
+                }
+
+                if (diagnosticWorkspace) {
+                    diagnosticWorkspace.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            }
             updateQuestionBackgroundImages();
             const qData = tree[currentStep.id];
             if (!qData) {
@@ -1747,8 +1825,21 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             renderCurrentQuestion();
+            window.scrollTo({ top: 0, behavior: "smooth" });
         }
     });
+
+    if (stepHomeBtn) {
+        stepHomeBtn.addEventListener("click", () => {
+            startConsultation();
+        });
+    }
+
+    if (questionHomeTopBtn) {
+        questionHomeTopBtn.addEventListener("click", () => {
+            startConsultation();
+        });
+    }
 
     // ========================================================
     // STAGE 4: CONFIRMATORY TEST
@@ -1778,6 +1869,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function triggerStage4Confirmatory(outcomeKey, outcomeData) {
+        if (consultationWrapper) {
+            consultationWrapper.classList.remove("is-start-mode", "is-question-page");
+        }
+        if (diagnosticWorkspace) {
+            diagnosticWorkspace.classList.remove("is-start-mode", "is-question-page", "is-report-page", "is-explorer-page");
+            diagnosticWorkspace.classList.add("is-stage4-page");
+        }
         setGlobalBackground(2, 3);
         questionContainer.hidden = true;
         stage4Container.hidden = false;
@@ -2329,6 +2427,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // ========================================================
 
     function triggerStage5Report() {
+        if (consultationWrapper) {
+            consultationWrapper.classList.remove("is-start-mode", "is-question-page");
+        }
+        if (diagnosticWorkspace) {
+            diagnosticWorkspace.classList.remove("is-start-mode", "is-question-page", "is-stage4-page", "is-explorer-page");
+            diagnosticWorkspace.classList.add("is-report-page");
+        }
         setGlobalBackground(4, 5);
         questionContainer.hidden = true;
         stage4Container.hidden = true;
@@ -2886,6 +2991,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentExplorerDossier = null;
 
     function startExplorerMode() {
+        if (consultationWrapper) {
+            consultationWrapper.classList.remove("is-start-mode", "is-question-page");
+        }
+        if (diagnosticWorkspace) {
+            diagnosticWorkspace.classList.remove("is-start-mode", "is-question-page", "is-stage4-page", "is-report-page");
+            diagnosticWorkspace.classList.add("is-explorer-page");
+        }
         if (questionContainer) questionContainer.hidden = true;
         if (stage4Container) stage4Container.hidden = true;
         if (stage5Container) stage5Container.hidden = true;
@@ -2894,6 +3006,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (saltHowPanel) saltHowPanel.style.display = "none";
         if (saltHowBtn) saltHowBtn.classList.remove("active");
         if (stepBackBtn) stepBackBtn.style.display = "none";
+        if (stepHomeBtn) stepHomeBtn.style.display = "none";
+        if (questionPageHeader) questionPageHeader.style.display = "none";
         if (saltExplorerWorkspace) {
             saltExplorerWorkspace.hidden = false;
             saltExplorerWorkspace.scrollIntoView({ behavior: "smooth", block: "start" });
