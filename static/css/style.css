@@ -3020,3 +3020,645 @@ h1 span {
 }
 
 
+
+
+/* ==========================================================================
+   DIRECT SALT EXPLORER & SYNTHESIS RECIPE PLANNER STYLES
+   ========================================================================== */
+
+/* Top Primary Operational Navigation Bar */
+.primary-nav-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+  background: rgba(15, 23, 42, 0.7);
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.primary-nav-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+  outline: none;
+}
+
+.primary-nav-tab:hover:not(.active) {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.primary-nav-tab.active {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.8), rgba(30, 41, 59, 0.9));
+  color: #60a5fa;
+  border-color: #3b82d6;
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.4);
+}
+
+.primary-nav-tab .tab-icon {
+  font-size: 18px;
+}
+
+/* Explorer Selectors Grid */
+.explorer-selectors-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 25px 0 20px;
+}
+
+@media (max-width: 768px) {
+  .explorer-selectors-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.explorer-control-group {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.explorer-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.label-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: #3b82d6;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.explorer-dropdown {
+  width: 100%;
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1.5px solid #334155;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.explorer-dropdown:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.35);
+}
+
+.explorer-dropdown option {
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 10px;
+}
+
+/* Explorer Actions Bar */
+.explorer-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.explorer-btn-primary {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border: 1px solid #60a5fa;
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+.explorer-btn-primary:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+  transform: translateY(-1px);
+}
+
+.explorer-btn-secondary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.explorer-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+  border-color: #64748b;
+}
+
+/* Quick Presets Container */
+.explorer-presets-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.4);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 25px;
+}
+
+.presets-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-left: 8px;
+}
+
+html[dir="ltr"] .presets-label {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+.presets-pills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.preset-pill-btn {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.preset-pill-btn:hover {
+  background: #1e293b;
+  color: #60a5fa;
+  border-color: #3b82d6;
+}
+
+.preset-pill-btn.preset-danger {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #f87171;
+}
+
+.preset-pill-btn.preset-danger:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+}
+
+/* Incompatible Alert Card */
+.incompatible-alert-card {
+  background: linear-gradient(135deg, rgba(69, 10, 10, 0.85), rgba(26, 12, 12, 0.95));
+  border: 1.5px solid #ef4444;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 8px 30px rgba(239, 68, 68, 0.25);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.incomp-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.incomp-icon {
+  font-size: 32px;
+}
+
+.incomp-title-group h3 {
+  font-size: 18px;
+  color: #fca5a5;
+  margin: 4px 0 0;
+}
+
+.incomp-badge {
+  display: inline-block;
+  background: #ef4444;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.incomp-reason-text {
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: #fee2e2;
+  margin-bottom: 18px;
+}
+
+.incomp-equations-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+
+.incomp-equations-box h5 {
+  font-size: 13px;
+  color: #fca5a5;
+  margin: 0 0 10px;
+}
+
+/* Compatible Dossier Grid */
+.compatible-dossier-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.dossier-card {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 22px 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.dossier-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 14px;
+}
+
+.dossier-card-header h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.card-num-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* Card 1: Identity */
+.identity-main-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+}
+
+.formula-label {
+  font-size: 12px;
+  color: #94a3b8;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.formula-text {
+  font-size: 28px;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: #60a5fa;
+  letter-spacing: 1px;
+}
+
+.names-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-bottom: 8px;
+}
+
+.solubility-status-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.solubility-status-badge.soluble {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid #22c55e;
+  color: #4ade80;
+}
+
+.solubility-status-badge.insoluble {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid #f59e0b;
+  color: #fbbf24;
+}
+
+.identity-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 640px) {
+  .identity-details-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detail-item {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.detail-label {
+  display: block;
+  font-size: 12px;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.detail-value {
+  font-size: 14px;
+  color: #e2e8f0;
+  line-height: 1.6;
+}
+
+.appearance-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.swatch-indicator {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.identity-info-box {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.info-box-label {
+  display: block;
+  font-size: 12px;
+  color: #94a3b8;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.dossier-info-list {
+  margin: 0;
+  padding: 0 20px;
+  color: #cbd5e1;
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+/* Card 2: Synthesis */
+.synthesis-method-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(37, 99, 235, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+}
+
+.method-type-tag {
+  background: #2563eb;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.method-title {
+  margin: 0;
+  font-size: 16px;
+  color: #93c5fd;
+  font-weight: 700;
+}
+
+.synthesis-mechanism-note {
+  font-size: 13.5px;
+  color: #94a3b8;
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.synthesis-section {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+
+.synthesis-section h5 {
+  font-size: 13px;
+  color: #60a5fa;
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+
+.materials-display-box {
+  color: #e2e8f0;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.synthesis-equation-box {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 15px;
+  color: #f8fafc;
+  direction: ltr;
+  text-align: center;
+}
+
+.procedure-steps-list {
+  margin: 0;
+  padding: 0 20px;
+  color: #e2e8f0;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.procedure-steps-list li {
+  margin-bottom: 8px;
+}
+
+.precautions-section {
+  border-color: rgba(245, 158, 11, 0.2);
+  background: rgba(41, 28, 10, 0.3);
+}
+
+.precautions-section h5 {
+  color: #fbbf24;
+}
+
+.precautions-text {
+  font-size: 13.5px;
+  color: #fde68a;
+  line-height: 1.7;
+}
+
+/* Card 3: Verification */
+.verification-radicals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .verification-radicals-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.radical-verification-col {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+
+.radical-col-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.radical-col-header h4 {
+  margin: 0;
+  font-size: 15px;
+  color: #f8fafc;
+}
+
+.radical-badge {
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.radical-group-text {
+  font-size: 13px;
+  color: #38bdf8;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.radical-summary-text {
+  font-size: 13.5px;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.radical-eqs-box {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+
+.eqs-box-label {
+  display: block;
+  font-size: 12px;
+  color: #94a3b8;
+  margin-bottom: 8px;
+  font-weight: 700;
+}

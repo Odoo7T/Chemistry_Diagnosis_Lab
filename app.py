@@ -61,6 +61,16 @@ def get_all_data():
         },
         "incompatible_salts": {
             f"{c}_{a}": s for (c, a), s in kb.INCOMPATIBLE_SALTS.items()
+        },
+        "salt_explorer_meta": {
+            "cations": [
+                {"key": k, "symbol": v["symbol"], "name_ar": v["name_ar"], "name_en": v["name_en"]}
+                for k, v in kb.CATIONS_DATA.items()
+            ],
+            "anions": [
+                {"key": k, "symbol": v["symbol"], "name_ar": v["name_ar"], "name_en": v["name_en"]}
+                for k, v in kb.ANIONS_DATA.items()
+            ]
         }
     })
 
@@ -77,6 +87,25 @@ def salt_outcome():
         }), 400
         
     result = kb.build_final_salt_outcome(cation, anion)
+    return jsonify(result)
+
+@app.route("/api/salt_explorer", methods=["POST", "GET"])
+def salt_explorer():
+    """Endpoint for Direct Salt Explorer & Synthesis Recipe Planner."""
+    if request.method == "POST":
+        payload = request.get_json(silent=True) or {}
+        cation = payload.get("cation", "")
+        anion = payload.get("anion", "")
+    else:
+        cation = request.args.get("cation", "")
+        anion = request.args.get("anion", "")
+        
+    if not cation or not anion:
+        return jsonify({
+            "error": "Both 'cation' and 'anion' parameters are required."
+        }), 400
+        
+    result = kb.get_direct_salt_dossier(cation, anion)
     return jsonify(result)
 
 @app.route("/api/predict", methods=["POST"])

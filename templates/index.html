@@ -26,6 +26,9 @@
             </div>
         </div>
 
+                <button id="explorer-header-btn" class="ref-toggle-btn" title="مستكشف وتحضير الأملاح بالاختيار المباشر">
+            <span id="header-explorer-btn-text">🧭 مستكشف الأملاح</span>
+        </button>
         <button id="salt-direct-header-btn" class="ref-toggle-btn" title="تشخيص ملح غير عضوي كامل عبر 3 مراحل">
             <span id="header-salt-btn-text">🧂 تشخيص ملح كامل</span>
         </button>
@@ -46,6 +49,18 @@
 </header>
 
 <main class="consultation-wrapper">
+
+    <!-- PRIMARY OPERATIONAL WORKSPACE SELECTOR -->
+    <div class="primary-nav-bar" id="primary-nav-bar" role="tablist" aria-label="Main Operational Mode">
+        <button type="button" class="primary-nav-tab active" id="tab-nav-diagnostic" role="tab" aria-selected="true">
+            <span class="tab-icon">🔬</span>
+            <span id="tab-nav-diag-text">فحص وتشخيص العينة المجهولة (Inquiry Diagnosis)</span>
+        </button>
+        <button type="button" class="primary-nav-tab" id="tab-nav-explorer" role="tab" aria-selected="false">
+            <span class="tab-icon">🧭</span>
+            <span id="tab-nav-exp-text">مستكشف وتحضير الأملاح المباشر (Direct Salt Explorer & Planner)</span>
+        </button>
+    </div>
 
     <!-- PRIMARY DIAGNOSTIC WORKSPACE (UNKNOWN SAMPLE INQUIRY) -->
     <section id="diagnostic-workspace" class="diagnostic-card">
@@ -312,6 +327,222 @@
         </div>
     </section>
 
+    <!-- DIRECT SALT EXPLORER & SYNTHESIS RECIPE PLANNER WORKSPACE -->
+    <section id="salt-explorer-workspace" class="diagnostic-card" hidden style="margin-top: 15px;">
+        <div class="workspace-header-text">
+            <div class="eyebrow" id="explorer-eyebrow">DIRECT SALT EXPLORATION & SYNTHESIS RECIPE PLANNER</div>
+            <h2 id="explorer-title">مستكشف وتحضير الأملاح بالاختيار المباشر</h2>
+            <p id="explorer-description" class="workspace-subdesc">
+                اختر الشق القاعدي (الكاتيون) والشق الحامضي (الأنيون) يدوياً لتوليد بطاقة هوية الملح، وصفة التحضير والتخليق المعملي الموزونة، وبروتوكول التحقق والكشف المعملي الكامل.
+            </p>
+        </div>
+
+        <!-- Dropdowns Grid -->
+        <div class="explorer-selectors-grid">
+            <div class="explorer-control-group">
+                <label for="explorer-cation-select" id="explorer-cation-label" class="explorer-label">
+                    <span class="label-step-num">1</span>
+                    <span id="explorer-cation-label-text">الشق القاعدي (الكاتيون - Basic Radical / Cation):</span>
+                </label>
+                <div class="select-wrapper">
+                    <select id="explorer-cation-select" class="explorer-dropdown">
+                        <option value="CU">النحاس الثنائي — Copper(II) (Cu²⁺)</option>
+                        <option value="FE2">الحديد الثنائي — Iron(II) (Fe²⁺)</option>
+                        <option value="FE3">الحديد الثلاثي — Iron(III) (Fe³⁺)</option>
+                        <option value="AL">الألومنيوم — Aluminium (Al³⁺)</option>
+                        <option value="ZN">الزنك — Zinc (Zn²⁺)</option>
+                        <option value="PB">الرصاص الثنائي — Lead(II) (Pb²⁺)</option>
+                        <option value="CA">الكالسيوم — Calcium (Ca²⁺)</option>
+                        <option value="BA">الباريوم — Barium (Ba²⁺)</option>
+                        <option value="MG">المغنيسيوم — Magnesium (Mg²⁺)</option>
+                        <option value="NH4">الأمونيوم — Ammonium (NH₄⁺)</option>
+                        <option value="NA">الصوديوم — Sodium (Na⁺)</option>
+                        <option value="K">البوتاسيوم — Potassium (K⁺)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="explorer-control-group">
+                <label for="explorer-anion-select" id="explorer-anion-label" class="explorer-label">
+                    <span class="label-step-num">2</span>
+                    <span id="explorer-anion-label-text">الشق الحامضي (الأنيون - Acidic Radical / Anion):</span>
+                </label>
+                <div class="select-wrapper">
+                    <select id="explorer-anion-select" class="explorer-dropdown">
+                        <option value="SO4">كبريتات — Sulfate (SO₄²⁻)</option>
+                        <option value="CL">كلوريد — Chloride (Cl⁻)</option>
+                        <option value="NO3">نترات — Nitrate (NO₃⁻)</option>
+                        <option value="CO3">كربونات — Carbonate (CO₃²⁻)</option>
+                        <option value="HCO3">بيكربونات — Bicarbonate (HCO₃⁻)</option>
+                        <option value="PO4">فوسفات — Phosphate (PO₄³⁻)</option>
+                        <option value="SO3">كبريتيت — Sulfite (SO₃²⁻)</option>
+                        <option value="S2O3">ثيوكبريتات — Thiosulfate (S₂O₃²⁻)</option>
+                        <option value="S">كبريتيد — Sulfide (S²⁻)</option>
+                        <option value="NO2">نيتريت — Nitrite (NO₂⁻)</option>
+                        <option value="BR">بروميد — Bromide (Br⁻)</option>
+                        <option value="I">يوديد — Iodide (I⁻)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="explorer-actions-bar">
+            <button type="button" id="explorer-generate-btn" class="explorer-btn-primary">
+                <span class="btn-icon">⚗️</span>
+                <span id="explorer-generate-btn-text">تحليل وتوليد الوصفة المعملية</span>
+            </button>
+            <button type="button" id="explorer-reset-btn" class="explorer-btn-secondary">
+                <span class="btn-icon">↺</span>
+                <span id="explorer-reset-btn-text">إعادة ضبط الاختيار</span>
+            </button>
+        </div>
+
+        <!-- Quick Combos / Presets -->
+        <div class="explorer-presets-container">
+            <span class="presets-label" id="explorer-presets-label">أمثلة سريعة مختارة:</span>
+            <div class="presets-pills-list">
+                <button type="button" class="preset-pill-btn" data-cation="CU" data-anion="SO4" data-name-ar="CuSO₄·5H₂O (التوتيا الزرقاء)" data-name-en="CuSO₄·5H₂O (Blue Vitriol)">CuSO₄·5H₂O (التوتيا الزرقاء)</button>
+                <button type="button" class="preset-pill-btn" data-cation="NA" data-anion="CL" data-name-ar="NaCl (ملح الطعام)" data-name-en="NaCl (Table Salt)">NaCl (ملح الطعام)</button>
+                <button type="button" class="preset-pill-btn" data-cation="CA" data-anion="CO3" data-name-ar="CaCO₃ (الحجر الجيري)" data-name-en="CaCO₃ (Limestone)">CaCO₃ (الحجر الجيري)</button>
+                <button type="button" class="preset-pill-btn" data-cation="PB" data-anion="I" data-name-ar="PbI₂ (المطر الذهبي)" data-name-en="PbI₂ (Golden Rain)">PbI₂ (المطر الذهبي)</button>
+                <button type="button" class="preset-pill-btn" data-cation="FE2" data-anion="SO4" data-name-ar="FeSO₄·7H₂O (الزاج الأخضر)" data-name-en="FeSO₄·7H₂O (Green Vitriol)">FeSO₄·7H₂O (الزاج الأخضر)</button>
+                <button type="button" class="preset-pill-btn" data-cation="BA" data-anion="SO4" data-name-ar="BaSO₄ (كبريتات الباريوم)" data-name-en="BaSO₄ (Barium Sulfate)">BaSO₄ (كبريتات الباريوم)</button>
+                <button type="button" class="preset-pill-btn preset-danger" data-cation="FE3" data-anion="CO3" data-name-ar="⚠️ Fe³⁺ + CO₃²⁻ (عدم توافق: تميؤ)" data-name-en="⚠️ Fe³⁺ + CO₃²⁻ (Incompatible: Hydrolysis)">⚠️ Fe³⁺ + CO₃²⁻ (عدم توافق: تميؤ)</button>
+                <button type="button" class="preset-pill-btn preset-danger" data-cation="CU" data-anion="I" data-name-ar="⚠️ Cu²⁺ + I⁻ (عدم توافق: أكسدة واختزال)" data-name-en="⚠️ Cu²⁺ + I⁻ (Incompatible: Redox)">⚠️ Cu²⁺ + I⁻ (عدم توافق: أكسدة واختزال)</button>
+            </div>
+        </div>
+
+        <!-- Results Area -->
+        <div id="explorer-results-area" class="explorer-results-wrapper">
+            <!-- 1. INCOMPATIBLE WARNING CARD (Hidden by default) -->
+            <div id="explorer-incompatible-card" class="incompatible-alert-card" hidden>
+                <div class="incomp-header">
+                    <span class="incomp-icon">⚠️</span>
+                    <div class="incomp-title-group">
+                        <span class="incomp-badge" id="explorer-incomp-badge">تحذير علمي: عدم توافق كيميائي</span>
+                        <h3 id="explorer-incomp-title">مركب غير مستقر كيميائياً في الوسط المائي</h3>
+                    </div>
+                </div>
+                <div class="incomp-body">
+                    <p id="explorer-incomp-reason" class="incomp-reason-text"></p>
+                    <div class="incomp-equations-box">
+                        <h5 id="explorer-incomp-eq-title">تفاعلات التفكك التلقائي / الأكسدة والاختزال:</h5>
+                        <div id="explorer-incomp-equations" class="equation-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. COMPATIBLE 3-CARD REPORT (Hidden by default) -->
+            <div id="explorer-compatible-cards" class="compatible-dossier-grid" hidden>
+                <!-- CARD 1: SALT IDENTITY & PHYSICAL PROPERTIES -->
+                <div class="dossier-card card-identity" id="explorer-card-identity">
+                    <div class="dossier-card-header">
+                        <span class="card-num-badge">1</span>
+                        <h3 id="explorer-card1-title">بطاقة هوية الملح والخواص الفيزيائية (Salt Identity)</h3>
+                    </div>
+                    <div class="identity-main-row">
+                        <div class="formula-box">
+                            <span class="formula-label" id="explorer-formula-label">الصيغة الكيميائية الموزونة:</span>
+                            <div id="explorer-formula-val" class="formula-text"></div>
+                        </div>
+                        <div class="names-box">
+                            <div id="explorer-names-val" class="names-text"></div>
+                            <div id="explorer-solubility-badge" class="solubility-status-badge"></div>
+                        </div>
+                    </div>
+                    <div class="identity-details-grid">
+                        <div class="detail-item">
+                            <span class="detail-label" id="explorer-appearance-label">المظهر واللون:</span>
+                            <div class="appearance-wrapper">
+                                <span id="explorer-swatch-val" class="swatch-indicator"></span>
+                                <span id="explorer-appearance-val" class="detail-value"></span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label" id="explorer-solubility-label">الذوبانية في الماء:</span>
+                            <div id="explorer-solubility-desc" class="detail-value"></div>
+                        </div>
+                    </div>
+                    <div class="identity-info-box">
+                        <span class="info-box-label" id="explorer-info-label">معلومات وتطبيقات معملية:</span>
+                        <ul id="explorer-info-list" class="dossier-info-list"></ul>
+                    </div>
+                </div>
+
+                <!-- CARD 2: LABORATORY SYNTHESIS RECIPE -->
+                <div class="dossier-card card-synthesis" id="explorer-card-synthesis">
+                    <div class="dossier-card-header">
+                        <span class="card-num-badge">2</span>
+                        <h3 id="explorer-card2-title">وصفة التحضير والتخليق المعملي (Laboratory Synthesis Recipe)</h3>
+                    </div>
+                    <div class="synthesis-method-banner">
+                        <span id="explorer-synth-badge" class="method-type-tag"></span>
+                        <h4 id="explorer-synth-method" class="method-title"></h4>
+                    </div>
+                    <div id="explorer-synth-type" class="synthesis-mechanism-note"></div>
+
+                    <div class="synthesis-section">
+                        <h5 id="explorer-mat-title">المواد الأولية المطلوبة (Starting Materials):</h5>
+                        <div id="explorer-synth-materials" class="materials-display-box"></div>
+                    </div>
+
+                    <div class="synthesis-section">
+                        <h5 id="explorer-eq-title">معادلة تكوين الملح الموزونة (Balanced Formation Equation):</h5>
+                        <div id="explorer-synth-equation" class="synthesis-equation-box"></div>
+                    </div>
+
+                    <div class="synthesis-section">
+                        <h5 id="explorer-steps-title">خطوات العمل المعملي المرقمة (Step-by-Step Procedure):</h5>
+                        <ol id="explorer-synth-steps" class="procedure-steps-list"></ol>
+                    </div>
+
+                    <div class="synthesis-section precautions-section">
+                        <h5 id="explorer-prec-title">احتياطات وملاحظات السلامة والدقة (Laboratory Precautions):</h5>
+                        <div id="explorer-synth-precautions" class="precautions-text"></div>
+                    </div>
+                </div>
+
+                <!-- CARD 3: DIAGNOSTIC VERIFICATION PROTOCOL -->
+                <div class="dossier-card card-verification" id="explorer-card-verification">
+                    <div class="dossier-card-header">
+                        <span class="card-num-badge">3</span>
+                        <h3 id="explorer-card3-title">بروتوكول التحقق والكشف المعملي (Verification Protocol)</h3>
+                    </div>
+                    <div class="verification-radicals-grid">
+                        <!-- Anion Column -->
+                        <div class="radical-verification-col anion-col">
+                            <div class="radical-col-header">
+                                <span class="radical-badge">🧪 الشق الحامضي</span>
+                                <h4 id="explorer-anion-col-title">التحقق من الأنيون (Acidic Radical)</h4>
+                            </div>
+                            <div id="explorer-anion-group-info" class="radical-group-text"></div>
+                            <div id="explorer-anion-summary" class="radical-summary-text"></div>
+                            <div class="radical-eqs-box">
+                                <span class="eqs-box-label" id="explorer-anion-eq-label">المعادلات الكيميائية التأكيدية:</span>
+                                <div id="explorer-anion-equations" class="equation-list"></div>
+                            </div>
+                        </div>
+
+                        <!-- Cation Column -->
+                        <div class="radical-verification-col cation-col">
+                            <div class="radical-col-header">
+                                <span class="radical-badge">⚗️ الشق القاعدي</span>
+                                <h4 id="explorer-cation-col-title">التحقق من الكاتيون (Basic Radical)</h4>
+                            </div>
+                            <div id="explorer-cation-group-info" class="radical-group-text"></div>
+                            <div id="explorer-cation-summary" class="radical-summary-text"></div>
+                            <div class="radical-eqs-box">
+                                <span class="eqs-box-label" id="explorer-cation-eq-label">المعادلات الكيميائية التأكيدية:</span>
+                                <div id="explorer-cation-equations" class="equation-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- AUXILIARY REACTION PREDICTOR MODAL / VIEW (TOGGLEABLE) -->
     <section id="predictor-view" class="diagnostic-card" hidden style="margin-top: 30px;">
         <div class="workspace-header-text">
@@ -453,6 +684,6 @@
     </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/main.js') }}?v=2.6"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}?v=2.7"></script>
 </body>
 </html>

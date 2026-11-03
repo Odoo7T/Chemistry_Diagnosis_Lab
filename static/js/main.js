@@ -69,7 +69,36 @@ document.addEventListener("DOMContentLoaded", () => {
             ref_modal_title: "الملاحظات المرجعية وكشوفات اللهب الجافة",
             ref_modal_desc: "دليل كشف اللهب للفلزات القلوية وملاحظات التحليل النوعي.",
             structure_modal_title: "الصيغة البنائية للمركب (Chemical Structure)",
-            page_footer: "CHEMLAB — نظام خبير الكيمياء غير العضوية الاستدلالي وتشخيص العينات المجهولة"
+            page_footer: "CHEMLAB — نظام خبير الكيمياء غير العضوية الاستدلالي وتشخيص العينات المجهولة",
+            tab_nav_diag_text: "فحص وتشخيص العينة المجهولة (Inquiry Diagnosis)",
+            tab_nav_exp_text: "مستكشف وتحضير الأملاح المباشر (Direct Salt Explorer & Planner)",
+            header_explorer_btn: "🧭 مستكشف الأملاح",
+            explorer_eyebrow: "DIRECT SALT EXPLORATION & SYNTHESIS RECIPE PLANNER",
+            explorer_title: "مستكشف وتحضير الأملاح بالاختيار المباشر",
+            explorer_desc: "اختر الشق القاعدي (الكاتيون) والشق الحامضي (الأنيون) يدوياً لتوليد بطاقة هوية الملح، وصفة التحضير والتخليق المعملي الموزونة، وبروتوكول التحقق والكشف المعملي الكامل.",
+            explorer_cation_label_text: "الشق القاعدي (الكاتيون - Basic Radical / Cation):",
+            explorer_anion_label_text: "الشق الحامضي (الأنيون - Acidic Radical / Anion):",
+            explorer_generate_btn_text: "تحليل وتوليد الوصفة المعملية",
+            explorer_reset_btn_text: "إعادة ضبط الاختيار",
+            explorer_presets_label: "أمثلة سريعة مختارة:",
+            explorer_incomp_badge: "تحذير علمي: عدم توافق كيميائي",
+            explorer_incomp_title: "مركب غير مستقر كيميائياً في الوسط المائي",
+            explorer_incomp_eq_title: "تفاعلات التفكك التلقائي / الأكسدة والاختزال:",
+            explorer_card1_title: "بطاقة هوية الملح والخواص الفيزيائية (Salt Identity)",
+            explorer_formula_label: "الصيغة الكيميائية الموزونة:",
+            explorer_appearance_label: "المظهر واللون:",
+            explorer_solubility_label: "الذوبانية في الماء:",
+            explorer_info_label: "معلومات وتطبيقات معملية:",
+            explorer_card2_title: "وصفة التحضير والتخليق المعملي (Laboratory Synthesis Recipe)",
+            explorer_mat_title: "المواد الأولية المطلوبة (Starting Materials):",
+            explorer_eq_title: "معادلة تكوين الملح الموزونة (Balanced Formation Equation):",
+            explorer_steps_title: "خطوات العمل المعملي المرقمة (Step-by-Step Procedure):",
+            explorer_prec_title: "احتياطات وملاحظات السلامة والدقة (Laboratory Precautions):",
+            explorer_card3_title: "بروتوكول التحقق والكشف المعملي (Verification Protocol)",
+            explorer_anion_col_title: "التحقق من الأنيون (Acidic Radical)",
+            explorer_anion_eq_label: "المعادلات الكيميائية التأكيدية:",
+            explorer_cation_col_title: "التحقق من الكاتيون (Basic Radical)",
+            explorer_cation_eq_label: "المعادلات الكيميائية التأكيدية:"
         },
         en: {
             header_logo_sub: "Organic & Inorganic Qualitative Diagnostic System",
@@ -134,7 +163,36 @@ document.addEventListener("DOMContentLoaded", () => {
             ref_modal_title: "Reference Notes & Dry Flame Tests",
             ref_modal_desc: "Flame test guide for alkali/alkaline earth metals and qualitative analysis notes.",
             structure_modal_title: "Chemical Structure",
-            page_footer: "CHEMLAB — Expert Diagnostic System for Qualitative Chemical Analysis"
+            page_footer: "CHEMLAB — Expert Diagnostic System for Qualitative Chemical Analysis",
+            tab_nav_diag_text: "Unknown Sample Chemical Diagnosis (Inquiry)",
+            tab_nav_exp_text: "Direct Salt Explorer & Synthesis Recipe Planner",
+            header_explorer_btn: "🧭 Salt Explorer",
+            explorer_eyebrow: "DIRECT SALT EXPLORATION & SYNTHESIS RECIPE PLANNER",
+            explorer_title: "Direct Salt Explorer & Synthesis Recipe Planner",
+            explorer_desc: "Directly select a basic radical (cation) and acidic radical (anion) to generate the complete salt identity dossier, verified balanced synthesis recipe, and systematic laboratory verification protocol.",
+            explorer_cation_label_text: "Basic Radical (Cation - Metal / Ammonium):",
+            explorer_anion_label_text: "Acidic Radical (Anion):",
+            explorer_generate_btn_text: "Analyze & Generate Lab Recipe",
+            explorer_reset_btn_text: "Reset Selection",
+            explorer_presets_label: "Selected Reference Combos:",
+            explorer_incomp_badge: "Scientific Alert: Chemical Incompatibility",
+            explorer_incomp_title: "Chemically Incompatible in Aqueous Environment",
+            explorer_incomp_eq_title: "Spontaneous Decomposition / Redox Reactions:",
+            explorer_card1_title: "1. Salt Identity & Physical Properties",
+            explorer_formula_label: "Balanced Chemical Formula:",
+            explorer_appearance_label: "Appearance & Color:",
+            explorer_solubility_label: "Aqueous Solubility:",
+            explorer_info_label: "Laboratory & Practical Application Notes:",
+            explorer_card2_title: "2. Laboratory Synthesis Recipe",
+            explorer_mat_title: "Required Starting Materials:",
+            explorer_eq_title: "Balanced Formation Equation:",
+            explorer_steps_title: "Numbered Step-by-Step Laboratory Procedure:",
+            explorer_prec_title: "Laboratory Precautions & Analytical Notes:",
+            explorer_card3_title: "3. Diagnostic Verification Protocol",
+            explorer_anion_col_title: "Anion Verification (Acidic Radical)",
+            explorer_anion_eq_label: "Confirmatory Chemical Equations:",
+            explorer_cation_col_title: "Cation Verification (Basic Radical)",
+            explorer_cation_eq_label: "Confirmatory Chemical Equations:"
         }
     };
 
@@ -201,7 +259,36 @@ document.addEventListener("DOMContentLoaded", () => {
         "ref-modal-title": "ref_modal_title",
         "ref-modal-desc": "ref_modal_desc",
         "structure-modal-title": "structure_modal_title",
-        "page-footer-text": "page_footer"
+        "page-footer-text": "page_footer",
+        "tab-nav-diag-text": "tab_nav_diag_text",
+        "tab-nav-exp-text": "tab_nav_exp_text",
+        "header-explorer-btn-text": "header_explorer_btn",
+        "explorer-eyebrow": "explorer_eyebrow",
+        "explorer-title": "explorer_title",
+        "explorer-description": "explorer_desc",
+        "explorer-cation-label-text": "explorer_cation_label_text",
+        "explorer-anion-label-text": "explorer_anion_label_text",
+        "explorer-generate-btn-text": "explorer_generate_btn_text",
+        "explorer-reset-btn-text": "explorer_reset_btn_text",
+        "explorer-presets-label": "explorer_presets_label",
+        "explorer-incomp-badge": "explorer_incomp_badge",
+        "explorer-incomp-title": "explorer_incomp_title",
+        "explorer-incomp-eq-title": "explorer_incomp_eq_title",
+        "explorer-card1-title": "explorer_card1_title",
+        "explorer-formula-label": "explorer_formula_label",
+        "explorer-appearance-label": "explorer_appearance_label",
+        "explorer-solubility-label": "explorer_solubility_label",
+        "explorer-info-label": "explorer_info_label",
+        "explorer-card2-title": "explorer_card2_title",
+        "explorer-mat-title": "explorer_mat_title",
+        "explorer-eq-title": "explorer_eq_title",
+        "explorer-steps-title": "explorer_steps_title",
+        "explorer-prec-title": "explorer_prec_title",
+        "explorer-card3-title": "explorer_card3_title",
+        "explorer-anion-col-title": "explorer_anion_col_title",
+        "explorer-anion-eq-label": "explorer_anion_eq_label",
+        "explorer-cation-col-title": "explorer_cation_col_title",
+        "explorer-cation-eq-label": "explorer_cation_eq_label"
     };
 
     function setLanguage(lang) {
@@ -223,6 +310,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (typeof setActiveModeTab === "function") {
             setActiveModeTab(activeMode);
+        }
+
+        // Update preset pills language
+        document.querySelectorAll(".preset-pill-btn").forEach(btn => {
+            if (lang === "en" && btn.dataset.nameEn) {
+                btn.textContent = btn.dataset.nameEn;
+            } else if (btn.dataset.nameAr) {
+                btn.textContent = btn.dataset.nameAr;
+            }
+        });
+
+        if (typeof updateExplorerDropdownLanguage === "function") {
+            updateExplorerDropdownLanguage(lang);
+        }
+
+        if (currentExplorerDossier && typeof renderExplorerDossier === "function") {
+            renderExplorerDossier(currentExplorerDossier, lang === "en");
         }
 
         // Re-render question if active and initialized
@@ -470,6 +574,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setupPredictorControls();
             setupSaltDiagnosisListeners();
             setupModeSelectorListeners();
+            setupSaltExplorer();
             startConsultation();
             setupLanguageSwitcher();
         } catch (err) {
@@ -541,6 +646,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function startSaltDiagnosis() {
+        if (typeof switchToWorkspace === "function") switchToWorkspace("diagnostic");
         setActiveModeTab("salt");
         previousFailedAttempt = null;
         sessionData = {
@@ -668,6 +774,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function startConsultation() {
+        if (typeof switchToWorkspace === "function") switchToWorkspace("diagnostic");
         setActiveModeTab("all");
         previousFailedAttempt = null;
         sessionData = {
@@ -2699,4 +2806,351 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     }
+
+    // ========================================================
+    // DIRECT SALT EXPLORER & SYNTHESIS RECIPE PLANNER
+    // ========================================================
+
+    const tabNavDiagnostic = document.getElementById("tab-nav-diagnostic");
+    const tabNavExplorer = document.getElementById("tab-nav-explorer");
+    const explorerHeaderBtn = document.getElementById("explorer-header-btn");
+    const saltExplorerWorkspace = document.getElementById("salt-explorer-workspace");
+
+    const explorerCationSelect = document.getElementById("explorer-cation-select");
+    const explorerAnionSelect = document.getElementById("explorer-anion-select");
+    const explorerGenerateBtn = document.getElementById("explorer-generate-btn");
+    const explorerResetBtn = document.getElementById("explorer-reset-btn");
+
+    const explorerResultsArea = document.getElementById("explorer-results-area");
+    const explorerIncompatibleCard = document.getElementById("explorer-incompatible-card");
+    const explorerIncompTitle = document.getElementById("explorer-incomp-title");
+    const explorerIncompReason = document.getElementById("explorer-incomp-reason");
+    const explorerIncompEquations = document.getElementById("explorer-incomp-equations");
+
+    const explorerCompatibleCards = document.getElementById("explorer-compatible-cards");
+    const explorerFormulaVal = document.getElementById("explorer-formula-val");
+    const explorerNamesVal = document.getElementById("explorer-names-val");
+    const explorerSolubilityBadge = document.getElementById("explorer-solubility-badge");
+    const explorerSwatchVal = document.getElementById("explorer-swatch-val");
+    const explorerAppearanceVal = document.getElementById("explorer-appearance-val");
+    const explorerSolubilityDesc = document.getElementById("explorer-solubility-desc");
+    const explorerInfoList = document.getElementById("explorer-info-list");
+
+    const explorerSynthBadge = document.getElementById("explorer-synth-badge");
+    const explorerSynthMethod = document.getElementById("explorer-synth-method");
+    const explorerSynthType = document.getElementById("explorer-synth-type");
+    const explorerSynthMaterials = document.getElementById("explorer-synth-materials");
+    const explorerSynthEquation = document.getElementById("explorer-synth-equation");
+    const explorerSynthSteps = document.getElementById("explorer-synth-steps");
+    const explorerSynthPrecautions = document.getElementById("explorer-synth-precautions");
+
+    const explorerAnionGroupInfo = document.getElementById("explorer-anion-group-info");
+    const explorerAnionSummary = document.getElementById("explorer-anion-summary");
+    const explorerAnionEquations = document.getElementById("explorer-anion-equations");
+    const explorerCationGroupInfo = document.getElementById("explorer-cation-group-info");
+    const explorerCationSummary = document.getElementById("explorer-cation-summary");
+    const explorerCationEquations = document.getElementById("explorer-cation-equations");
+
+    let currentExplorerDossier = null;
+
+    function switchToWorkspace(workspace) {
+        if (workspace === "explorer") {
+            if (tabNavExplorer) {
+                tabNavExplorer.classList.add("active");
+                tabNavExplorer.setAttribute("aria-selected", "true");
+            }
+            if (tabNavDiagnostic) {
+                tabNavDiagnostic.classList.remove("active");
+                tabNavDiagnostic.setAttribute("aria-selected", "false");
+            }
+            if (diagnosticWorkspace) diagnosticWorkspace.hidden = true;
+            if (saltExplorerWorkspace) {
+                saltExplorerWorkspace.hidden = false;
+                saltExplorerWorkspace.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        } else {
+            if (tabNavDiagnostic) {
+                tabNavDiagnostic.classList.add("active");
+                tabNavDiagnostic.setAttribute("aria-selected", "true");
+            }
+            if (tabNavExplorer) {
+                tabNavExplorer.classList.remove("active");
+                tabNavExplorer.setAttribute("aria-selected", "false");
+            }
+            if (saltExplorerWorkspace) saltExplorerWorkspace.hidden = true;
+            if (diagnosticWorkspace) {
+                diagnosticWorkspace.hidden = false;
+            }
+        }
+    }
+
+    const CATIONS_FALLBACK = [
+        { key: "CU", ar: "النحاس الثنائي", en: "Copper(II)", symbol: "Cu²⁺" },
+        { key: "FE2", ar: "الحديد الثنائي", en: "Iron(II)", symbol: "Fe²⁺" },
+        { key: "FE3", ar: "الحديد الثلاثي", en: "Iron(III)", symbol: "Fe³⁺" },
+        { key: "AL", ar: "الألومنيوم", en: "Aluminium", symbol: "Al³⁺" },
+        { key: "ZN", ar: "الزنك", en: "Zinc", symbol: "Zn²⁺" },
+        { key: "PB", ar: "الرصاص الثنائي", en: "Lead(II)", symbol: "Pb²⁺" },
+        { key: "CA", ar: "الكالسيوم", en: "Calcium", symbol: "Ca²⁺" },
+        { key: "BA", ar: "الباريوم", en: "Barium", symbol: "Ba²⁺" },
+        { key: "MG", ar: "المغنيسيوم", en: "Magnesium", symbol: "Mg²⁺" },
+        { key: "NH4", ar: "الأمونيوم", en: "Ammonium", symbol: "NH₄⁺" },
+        { key: "NA", ar: "الصوديوم", en: "Sodium", symbol: "Na⁺" },
+        { key: "K", ar: "البوتاسيوم", en: "Potassium", symbol: "K⁺" }
+    ];
+
+    const ANIONS_FALLBACK = [
+        { key: "SO4", ar: "كبريتات", en: "Sulfate", symbol: "SO₄²⁻" },
+        { key: "CL", ar: "كلوريد", en: "Chloride", symbol: "Cl⁻" },
+        { key: "NO3", ar: "نترات", en: "Nitrate", symbol: "NO₃⁻" },
+        { key: "CO3", ar: "كربونات", en: "Carbonate", symbol: "CO₃²⁻" },
+        { key: "HCO3", ar: "بيكربونات", en: "Bicarbonate", symbol: "HCO₃⁻" },
+        { key: "PO4", ar: "فوسفات", en: "Phosphate", symbol: "PO₄³⁻" },
+        { key: "SO3", ar: "كبريتيت", en: "Sulfite", symbol: "SO₃²⁻" },
+        { key: "S2O3", ar: "ثيوكبريتات", en: "Thiosulfate", symbol: "S₂O₃²⁻" },
+        { key: "S", ar: "كبريتيد", en: "Sulfide", symbol: "S²⁻" },
+        { key: "NO2", ar: "نيتريت", en: "Nitrite", symbol: "NO₂⁻" },
+        { key: "BR", ar: "بروميد", en: "Bromide", symbol: "Br⁻" },
+        { key: "I", ar: "يوديد", en: "Iodide", symbol: "I⁻" }
+    ];
+
+    function updateExplorerDropdownLanguage(lang) {
+        const isEn = lang === "en";
+        const cationsList = (knowledgeBase && knowledgeBase.salt_explorer_meta && knowledgeBase.salt_explorer_meta.cations)
+            ? knowledgeBase.salt_explorer_meta.cations
+            : CATIONS_FALLBACK;
+        const anionsList = (knowledgeBase && knowledgeBase.salt_explorer_meta && knowledgeBase.salt_explorer_meta.anions)
+            ? knowledgeBase.salt_explorer_meta.anions
+            : ANIONS_FALLBACK;
+
+        if (explorerCationSelect) {
+            const curVal = explorerCationSelect.value || "CU";
+            explorerCationSelect.innerHTML = "";
+            cationsList.forEach(c => {
+                const opt = document.createElement("option");
+                opt.value = c.key;
+                opt.textContent = isEn ? `${c.en} (${c.symbol})` : `${c.ar} (${c.symbol})`;
+                if (c.key === curVal) opt.selected = true;
+                explorerCationSelect.appendChild(opt);
+            });
+        }
+
+        if (explorerAnionSelect) {
+            const curVal = explorerAnionSelect.value || "SO4";
+            explorerAnionSelect.innerHTML = "";
+            anionsList.forEach(a => {
+                const opt = document.createElement("option");
+                opt.value = a.key;
+                opt.textContent = isEn ? `${a.en} (${a.symbol})` : `${a.ar} (${a.symbol})`;
+                if (a.key === curVal) opt.selected = true;
+                explorerAnionSelect.appendChild(opt);
+            });
+        }
+    }
+
+    function renderExplorerDossier(dossier, isEn) {
+        if (!dossier) {
+            if (explorerIncompatibleCard) explorerIncompatibleCard.hidden = true;
+            if (explorerCompatibleCards) explorerCompatibleCards.hidden = true;
+            return;
+        }
+
+        // Case 1: Incompatible Salt
+        if (dossier.compatible === false) {
+            if (explorerCompatibleCards) explorerCompatibleCards.hidden = true;
+            if (explorerIncompatibleCard) {
+                explorerIncompatibleCard.hidden = false;
+                if (explorerIncompTitle) {
+                    explorerIncompTitle.textContent = isEn ? (dossier.warning.title_en || dossier.warning.title) : dossier.warning.title;
+                }
+                if (explorerIncompReason) {
+                    explorerIncompReason.textContent = isEn ? (dossier.warning.reason_en || dossier.warning.reason) : dossier.warning.reason;
+                }
+                if (explorerIncompEquations) {
+                    explorerIncompEquations.innerHTML = "";
+                    const eqs = (isEn && dossier.warning.equations_en) ? dossier.warning.equations_en : (dossier.warning.equations || []);
+                    eqs.forEach(eq => {
+                        const item = document.createElement("div");
+                        item.className = "equation-item danger-eq";
+                        item.textContent = eq;
+                        explorerIncompEquations.appendChild(item);
+                    });
+                }
+            }
+            return;
+        }
+
+        // Case 2: Compatible (3 Cards)
+        if (explorerIncompatibleCard) explorerIncompatibleCard.hidden = true;
+        if (explorerCompatibleCards) explorerCompatibleCards.hidden = false;
+
+        const salt = dossier.salt_card;
+        const synth = dossier.synthesis;
+        const verif = dossier.verification;
+
+        // CARD 1: Identity & Physical Properties
+        if (explorerFormulaVal) explorerFormulaVal.textContent = salt.formula;
+        if (explorerNamesVal) {
+            explorerNamesVal.innerHTML = `<span class="name-ar" style="font-weight: 700; font-size: 18px; color: #fff;">${salt.name_ar}</span><span class="name-en" style="font-size: 13px; color: #a1a1aa; margin-top: 2px;">${salt.name_en}</span>`;
+        }
+        if (explorerSolubilityBadge) {
+            const isSol = salt.is_soluble;
+            explorerSolubilityBadge.className = "solubility-status-badge " + (isSol ? "badge-soluble" : "badge-insoluble");
+            explorerSolubilityBadge.textContent = isEn ? salt.solubility_status_en : salt.solubility_status_ar;
+        }
+        if (explorerSwatchVal) {
+            explorerSwatchVal.style.backgroundColor = salt.swatch || "#ffffff";
+        }
+        if (explorerAppearanceVal) {
+            explorerAppearanceVal.textContent = isEn ? salt.appearance_en : salt.appearance_ar;
+        }
+        if (explorerSolubilityDesc) {
+            explorerSolubilityDesc.textContent = isEn ? salt.solubility_desc_en : salt.solubility_desc_ar;
+        }
+        if (explorerInfoList) {
+            explorerInfoList.innerHTML = "";
+            const infoItems = (isEn ? salt.info_en : salt.info_ar) || [];
+            infoItems.forEach(info => {
+                const li = document.createElement("li");
+                li.className = "info-item";
+                li.textContent = info;
+                explorerInfoList.appendChild(li);
+            });
+        }
+
+        // CARD 2: Synthesis Recipe
+        if (explorerSynthBadge) {
+            explorerSynthBadge.textContent = isEn ? (synth.reaction_type_en || "Reaction Category") : (synth.reaction_type_ar || "نوع التفاعل");
+        }
+        if (explorerSynthMethod) {
+            explorerSynthMethod.textContent = isEn ? synth.method_name_en : synth.method_name_ar;
+        }
+        if (explorerSynthType) {
+            explorerSynthType.textContent = isEn ? `Pathway Category: ${synth.reaction_type_en}` : `تصنيف مسار التحضير: ${synth.reaction_type_ar}`;
+        }
+        if (explorerSynthMaterials) {
+            explorerSynthMaterials.textContent = isEn ? synth.starting_materials_en : synth.starting_materials_ar;
+        }
+        if (explorerSynthEquation) {
+            explorerSynthEquation.innerHTML = `<span class="equation-text">${synth.equation}</span>`;
+        }
+        if (explorerSynthSteps) {
+            explorerSynthSteps.innerHTML = "";
+            const steps = (isEn ? synth.steps_en : synth.steps_ar) || [];
+            steps.forEach(step => {
+                const li = document.createElement("li");
+                li.className = "procedure-step-item";
+                li.textContent = step;
+                explorerSynthSteps.appendChild(li);
+            });
+        }
+        if (explorerSynthPrecautions) {
+            explorerSynthPrecautions.textContent = isEn ? synth.precautions_en : synth.precautions_ar;
+        }
+
+        // CARD 3: Verification Protocol
+        if (explorerAnionGroupInfo) {
+            explorerAnionGroupInfo.textContent = isEn ? `Group: ${verif.anion.group_en} (${verif.anion.symbol})` : `المجموعة: ${verif.anion.group} (${verif.anion.symbol})`;
+        }
+        if (explorerAnionSummary) {
+            explorerAnionSummary.textContent = isEn ? verif.anion.summary_en : verif.anion.summary;
+        }
+        if (explorerAnionEquations) {
+            explorerAnionEquations.innerHTML = "";
+            (verif.anion.equations || []).forEach(eq => {
+                const div = document.createElement("div");
+                div.className = "equation-item";
+                div.textContent = eq;
+                explorerAnionEquations.appendChild(div);
+            });
+        }
+
+        if (explorerCationGroupInfo) {
+            explorerCationGroupInfo.textContent = isEn ? `Group: ${verif.cation.group_en} (${verif.cation.symbol})` : `المجموعة: ${verif.cation.group} (${verif.cation.symbol})`;
+        }
+        if (explorerCationSummary) {
+            explorerCationSummary.textContent = isEn ? verif.cation.summary_en : verif.cation.summary;
+        }
+        if (explorerCationEquations) {
+            explorerCationEquations.innerHTML = "";
+            (verif.cation.equations || []).forEach(eq => {
+                const div = document.createElement("div");
+                div.className = "equation-item";
+                div.textContent = eq;
+                explorerCationEquations.appendChild(div);
+            });
+        }
+    }
+
+    async function generateSaltDossier() {
+        const cation = explorerCationSelect ? explorerCationSelect.value : null;
+        const anion = explorerAnionSelect ? explorerAnionSelect.value : null;
+        if (!cation || !anion) return;
+
+        if (explorerGenerateBtn) {
+            explorerGenerateBtn.disabled = true;
+            const origHTML = explorerGenerateBtn.innerHTML;
+            explorerGenerateBtn.innerHTML = `<span class="btn-icon">⏳</span><span>${currentLang === "en" ? "Analyzing & Generating..." : "جارٍ الاستدلال وتوليد الوصفة..."}</span>`;
+            try {
+                const res = await fetch(`/api/salt_explorer?cation=${encodeURIComponent(cation)}&anion=${encodeURIComponent(anion)}`);
+                if (!res.ok) throw new Error("Server error");
+                const data = await res.json();
+                currentExplorerDossier = data;
+                renderExplorerDossier(data, currentLang === "en");
+                if (explorerResultsArea) {
+                    explorerResultsArea.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            } catch (err) {
+                console.error("Error generating salt dossier:", err);
+            } finally {
+                explorerGenerateBtn.disabled = false;
+                explorerGenerateBtn.innerHTML = origHTML;
+                const btnTextEl = document.getElementById("explorer-generate-btn-text");
+                if (btnTextEl) {
+                    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.ar;
+                    btnTextEl.textContent = t.explorer_generate_btn_text;
+                }
+            }
+        }
+    }
+
+    function setupSaltExplorer() {
+        if (tabNavDiagnostic) {
+            tabNavDiagnostic.addEventListener("click", () => switchToWorkspace("diagnostic"));
+        }
+        if (tabNavExplorer) {
+            tabNavExplorer.addEventListener("click", () => switchToWorkspace("explorer"));
+        }
+        if (explorerHeaderBtn) {
+            explorerHeaderBtn.addEventListener("click", () => switchToWorkspace("explorer"));
+        }
+        if (explorerGenerateBtn) {
+            explorerGenerateBtn.addEventListener("click", () => generateSaltDossier());
+        }
+        if (explorerResetBtn) {
+            explorerResetBtn.addEventListener("click", () => {
+                if (explorerCationSelect) explorerCationSelect.selectedIndex = 0;
+                if (explorerAnionSelect) explorerAnionSelect.selectedIndex = 0;
+                currentExplorerDossier = null;
+                if (explorerIncompatibleCard) explorerIncompatibleCard.hidden = true;
+                if (explorerCompatibleCards) explorerCompatibleCards.hidden = true;
+            });
+        }
+
+        const presetBtns = document.querySelectorAll(".preset-pill-btn");
+        presetBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const cat = btn.getAttribute("data-cation");
+                const an = btn.getAttribute("data-anion");
+                if (cat && an) {
+                    if (explorerCationSelect) explorerCationSelect.value = cat;
+                    if (explorerAnionSelect) explorerAnionSelect.value = an;
+                    generateSaltDossier();
+                }
+            });
+        });
+
+        updateExplorerDropdownLanguage(currentLang);
+    }
+
 });

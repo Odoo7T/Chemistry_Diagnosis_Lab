@@ -693,7 +693,10 @@ from salt_kb import (
     SUBSCRIPTS,
     format_ion_part,
     auto_balance_formula,
-    build_final_salt_outcome
+    build_final_salt_outcome,
+    check_salt_solubility,
+    generate_synthesis_recipe,
+    get_direct_salt_dossier
 )
 
 ALL_OUTCOMES = {

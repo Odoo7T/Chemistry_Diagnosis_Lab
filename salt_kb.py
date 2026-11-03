@@ -1004,7 +1004,7 @@ def auto_balance_formula(cation_key, anion_key):
 
 # -*- coding: utf-8 -*-
 """
-Enrich salt_kb.py with bilingual English data for:
+Enrich py with bilingual English data for:
 - 12 anions (group_en, summary_en)
 - 12 cations (group_en, summary_en)
 - 30 salts (appearance_en, solubility_en, info_en)
@@ -1482,3 +1482,366 @@ def build_final_salt_outcome(cation_key, anion_key):
         summary_en=f"Salt deduced by combining acidic radical ({a_data['name_en']}) and basic radical ({c_data['name_en']}).",
         badge_en="Standard Diagnostic Deduction"
     )
+# ==========================================================================
+# نمط مستكشف وتحضير الأملاح المباشر (Direct Salt Explorer & Synthesis Planner)
+# ==========================================================================
+
+def check_salt_solubility(cation_key, anion_key):
+    if anion_key in ("NO3", "HCO3"):
+        return True
+    if cation_key in ("NA", "K", "NH4"):
+        return True
+    if anion_key in ("CO3", "PO4", "S"):
+        return False
+    if anion_key == "SO4":
+        return cation_key not in ("BA", "CA", "PB")
+    if anion_key in ("CL", "BR", "I"):
+        return cation_key != "PB"
+    if anion_key == "SO3":
+        return False
+    if anion_key == "S2O3":
+        return cation_key != "PB"
+    return True
+
+ACID_PRECURSORS = {
+    "CL": ("حمض الهيدروكلوريك المخفف (Dil. HCl)", "Dilute Hydrochloric Acid (Dil. HCl)", "HCl"),
+    "BR": ("حمض الهيدروبروميك المخفف (Dil. HBr)", "Dilute Hydrobromic Acid (Dil. HBr)", "HBr"),
+    "I": ("حمض الهيدرويوديك المخفف (Dil. HI)", "Dilute Hydroiodic Acid (Dil. HI)", "HI"),
+    "NO3": ("حمض النيتريك المخفف (Dil. HNO₃)", "Dilute Nitric Acid (Dil. HNO₃)", "HNO₃"),
+    "NO2": ("حمض النيتروز المخفف (Dil. HNO₂)", "Dilute Nitrous Acid (Dil. HNO₂)", "HNO₂"),
+    "SO4": ("حمض الكبريتيك المخفف (Dil. H₂SO₄)", "Dilute Sulfuric Acid (Dil. H₂SO₄)", "H₂SO₄"),
+    "SO3": ("محلول حمض الكبريتوز (H₂SO₃) أو إمرار غاز SO₂", "Dilute Sulfurous Acid (H₂SO₃) / SO₂ Gas", "H₂SO₃"),
+    "CO3": ("حمض الكربونيك (H₂CO₃) أو إمرار غاز CO₂ في الماء", "Carbonic Acid (H₂CO₃) / CO₂ Gas Stream", "H₂CO₃"),
+    "HCO3": ("إمرار غاز ثاني أكسيد الكربون (CO₂) في محلول الكربونات المائي حتى التشبع", "Carbon Dioxide (CO₂) Gas Saturation", "CO₂"),
+    "PO4": ("حمض الفوسفوريك المخفف (Dil. H₃PO₄)", "Dilute Phosphoric Acid (Dil. H₃PO₄)", "H₃PO₄"),
+    "S": ("حمض الهيدروكبريتيك (H₂S) أو إمرار غاز كبريتيد الهيدروجين", "Hydrogen Sulfide Gas (H₂S)", "H₂S"),
+    "S2O3": ("محلول كبريتيت الصوديوم مع مسحوق الكبريت الأصفر (S)", "Sodium Sulfite Solution with Powdered Sulfur (S)", "Na₂S₂O₃")
+}
+
+SODIUM_PRECURSORS = {
+    "CO3": ("محلول كربونات الصوديوم (Na₂CO₃)", "Sodium Carbonate Solution (Na₂CO₃)", "Na₂CO₃"),
+    "HCO3": ("محلول بيكربونات الصوديوم (NaHCO₃)", "Sodium Bicarbonate Solution (NaHCO₃)", "NaHCO₃"),
+    "SO3": ("محلول كبريتيت الصوديوم (Na₂SO₃)", "Sodium Sulfite Solution (Na₂SO₃)", "Na₂SO₃"),
+    "S2O3": ("محلول ثيوكبريتات الصوديوم (Na₂S₂O₃)", "Sodium Thiosulfate Solution (Na₂S₂O₃)", "Na₂S₂O₃"),
+    "S": ("محلول كبريتيد الصوديوم (Na₂S)", "Sodium Sulfide Solution (Na₂S)", "Na₂S"),
+    "NO2": ("محلول نيتريت الصوديوم (NaNO₂)", "Sodium Nitrite Solution (NaNO₂)", "NaNO₂"),
+    "CL": ("محلول كلوريد الصوديوم (NaCl)", "Sodium Chloride Solution (NaCl)", "NaCl"),
+    "BR": ("محلول بروميد الصوديوم (NaBr)", "Sodium Bromide Solution (NaBr)", "NaBr"),
+    "I": ("محلول يوديد البوتاسيوم (KI) أو يوديد الصوديوم (NaI)", "Potassium Iodide Solution (KI)", "KI"),
+    "NO3": ("محلول نترات الصوديوم (NaNO₃)", "Sodium Nitrate Solution (NaNO₃)", "NaNO₃"),
+    "SO4": ("محلول كبريتات الصوديوم (Na₂SO₄)", "Sodium Sulfate Solution (Na₂SO₄)", "Na₂SO₄"),
+    "PO4": ("محلول فوسفات الصوديوم (Na₃PO₄)", "Sodium Phosphate Solution (Na₃PO₄)", "Na₃PO₄")
+}
+
+SOLUBLE_METAL_PRECURSORS = {
+    "PB": ("محلول نترات الرصاص الثنائي Pb(NO₃)₂", "Lead(II) Nitrate Solution Pb(NO₃)₂", "Pb(NO₃)₂"),
+    "CA": ("محلول كلوريد الكالسيوم CaCl₂", "Calcium Chloride Solution CaCl₂", "CaCl₂"),
+    "BA": ("محلول كلوريد الباريوم BaCl₂", "Barium Chloride Solution BaCl₂", "BaCl₂"),
+    "CU": ("محلول كبريتات النحاس الثنائي CuSO₄", "Copper(II) Sulfate Solution CuSO₄", "CuSO₄"),
+    "FE2": ("محلول كبريتات الحديد الثنائي FeSO₄", "Iron(II) Sulfate Solution FeSO₄", "FeSO₄"),
+    "FE3": ("محلول كلوريد الحديد الثلاثي FeCl₃", "Iron(III) Chloride Solution FeCl₃", "FeCl₃"),
+    "AL": ("محلول كلوريد الألومنيوم AlCl₃", "Aluminium Chloride Solution AlCl₃", "AlCl₃"),
+    "ZN": ("محلول كبريتات الزنك ZnSO₄", "Zinc Sulfate Solution ZnSO₄", "ZnSO₄"),
+    "MG": ("محلول كبريتات المغنيسيوم MgSO₄", "Magnesium Sulfate Solution MgSO₄", "MgSO₄")
+}
+
+INSOLUBLE_BASE_PRECURSORS = {
+    "CU": ("أكسيد النحاس الثنائي الأسود (CuO) أو كربونات النحاس (CuCO₃)", "Black Copper(II) Oxide (CuO) or Copper Carbonate (CuCO₃)", "CuO"),
+    "FE2": ("برادة الحديد النقي (Fe) أو كربونات الحديد الثنائي (FeCO₃)", "Pure Iron Filings (Fe) or Iron(II) Carbonate (FeCO₃)", "Fe"),
+    "FE3": ("هيدروكسيد الحديد الثلاثي (Fe(OH)₃) أو أكسيد الحديد الثلاثي (Fe₂O₃)", "Iron(III) Hydroxide (Fe(OH)₃) or Iron(III) Oxide (Fe₂O₃)", "Fe(OH)₃"),
+    "AL": ("هيدروكسيد الألومنيوم (Al(OH)₃)", "Aluminium Hydroxide (Al(OH)₃)", "Al(OH)₃"),
+    "ZN": ("مسحوق أكسيد الزنك الأبيض (ZnO) أو كربونات الزنك (ZnCO₃)", "White Zinc Oxide (ZnO) or Zinc Carbonate (ZnCO₃)", "ZnO"),
+    "PB": ("مسحوق أكسيد الرصاص الثنائي (PbO)", "Lead(II) Oxide (PbO)", "PbO"),
+    "CA": ("مسحوق كربونات الكالسيوم (CaCO₃ / الرخام)", "Calcium Carbonate Powder (CaCO₃)", "CaCO₃"),
+    "BA": ("مسحوق كربونات الباريوم (BaCO₃)", "Barium Carbonate Powder (BaCO₃)", "BaCO₃"),
+    "MG": ("مسحوق أكسيد المغنيسيوم (MgO) أو كربونات المغنيسيوم (MgCO₃)", "Magnesium Oxide (MgO) or Magnesium Carbonate (MgCO₃)", "MgO")
+}
+
+SOLUBLE_ALKALI_PRECURSORS = {
+    "NA": ("محلول هيدروكسيد الصوديوم (NaOH)", "Sodium Hydroxide Solution (NaOH)", "NaOH"),
+    "K": ("محلول هيدروكسيد البوتاسيوم (KOH)", "Potassium Hydroxide Solution (KOH)", "KOH"),
+    "NH4": ("محلول النشادر المائي / هيدروكسيد الأمونيوم (NH₄OH)", "Aqueous Ammonia Solution (NH₄OH)", "NH₃")
+}
+
+def generate_synthesis_recipe(cation_key, anion_key, formula, is_soluble):
+    c_data = CATIONS_DATA[cation_key]
+    a_data = ANIONS_DATA[anion_key]
+
+    # Pathway 1: Insoluble Salt (Precipitation)
+    if not is_soluble:
+        metal_p = SOLUBLE_METAL_PRECURSORS.get(cation_key, (f"محلول نترات {c_data['name_ar']}", f"{c_data['name_en']} Nitrate Solution", f"{cation_key}(NO₃)"))
+        anion_p = SODIUM_PRECURSORS.get(anion_key, (f"محلول ملح الصوديوم لـ {a_data['name_ar']}", f"Sodium {a_data['name_en']} Solution", "Na-Salt"))
+
+        steps_ar = [
+            f"تحضير المحاليل الرائقة: أذب كميات متكافئة من {metal_p[0]} ومن {anion_p[0]} في كأسين منفصلين باستخدام ماء مقطر رائق.",
+            "إجراء تفاعل الترسيب: اسكب محلول الصوديوم تدريجياً وببطء إلى محلول الفلز مع التقليب المستمر بقضيب زجاجي على البارد، ولاحظ تكون الراسب فورياً.",
+            "فصل الراسب بالترشيح: جهّز قمع ترشيح زجاجي مع ورقة ترشيح كمية، واسكب الخليط لفصل الراسب الصلب عن المحلول المائي الرائق.",
+            "الغسيل والتنقية: اغسل الراسب المتبقي على ورقة الترشيح 3 إلى 4 مرات بكميات صغيرة من الماء المقطر البارد لإزالة الشوائب الذائبة ونترات الصوديوم.",
+            "التجفيف المعملي: انقل ورقة الترشيح إلى فرن التجفيف عند درجة 80-100 مئوية أو اترك الراسب يجف في مجفف معملي (Desiccator) حتى ثبات الوزن."
+        ]
+        steps_en = [
+            f"Precursor Preparation: Dissolve stoichiometric amounts of {metal_p[1]} and {anion_p[1]} in separate beakers using cold distilled water until clear.",
+            "Precipitation: Slowly pour the sodium salt solution into the metal cation solution with continuous stirring; observe instantaneous precipitate formation.",
+            "Filtration: Assemble a glass funnel with quantitative filter paper and filter the mixture to separate the insoluble precipitate from the filtrate.",
+            "Washing: Wash the collected precipitate on the filter paper 3-4 times with cold distilled water to thoroughly remove all soluble spectator ions.",
+            "Drying: Dry the precipitate in a laboratory oven at 80-100°C or in a desiccator over silica gel until constant mass."
+        ]
+
+        eq_ar = f"{metal_p[2]}(aq) + {anion_p[2]}(aq) → {formula} ↓ + النواتج الجانبية الذائبة"
+        eq_en = f"{metal_p[2]}(aq) + {anion_p[2]}(aq) → {formula} ↓ + Soluble Spectators(aq)"
+
+        return {
+            "pathway": "precipitation",
+            "method_name": "الترسيب المزدوج (Double Displacement / Precipitation)",
+            "method_name_ar": "الترسيب المزدوج (Double Displacement / Precipitation)",
+            "method_name_en": "Double Displacement Precipitation",
+            "reaction_type": "تفاعل ترسيب كيميائي متبادل بين محلولين مائيين رائقين",
+            "reaction_type_ar": "تفاعل ترسيب كيميائي متبادل بين محلولين مائيين رائقين",
+            "reaction_type_en": "Precipitation reaction via double displacement of aqueous ions",
+            "starting_materials": f"1. {metal_p[0]}\n2. {anion_p[0]}",
+            "starting_materials_ar": f"1. {metal_p[0]}\n2. {anion_p[0]}",
+            "starting_materials_en": f"1. {metal_p[1]}\n2. {anion_p[1]}",
+            "steps": steps_ar,
+            "steps_ar": steps_ar,
+            "steps_en": steps_en,
+            "equation": eq_ar,
+            "equation_ar": eq_ar,
+            "equation_en": eq_en,
+            "precautions": "استخدم الماء المقطر البارد لمنع ذوبان الراسب الشحيح، وتجنب استخدام محاليل عكرة لضمان نقاوة بلورات الراسب.",
+            "precautions_ar": "استخدم الماء المقطر البارد لمنع ذوبان الراسب الشحيح، وتجنب استخدام محاليل عكرة لضمان نقاوة بلورات الراسب.",
+            "precautions_en": "Use ice-cold distilled water for washing to minimize precipitate redissolution; ensure precursors are fully dissolved prior to mixing."
+        }
+
+    # Pathway 2: Soluble Salt with Alkali Cation (Titration)
+    if cation_key in ("NA", "K", "NH4"):
+        alkali_p = SOLUBLE_ALKALI_PRECURSORS[cation_key]
+        acid_p = ACID_PRECURSORS[anion_key]
+
+        steps_ar = [
+            f"المعايرة الأولية بالدليل: انقل بواسطة الماصة 25.0 مل من {alkali_p[0]} بدقة إلى دورق مخروطي، وأضف قطرتين من دليل الفينولفثالين (يتحول المحلول للوردي).",
+            f"تحديد نقطة التعادل: املأ السحاحة بـ {acid_p[0]}، وأضف الحمض قطرة قطرة مع الرج حتى اختفاء اللون الوردي تماماً وسجل الحجم المستهلك بدقة.",
+            "التعادل النقي بدون دليل: كرر التجربة في كأس نظيف بنفس الحجوم الدقيقة المحسوبة تماماً دون إضافة أي دليل لوني للحصول على محلول ملح نقي غير ملوث.",
+            "التبخير حتى نقطة التبلور: اسكب المحلول في جفنة تبخير وسخنه فوق حمام مائي حتى يتبخر نصف إلى ثلثي حجم الماء وتصل العينة لدرجة التشبع والتبلور.",
+            "التبلور والتجفيف: اترك المحلول الساخن المركز ليبرد ببطء في درجة حرارة الغرفة لتتكون بلورات الملح النقية، ثم افصل البلورات بالترشيح وجففها بين ورقتي ترشيح."
+        ]
+        steps_en = [
+            f"Initial Titration with Indicator: Pipette 25.0 mL of {alkali_p[1]} into a conical flask and add 2 drops of phenolphthalein indicator (turns pink).",
+            f"Determining Endpoint: Fill a burette with {acid_p[1]} and titrate dropwise with continuous swirling until the pink color permanently disappears; record exact titre.",
+            "Pure Neutralization: Repeat the procedure using the exact recorded volumes in a clean beaker without adding any indicator to prevent chemical contamination.",
+            "Evaporation to Crystallization Point: Evaporate the neutral solution in an evaporating basin over a boiling water bath until reduced to crystallization point.",
+            "Crystallization & Drying: Allow the concentrated solution to cool slowly at room temperature to form pure crystals; filter and dry between filter papers."
+        ]
+
+        eq_ar = f"{alkali_p[2]}(aq) + {acid_p[2]}(aq) → {formula}(aq) + H₂O(l)"
+        eq_en = f"{alkali_p[2]}(aq) + {acid_p[2]}(aq) → {formula}(aq) + H₂O(l)"
+
+        return {
+            "pathway": "titration",
+            "method_name": "المعايرة الحمضية القلوية والتبلور (Acid-Base Titration & Crystallization)",
+            "method_name_ar": "المعايرة الحمضية القلوية والتبلور (Acid-Base Titration & Crystallization)",
+            "method_name_en": "Acid-Base Titration & Crystallization",
+            "reaction_type": "تفاعل تعادل كيميائي بين حمض وقاعدة ذائبة يليه التبخير البطيء والتبلور",
+            "reaction_type_ar": "تفاعل تعادل كيميائي بين حمض وقاعدة ذائبة يليه التبخير البطيء والتبلور",
+            "reaction_type_en": "Neutralization reaction between acid and soluble alkali followed by evaporation and crystallization",
+            "starting_materials": f"1. {alkali_p[0]}\n2. {acid_p[0]}",
+            "starting_materials_ar": f"1. {alkali_p[0]}\n2. {acid_p[0]}",
+            "starting_materials_en": f"1. {alkali_p[1]}\n2. {acid_p[1]}",
+            "steps": steps_ar,
+            "steps_ar": steps_ar,
+            "steps_en": steps_en,
+            "equation": eq_ar,
+            "equation_ar": eq_ar,
+            "equation_en": eq_en,
+            "precautions": "إعادة التجربة بدون دليل خطوة جوهرية للحصول على بلورات ملح نقية طبياً وصناعياً خالية من صبغة الكاشف اللوني.",
+            "precautions_ar": "إعادة التجربة بدون دليل خطوة جوهرية للحصول على بلورات ملح نقية طبياً وصناعياً خالية من صبغة الكاشف اللوني.",
+            "precautions_en": "Repeating the titration without indicator is mandatory to isolate pure pharmaceutical/analytical grade crystals free of dye contamination."
+        }
+
+    # Pathway 3: Soluble Salt with Insoluble Base (Excess Insoluble Precursor)
+    base_p = INSOLUBLE_BASE_PRECURSORS.get(cation_key, (f"أكسيد أو كربونات {c_data['name_ar']}", f"{c_data['name_en']} Oxide/Carbonate", f"{cation_key}O"))
+    acid_p = ACID_PRECURSORS[anion_key]
+
+    steps_ar = [
+        f"تدفئة الحمض المخفف: ضع 50 مل من {acid_p[0]} في كأس زجاجي سعة 250 مل، وسخنه بلطف فوق سخان كهربائي حتى يصبح دافئاً (حوالي 50-60 مئوية دون غليان).",
+        f"إضافة المسحوق بفائض: أضف مسحوق {base_p[0]} تدريجياً ملعقة بملعقة مع التقليب المستمر حتى يتوقف الذوبان والفوران وتتبقى زيادة غير ذائبة في القاع (لضمان استهلاك الحمض كاملاً).",
+        "ترشيح الفائض الصلب: جهز قمع زجاجي وورقة ترشيح مثنية، ورشح الخليط الدافئ للتخلص التام من الفائض الصلب غير المتفاعل وجمع الرشيح الرائق في دورق مخروطي.",
+        "التبخير حتى نقطة التبلور: اسكب الرشيح الرائق في جفنة تبخير وسخنه فوق حمام مائي حتى يتبخر نصف المحلول وتظهر قشرة بلورية على ساق زجاجية باردة.",
+        "التبلور والتجفيف: انقل الجفنة لتبرد ببطء شديد في مكان هادئ لتنمو بلورات الملح النقية الكبيرة، ثم افصل البلورات بالترشيح وجففها برفق بين ورقتي ترشيح."
+    ]
+    steps_en = [
+        f"Warming Dilute Acid: Place 50 mL of {acid_p[1]} in a 250 mL beaker and warm gently on a heating plate to ~50-60°C without boiling.",
+        f"Adding Excess Insoluble Base: Add {base_p[1]} incrementally with continuous stirring until no more dissolves and excess solid remains at the bottom, ensuring complete acid neutralization.",
+        "Filtering Excess Solid: Filter the warm mixture through fluted filter paper into a conical flask to completely remove unreacted solid and obtain a clear salt solution.",
+        "Evaporation: Pour the clear filtrate into an evaporating basin and heat over a boiling water bath until crystallization point is reached.",
+        "Crystallization & Drying: Allow the hot solution to cool slowly at room temperature to grow large pure crystals; collect by filtration and dry between filter papers."
+    ]
+
+    eq_ar = f"{base_p[2]}(s) + {acid_p[2]}(aq) → {formula}(aq) + H₂O(l) (أو غازات مرافقة)"
+    eq_en = f"{base_p[2]}(s) + {acid_p[2]}(aq) → {formula}(aq) + H₂O(l) (or side gases)"
+
+    return {
+        "pathway": "excess_base",
+        "method_name": "تفاعل الحمض مع فائض من القاعدة غير الذائبة أو الكربونات (Acid with Excess Insoluble Base)",
+        "method_name_ar": "تفاعل الحمض مع فائض من القاعدة غير الذائبة أو الكربونات (Acid with Excess Insoluble Base)",
+        "method_name_en": "Acid with Excess Insoluble Base / Carbonate",
+        "reaction_type": "إذابة أكسيد أو كربونات الفلز غير الذائب في الحمض المخفف الساخن مع ترشيح الفائض والتبلور",
+        "reaction_type_ar": "إذابة أكسيد أو كربونات الفلز غير الذائب في الحمض المخفف الساخن مع ترشيح الفائض والتبلور",
+        "reaction_type_en": "Dissolution of excess insoluble metal oxide or carbonate in warm dilute acid followed by filtration and crystallization",
+        "starting_materials": f"1. {acid_p[0]}\n2. {base_p[0]} (فائض صلب)",
+        "starting_materials_ar": f"1. {acid_p[0]}\n2. {base_p[0]} (فائض صلب)",
+        "starting_materials_en": f"1. {acid_p[1]}\n2. {base_p[1]} (solid excess)",
+        "steps": steps_ar,
+        "steps_ar": steps_ar,
+        "steps_en": steps_en,
+        "equation": eq_ar,
+        "equation_ar": eq_ar,
+        "equation_en": eq_en,
+        "precautions": "يجب إضافة المادة الصلبة بفائض مؤكد حتى يتبقى راسب في القاع لضمان تعادل واستهلاك كامل الحمض، وتجنب تبخير المحلول حتى الجفاف التام لمنع تفكك البلورات.",
+        "precautions_ar": "يجب إضافة المادة الصلبة بفائض مؤكد حتى يتبقى راسب في القاع لضمان تعادل واستهلاك كامل الحمض، وتجنب تبخير المحلول حتى الجفاف التام لمنع تفكك البلورات.",
+        "precautions_en": "Ensure solid base is added in true excess to consume all acid; never evaporate to total dryness to avoid thermal decomposition of hydrated crystals."
+    }
+
+def get_default_salt_swatch(cation_key, anion_key):
+    if cation_key == "CU":
+        if anion_key == "CL": return BLUE_GREEN
+        if anion_key == "S": return BLACK
+        return BLUE
+    if cation_key == "FE2":
+        if anion_key == "S": return GRAY_BLACK
+        return GREEN
+    if cation_key == "FE3":
+        return BROWN
+    if cation_key == "PB":
+        if anion_key == "I": return YELLOW
+        if anion_key == "S": return BLACK
+        return WHITE
+    return WHITE
+
+def get_default_appearance(cation_key, anion_key, swatch, is_ar=True):
+    color_map_ar = {
+        BLUE: "بلورات زرقاء نقية",
+        BLUE_GREEN: "بلورات زرقاء مخضرة",
+        GREEN: "بلورات أو مسحوق أخضر باهت",
+        BROWN: "مسحوق أو بلورات بنية محمرة",
+        YELLOW: "مسحوق بلوري أصفر ساطع",
+        BLACK: "مسحوق أسود داكن",
+        GRAY_BLACK: "صلب أسود رمادي",
+        WHITE: "بلورات أو مسحوق أبيض نقي"
+    }
+    color_map_en = {
+        BLUE: "Pure bright blue crystals",
+        BLUE_GREEN: "Blue-green crystals",
+        GREEN: "Pale green crystals or powder",
+        BROWN: "Reddish-brown crystalline powder",
+        YELLOW: "Brilliant yellow crystalline powder",
+        BLACK: "Dark black powder",
+        GRAY_BLACK: "Grayish-black solid",
+        WHITE: "Pure white crystals or powder"
+    }
+    if is_ar:
+        return color_map_ar.get(swatch, "بلورات أو مسحوق أبيض")
+    return color_map_en.get(swatch, "White crystals or powder")
+
+def get_direct_salt_dossier(cation_key, anion_key):
+    c_data = CATIONS_DATA[cation_key]
+    a_data = ANIONS_DATA[anion_key]
+
+    if (cation_key, anion_key) in INCOMPATIBLE_SALTS:
+        inc = INCOMPATIBLE_SALTS[(cation_key, anion_key)]
+        warn = {
+            "badge": "تحذير علمي: عدم توافق كيميائي",
+            "badge_en": "Scientific Warning: Chemical Incompatibility",
+            "title": inc["title"],
+            "title_en": inc.get("title_en", inc["title"]),
+            "subtitle": inc["subtitle"],
+            "reason": inc["reason"],
+            "reason_en": inc.get("reason_en", inc["reason"]),
+            "equations": inc["equations"],
+            "equations_en": inc.get("equations_en", inc["equations"]),
+        }
+        res = {
+            "cation": cation_key,
+            "anion": anion_key,
+            "compatible": False,
+            "warning": warn,
+            "anion_data": {
+                "symbol": a_data["symbol"],
+                "name_ar": a_data["name_ar"],
+                "name_en": a_data["name_en"],
+            },
+            "cation_data": {
+                "symbol": c_data["symbol"],
+                "name_ar": c_data["name_ar"],
+                "name_en": c_data["name_en"],
+            },
+            "swatch": BROWN,
+        }
+        res.update(warn)
+        return res
+
+    is_ref = (cation_key, anion_key) in SALTS_DATABASE
+    ref = SALTS_DATABASE[(cation_key, anion_key)] if is_ref else None
+
+    formula = ref["formula"] if is_ref else auto_balance_formula(cation_key, anion_key)
+    name_ar = ref["name_ar"] if is_ref else f"{a_data['name_ar']} {c_data['name_ar']}"
+    name_en = ref["name_en"] if is_ref else f"{c_data['name_en']} {a_data['name_en']}"
+    swatch = ref["swatch"] if is_ref else get_default_salt_swatch(cation_key, anion_key)
+
+    is_sol = check_salt_solubility(cation_key, anion_key)
+
+    appearance_ar = ref["appearance"] if is_ref else get_default_appearance(cation_key, anion_key, swatch, is_ar=True)
+    appearance_en = ref.get("appearance_en", ref["appearance"]) if is_ref else get_default_appearance(cation_key, anion_key, swatch, is_ar=False)
+
+    sol_desc_ar = ref["solubility"] if is_ref else ("يذوب بسهولة في الماء البارد ليعطي محلولاً مائياً رائقاً." if is_sol else "شحيح أو غير ذائب في الماء النقي (يترسب كراسب صلب عند خلط أيوناته المائية).")
+    sol_desc_en = ref.get("solubility_en", ref["solubility"]) if is_ref else ("Readily soluble in cold water forming a clear aqueous solution." if is_sol else "Sparingly soluble or insoluble in pure water (precipitates as a solid when its aqueous ions are mixed).")
+
+    info_ar = ref.get("info", []) if is_ref else [f"ملح غير عضوي ناتج من اتحاد كاتيون {c_data['name_ar']} مع أنيون {a_data['name_ar']}.", a_data["summary"]]
+    info_en = ref.get("info_en", []) if is_ref else [f"Inorganic salt formed from the combination of {c_data['name_en']} cation and {a_data['name_en']} anion.", a_data.get("summary_en", a_data["summary"])]
+
+    synthesis = generate_synthesis_recipe(cation_key, anion_key, formula, is_sol)
+
+    verification = {
+        "anion": {
+            "symbol": a_data["symbol"],
+            "name_ar": a_data["name_ar"],
+            "name_en": a_data["name_en"],
+            "group": a_data["group"],
+            "group_en": a_data.get("group_en", a_data["group"]),
+            "summary": a_data["summary"],
+            "summary_en": a_data.get("summary_en", a_data["summary"]),
+            "equations": a_data["equations"],
+        },
+        "cation": {
+            "symbol": c_data["symbol"],
+            "name_ar": c_data["name_ar"],
+            "name_en": c_data["name_en"],
+            "group": c_data["group"],
+            "group_en": c_data.get("group_en", c_data["group"]),
+            "summary": c_data["summary"],
+            "summary_en": c_data.get("summary_en", c_data["summary"]),
+            "equations": c_data["equations"],
+        }
+    }
+
+    return {
+        "cation": cation_key,
+        "anion": anion_key,
+        "compatible": True,
+        "salt_card": {
+            "formula": formula,
+            "name_ar": name_ar,
+            "name_en": name_en,
+            "swatch": swatch,
+            "appearance_ar": appearance_ar,
+            "appearance_en": appearance_en,
+            "is_soluble": is_sol,
+            "solubility_status_ar": "ملح ذائب في الماء" if is_sol else "ملح غير ذائب (راسب)",
+            "solubility_status_en": "Water-Soluble Salt" if is_sol else "Insoluble Salt (Precipitate)",
+            "solubility_desc_ar": sol_desc_ar,
+            "solubility_desc_en": sol_desc_en,
+            "info_ar": info_ar,
+            "info_en": info_en,
+        },
+        "synthesis": synthesis,
+        "verification": verification,
+    }
