@@ -14,8 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
             header_flame_btn: "دليل اللهب",
             header_status: "النظام جاهز",
             workspace_eyebrow: "CHEMISTRY DIAGNOSIS LAB — EXPERT SYSTEM",
-            workspace_title: "فحص وتشخيص العينة المجهولة",
-            workspace_desc: "حدد مسار الفحص (عضوي أو غير عضوي أو غير محدد) وأجب عن الأسئلة المعملية وسيقوم محرك الاستدلال بإرشادك خطوة بخطوة حتى الوصول للنتيجة والتجربة التأكيدية.",
+            workspace_title: "تشخيص الأملاح غير العضوية الكامل (30 ملحاً)",
+            workspace_desc: "نظام استدلالي خبير لتشخيص الأملاح غير العضوية عبر 3 مراحل متتالية: الفحص الفيزيائي، كشف الشق الحامضي (Anion)، وكشف الشق القاعدي (Cation) للوصول للملح ومعادلاته واستقراره.",
+            tab_salt_text: "🧂 تشخيص ملح كامل (30 ملحاً)",
+            tab_organic_text: "🧪 كشف المركبات العضوية",
+            tab_ions_text: "⚗️ كشف أيونات منفردة",
             step_back: "← الرجوع للسؤال السابق",
             stage4_eyebrow: "CONFIRMATORY PROTOCOL",
             stage4_title: "النتيجة المحتملة والاختبار التأكيدي",
@@ -75,8 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
             header_flame_btn: "Flame Guide",
             header_status: "SYSTEM READY",
             workspace_eyebrow: "CHEMISTRY DIAGNOSIS LAB — EXPERT SYSTEM",
-            workspace_title: "Unknown Sample Analysis & Diagnosis",
-            workspace_desc: "Select your diagnostic route and answer the laboratory prompts. The inference engine will guide you step by step to identify the substance and perform confirmatory tests.",
+            workspace_title: "Complete Inorganic Salt Diagnosis (30 Salts)",
+            workspace_desc: "Expert inference system for inorganic salt diagnosis across 3 sequential stages: physical examination, acidic radical (anion) detection, and basic radical (cation) detection.",
+            tab_salt_text: "🧂 Complete Salt Diagnosis (30 Salts)",
+            tab_organic_text: "🧪 Organic Analysis",
+            tab_ions_text: "⚗️ Single Ion Analysis",
             step_back: "← Back to Previous Question",
             stage4_eyebrow: "CONFIRMATORY PROTOCOL",
             stage4_title: "Suspected Outcome & Confirmatory Test",
@@ -140,6 +146,9 @@ document.addEventListener("DOMContentLoaded", () => {
         "workspace-eyebrow": "workspace_eyebrow",
         "workspace-title": "workspace_title",
         "workspace-description": "workspace_desc",
+        "tab-salt-text": "tab_salt_text",
+        "tab-organic-text": "tab_organic_text",
+        "tab-ions-text": "tab_ions_text",
         "step-back-text": "step_back",
         "stage4-eyebrow": "stage4_eyebrow",
         "stage4-title": "stage4_title",
@@ -209,6 +218,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
+        if (typeof setActiveModeTab === "function") {
+            setActiveModeTab(activeMode);
+        }
+
         // Re-render question if active
         if (questionContainer && !questionContainer.hidden) {
             renderCurrentQuestion();
@@ -238,6 +251,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         setLanguage(currentLang);
     }
+
+    // Diagnostic Mode Tabs
+    const modeSaltBtn = document.getElementById("mode-salt-btn");
+    const modeOrganicBtn = document.getElementById("mode-organic-btn");
+    const modeIonsBtn = document.getElementById("mode-ions-btn");
+    let activeMode = "salt";
 
     // DOM Elements - Shell
     const newSampleHeaderBtn = document.getElementById("new-sample-header-btn");
@@ -446,8 +465,9 @@ document.addEventListener("DOMContentLoaded", () => {
             knowledgeBase = await res.json();
             setupPredictorControls();
             setupSaltDiagnosisListeners();
+            setupModeSelectorListeners();
             setupLanguageSwitcher();
-            startConsultation();
+            startSaltDiagnosis();
         } catch (err) {
             console.error("Error loading knowledge base:", err);
         }
@@ -456,32 +476,84 @@ document.addEventListener("DOMContentLoaded", () => {
     loadData();
 
     // ========================================================
-    // UNIFIED LAB CONSULTATION (Starts directly with Question 1)
+    // UNIFIED LAB CONSULTATION (Defaults to Inorganic Salt)
     // ========================================================
 
-    function startConsultation() {
+    function setActiveModeTab(mode) {
+        activeMode = mode;
+        if (modeSaltBtn) modeSaltBtn.classList.toggle("active", mode === "salt");
+        if (modeOrganicBtn) modeOrganicBtn.classList.toggle("active", mode === "organic");
+        if (modeIonsBtn) modeIonsBtn.classList.toggle("active", mode === "ions");
+
+        const isEn = currentLang === "en";
+        const titleEl = document.getElementById("workspace-title");
+        const descEl = document.getElementById("workspace-description");
+
+        if (mode === "salt") {
+            if (titleEl) titleEl.textContent = isEn ? "Complete Inorganic Salt Diagnosis (30 Salts)" : "تشخيص الأملاح غير العضوية الكامل (30 ملحاً)";
+            if (descEl) descEl.textContent = isEn
+                ? "Expert inference system for inorganic salt diagnosis across 3 sequential stages: physical examination, acidic radical (anion) detection, and basic radical (cation) detection."
+                : "نظام استدلالي خبير لتشخيص الأملاح غير العضوية عبر 3 مراحل متتالية: الفحص الفيزيائي، كشف الشق الحامضي (Anion)، وكشف الشق القاعدي (Cation) للوصول للملح ومعادلاته واستقراره.";
+        } else if (mode === "organic") {
+            if (titleEl) titleEl.textContent = isEn ? "Organic Chemical Analysis (25 Compounds)" : "كشف المركبات العضوية (25 مركباً)";
+            if (descEl) descEl.textContent = isEn
+                ? "Qualitative diagnosis of 25 organic laboratory compounds (liquids & solids) through sequential functional tests."
+                : "تشخيص كيفي لـ 25 مركباً عضوياً معملياً (سوائل ومواد صلبة) عبر الفحوصات الوظيفية المتتالية.";
+        } else {
+            if (titleEl) titleEl.textContent = isEn ? "Single Ion Analysis (Cations & Anions)" : "كشف الأيونات المنفردة (كاتيونات وأنيونات)";
+            if (descEl) descEl.textContent = isEn
+                ? "Sequential precipitation and group reagent tests for isolated inorganic ions."
+                : "فحوصات الترسيب وسلسلة الكواشف النوعية للأيونات غير العضوية المنفردة.";
+        }
+    }
+
+    function setupModeSelectorListeners() {
+        if (modeSaltBtn) {
+            modeSaltBtn.addEventListener("click", () => {
+                startSaltDiagnosis();
+            });
+        }
+        if (modeOrganicBtn) {
+            modeOrganicBtn.addEventListener("click", () => {
+                startOrganicDiagnosis();
+            });
+        }
+        if (modeIonsBtn) {
+            modeIonsBtn.addEventListener("click", () => {
+                startIonDiagnosis();
+            });
+        }
+    }
+
+    function startSaltDiagnosis() {
+        setActiveModeTab("salt");
         previousFailedAttempt = null;
         sessionData = {
             color: "غير محدد",
-            state: "محلول مائي",
+            color_ar: "غير محدد",
+            color_en: "Not specified",
+            state: "ملح صلب / محلول مائي",
+            state_ar: "ملح صلب / محلول مائي",
+            state_en: "Solid salt / Aqueous solution",
             solubility: "غير محدد",
             stepsTrail: [],
             suspectedKey: null,
             suspectedData: null,
             confirmatory: null,
             confirmed: false,
-            isSaltDiagnosis: false,
+            isSaltDiagnosis: true,
             detected_anion: null,
             detected_cation: null,
             saltOutcome: null
         };
 
-        historyStack = [];
-        historyStack.push({
+        historyStack = [{
             type: "question",
-            id: "start_mode",
-            label: "تحديد مسار التحليل الكيميائي"
-        });
+            id: "SALT_START",
+            label: currentLang === "en" ? "Step 1: Physical Examination of Salt" : "الخطوة 1: الفحص الفيزيائي للملح",
+            label_ar: "الخطوة 1: الفحص الفيزيائي للملح",
+            label_en: "Step 1: Physical Examination of Salt"
+        }];
 
         // Show question container, hide confirmatory & report
         questionContainer.hidden = false;
@@ -496,17 +568,92 @@ document.addEventListener("DOMContentLoaded", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function startSaltDiagnosis() {
-        startConsultation();
-        sessionData.isSaltDiagnosis = true;
+    function startOrganicDiagnosis() {
+        setActiveModeTab("organic");
+        previousFailedAttempt = null;
+        sessionData = {
+            color: "غير محدد",
+            color_ar: "غير محدد",
+            color_en: "Not specified",
+            state: "غير محدد",
+            state_ar: "غير محدد",
+            state_en: "Not specified",
+            solubility: "غير محدد",
+            stepsTrail: [],
+            suspectedKey: null,
+            suspectedData: null,
+            confirmatory: null,
+            confirmed: false,
+            isSaltDiagnosis: false,
+            detected_anion: null,
+            detected_cation: null,
+            saltOutcome: null
+        };
+
         historyStack = [{
             type: "question",
-            id: "SALT_START",
-            label: "الخطوة 1: الفحص الفيزيائي للملح"
+            id: "org_q_state",
+            label: currentLang === "en" ? "Organic: Physical State" : "كشف عضوي: الحالة الفيزيائية",
+            label_ar: "كشف عضوي: الحالة الفيزيائية",
+            label_en: "Organic: Physical State"
         }];
+
+        questionContainer.hidden = false;
+        stage4Container.hidden = true;
+        stage5Container.hidden = true;
+        if (saltHowContainer) saltHowContainer.style.display = "none";
+        if (saltHowPanel) saltHowPanel.style.display = "none";
+        if (saltHowBtn) saltHowBtn.classList.remove("active");
         stepBackBtn.style.display = "none";
+
         renderCurrentQuestion();
         window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function startIonDiagnosis() {
+        setActiveModeTab("ions");
+        previousFailedAttempt = null;
+        sessionData = {
+            color: "غير محدد",
+            color_ar: "غير محدد",
+            color_en: "Not specified",
+            state: "محلول مائي",
+            state_ar: "محلول مائي",
+            state_en: "Aqueous Solution",
+            solubility: "غير محدد",
+            stepsTrail: [],
+            suspectedKey: null,
+            suspectedData: null,
+            confirmatory: null,
+            confirmed: false,
+            isSaltDiagnosis: false,
+            detected_anion: null,
+            detected_cation: null,
+            saltOutcome: null
+        };
+
+        historyStack = [{
+            type: "question",
+            id: "start_color",
+            label: currentLang === "en" ? "Single Ion: Sample Color" : "كشف أيونات: لون العينة الأصلي",
+            label_ar: "كشف أيونات: لون العينة الأصلي",
+            label_en: "Single Ion: Sample Color"
+        }];
+
+        questionContainer.hidden = false;
+        stage4Container.hidden = true;
+        stage5Container.hidden = true;
+        if (saltHowContainer) saltHowContainer.style.display = "none";
+        if (saltHowPanel) saltHowPanel.style.display = "none";
+        if (saltHowBtn) saltHowBtn.classList.remove("active");
+        stepBackBtn.style.display = "none";
+
+        renderCurrentQuestion();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function startConsultation() {
+        startSaltDiagnosis();
     }
 
     function renderCurrentQuestion() {
@@ -1512,11 +1659,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     reportNewSampleBtn.addEventListener("click", () => {
-        startConsultation();
+        if (activeMode === "organic") startOrganicDiagnosis();
+        else if (activeMode === "ions") startIonDiagnosis();
+        else startSaltDiagnosis();
     });
 
     newSampleHeaderBtn.addEventListener("click", () => {
-        startConsultation();
+        if (activeMode === "organic") startOrganicDiagnosis();
+        else if (activeMode === "ions") startIonDiagnosis();
+        else startSaltDiagnosis();
     });
 
     // Reference Modal Handlers

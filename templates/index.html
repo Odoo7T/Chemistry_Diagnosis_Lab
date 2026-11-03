@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chemistry Diagnosis Lab | معمل تشخيص الكيمياء (عضوي وغير عضوي)</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2.1">
 </head>
 <body>
 
@@ -51,10 +51,23 @@
     <section id="diagnostic-workspace" class="diagnostic-card">
         <div class="workspace-header-text">
             <div class="eyebrow" id="workspace-eyebrow">CHEMISTRY DIAGNOSIS LAB — EXPERT SYSTEM</div>
-            <h2 id="workspace-title">فحص وتشخيص العينة المجهولة</h2>
+            <h2 id="workspace-title">تشخيص الأملاح غير العضوية الكامل (30 ملحاً)</h2>
             <p id="workspace-description" class="workspace-subdesc">
-                حدد مسار الفحص (عضوي أو غير عضوي أو غير محدد) وأجب عن الأسئلة المعملية وسيقوم محرك الاستدلال بإرشادك خطوة بخطوة حتى الوصول للنتيجة والتجربة التأكيدية.
+                نظام استدلالي خبير لتشخيص الأملاح غير العضوية عبر 3 مراحل متتالية: الفحص الفيزيائي، كشف الشق الحامضي (Anion)، وكشف الشق القاعدي (Cation) للوصول للملح ومعادلاته واستقراره.
             </p>
+        </div>
+
+        <!-- Diagnostic Mode Tabs -->
+        <div class="diagnostic-mode-selector" id="mode-selector">
+            <button type="button" class="mode-tab active" id="mode-salt-btn" title="تشخيص ملح غير عضوي كامل عبر 3 مراحل">
+                <span id="tab-salt-text">🧂 تشخيص ملح كامل (30 ملحاً)</span>
+            </button>
+            <button type="button" class="mode-tab" id="mode-organic-btn" title="تشخيص 25 مركباً عضوياً">
+                <span id="tab-organic-text">🧪 كشف المركبات العضوية</span>
+            </button>
+            <button type="button" class="mode-tab" id="mode-ions-btn" title="الكشف عن الأيونات المنفردة">
+                <span id="tab-ions-text">⚗️ كشف أيونات منفردة</span>
+            </button>
         </div>
 
         <!-- Breadcrumb / Trail of choices -->
@@ -437,6 +450,6 @@
     </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}?v=2.1"></script>
 </body>
 </html>

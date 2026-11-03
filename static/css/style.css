@@ -246,6 +246,47 @@ html[dir="rtl"] .structure-modal-close {
   right: auto;
 }
 
+/* Diagnostic Mode Selector Tabs */
+.diagnostic-mode-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.mode-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  outline: none;
+}
+
+.mode-tab:hover:not(.active) {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mode-tab.active {
+  background: #1e293b;
+  color: #60a5fa;
+  border-color: #3b82d6;
+  box-shadow: 0 0 12px rgba(59, 130, 214, 0.35);
+}
+
 /* Hero Section */
 .hero {
   max-width: 1450px;
