@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const langBtnAr = document.getElementById("lang-btn-ar");
     const langBtnEn = document.getElementById("lang-btn-en");
     let currentLang = localStorage.getItem("chemlab_lang") || "ar";
+    let activeMode = "all";
+    let historyStack = [];
+    let currentExplorerDossier = null;
 
     // Bilingual Localization (Arabic & English)
     const TRANSLATIONS = {
@@ -374,7 +377,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const modeOrganicBtn = document.getElementById("mode-organic-btn");
     const modeIonsBtn = document.getElementById("mode-ions-btn");
     
-    let activeMode = "all";
 
     // DOM Elements - Shell
     const newSampleHeaderBtn = document.getElementById("new-sample-header-btn");
@@ -409,6 +411,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const questionHomeTopBtn = document.getElementById("question-home-top-btn");
     const stepHomeBtn = document.getElementById("step-home-btn");
     const consultationWrapper = document.querySelector(".consultation-wrapper");
+    const saltExplorerWorkspace = document.getElementById("salt-explorer-workspace");
         const qFloatBgLeft = document.getElementById("global-bg-left");
     const qFloatBgRight = document.getElementById("global-bg-right");
 
@@ -561,7 +564,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // State Variables
     let knowledgeBase = null;
-    let historyStack = [];
     let sessionData = {
         color: "غير محدد",
         state: "محلول مائي",
@@ -1452,8 +1454,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Question node not found:", currentStep.id);
                 return;
             }
-
-            const isEn = currentLang === "en";
             const primaryText = isEn ? (qData.text || qData.arabic_text) : (qData.arabic_text || qData.text);
             const secondaryText = isEn
                 ? (qData.arabic_text && qData.arabic_text !== qData.text ? qData.arabic_text : "")
@@ -2949,8 +2949,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     
     
-    const saltExplorerWorkspace = document.getElementById("salt-explorer-workspace");
-
+    
     const explorerCationSelect = document.getElementById("explorer-cation-select");
     const explorerAnionSelect = document.getElementById("explorer-anion-select");
     const explorerGenerateBtn = document.getElementById("explorer-generate-btn");
@@ -2986,7 +2985,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const explorerCationSummary = document.getElementById("explorer-cation-summary");
     const explorerCationEquations = document.getElementById("explorer-cation-equations");
 
-    let currentExplorerDossier = null;
 
     function startExplorerMode() {
         if (consultationWrapper) {
