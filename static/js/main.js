@@ -664,8 +664,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 startIonDiagnosis();
             });
         }
-        );
-        }
     }
 
     function startSaltDiagnosis() {
