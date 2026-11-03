@@ -779,6 +779,20 @@ ORGANIC_CONFIRMATORY_TESTS = {
 # 3. ORGANIC DECISION TREE (Full Sequential Filtering Architecture)
 # =========================================================================
 
+# Enrich Organic Confirmatory Protocols with English Translations
+try:
+    from confirmatory_data_en import CONFIRMATORY_TESTS_EN
+    for _k, _en in CONFIRMATORY_TESTS_EN.items():
+        if _k in ORGANIC_CONFIRMATORY_TESTS:
+            _entry = ORGANIC_CONFIRMATORY_TESTS[_k]
+            _entry.setdefault('reagent_ar', _entry.get('reagent', ''))
+            _entry.setdefault('procedure_ar', _entry.get('procedure', ''))
+            _entry.setdefault('expected_sign_ar', _entry.get('expected_sign', ''))
+            _entry.setdefault('name_ar', _entry.get('name', ''))
+            _entry.update(_en)
+except ImportError:
+    pass
+
 ORGANIC_DECISION_TREE = {
     # Step 1: Physical State (سائل vs صلب)
     "org_q_state": question(

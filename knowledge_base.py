@@ -1205,6 +1205,18 @@ CONFIRMATORY_TESTS = {
 # Integrate Organic Confirmatory Protocols
 CONFIRMATORY_TESTS.update(ORGANIC_CONFIRMATORY_TESTS)
 
+# Enrich Confirmatory Tests with English Translations and Arabic fallbacks
+from confirmatory_data_en import CONFIRMATORY_TESTS_EN
+
+for _key, _en_data in CONFIRMATORY_TESTS_EN.items():
+    if _key in CONFIRMATORY_TESTS:
+        _entry = CONFIRMATORY_TESTS[_key]
+        _entry.setdefault('reagent_ar', _entry.get('reagent', ''))
+        _entry.setdefault('procedure_ar', _entry.get('procedure', ''))
+        _entry.setdefault('expected_sign_ar', _entry.get('expected_sign', ''))
+        _entry.setdefault('name_ar', _entry.get('name', ''))
+        _entry.update(_en_data)
+
 INITIAL_COLOR_HINTS = {
     "أزرق": ["Cu²⁺"],
     "أخضر": ["Fe²⁺", "Ni²⁺", "Cr³⁺"],

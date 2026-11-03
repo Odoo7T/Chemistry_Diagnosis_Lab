@@ -1843,10 +1843,50 @@ document.addEventListener("DOMContentLoaded", () => {
     // STAGE 4: CONFIRMATORY TEST
     // ========================================================
 
+    function getLocalizedIonName(outData, isEn) {
+        if (!outData) return isEn ? "Unknown Substance" : "المادة المجهولة";
+        if (isEn && outData.name_en) return outData.name_en;
+        if (!isEn && outData.name_ar) return outData.name_ar;
+
+        const sub = outData.subtitle || outData.title || "";
+        if (sub.includes(" — ")) {
+            const parts = sub.split(" — ").map(s => s.trim());
+            const hasAr0 = /[\u0600-\u06FF]/.test(parts[0]);
+            const hasAr1 = /[\u0600-\u06FF]/.test(parts[1]);
+            if (isEn) {
+                if (!hasAr0 && hasAr1) return parts[0];
+                if (!hasAr1 && hasAr0) return parts[1];
+            } else {
+                if (hasAr0) return parts[0];
+                if (hasAr1) return parts[1];
+            }
+        }
+        if (sub.includes("(") && sub.includes(")")) {
+            const match = sub.match(/^(.*?)\((.*?)\)$/);
+            if (match) {
+                const part1 = match[1].trim();
+                const part2 = match[2].trim();
+                const hasAr1 = /[\u0600-\u06FF]/.test(part1);
+                const hasAr2 = /[\u0600-\u06FF]/.test(part2);
+                if (isEn) {
+                    if (!hasAr1 && hasAr2) return part1;
+                    if (!hasAr2 && hasAr1) return part2;
+                } else {
+                    if (hasAr1) return part1;
+                    if (hasAr2) return part2;
+                }
+            }
+        }
+        return sub;
+    }
+
     function updateStage4Language() {
         const outData = sessionData.suspectedData;
+        const confTest = sessionData.confirmatory;
         const isEn = currentLang === "en";
-        const ionName = outData ? (outData.subtitle || outData.title) : (isEn ? "Unknown Substance" : "المادة المجهولة");
+        const ionName = (isEn && confTest && confTest.name_en)
+            ? confTest.name_en
+            : getLocalizedIonName(outData, isEn);
         const formula = outData ? outData.title : "";
 
         if (stage4PromptText) {
@@ -1855,14 +1895,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 : `النتيجة المحتملة: ${formula} (${ionName}). هل تريد إجراء الاختبار التأكيدي؟`;
         }
 
-        const confTest = sessionData.confirmatory;
         if (confTest && stage4ExecutionBlock && !stage4ExecutionBlock.hidden) {
-            confirmatoryReagentTitle.textContent = isEn ? `Confirmatory Reagent: ${confTest.reagent}` : `الكاشف التأكيدي: ${confTest.reagent}`;
-            confirmatoryProcedure.textContent = isEn ? `Procedure: ${confTest.procedure}` : `طريقة الإجراء: ${confTest.procedure}`;
-            confirmatorySignBadge.textContent = isEn ? `Expected Sign: ${confTest.expected_sign}` : `العلامة المتوقعة: ${confTest.expected_sign}`;
+            const reagent = isEn ? (confTest.reagent_en || confTest.reagent) : (confTest.reagent_ar || confTest.reagent);
+            const procedure = isEn ? (confTest.procedure_en || confTest.procedure) : (confTest.procedure_ar || confTest.procedure);
+            const sign = isEn ? (confTest.expected_sign_en || confTest.expected_sign) : (confTest.expected_sign_ar || confTest.expected_sign);
+
+            confirmatoryReagentTitle.textContent = isEn ? `Confirmatory Reagent: ${reagent}` : `الكاشف التأكيدي: ${reagent}`;
+            confirmatoryProcedure.textContent = isEn ? `Procedure: ${procedure}` : `طريقة الإجراء: ${procedure}`;
+            confirmatorySignBadge.textContent = isEn ? `Expected Sign: ${sign}` : `العلامة المتوقعة: ${sign}`;
             confirmatoryQuestionText.textContent = isEn
-                ? `Add ${confTest.reagent}. Did the expected sign (${confTest.expected_sign}) appear?`
-                : `أضف ${confTest.reagent}. هل ظهرت العلامة المتوقعة (${confTest.expected_sign})؟`;
+                ? `Add ${reagent}. Did the expected sign (${sign}) appear?`
+                : `أضف ${reagent}. هل ظهرت العلامة المتوقعة (${sign})؟`;
+        }
+
+        if (stage4FailureBlock && !stage4FailureBlock.hidden) {
+            const reagent = confTest ? (isEn ? (confTest.reagent_en || confTest.reagent) : (confTest.reagent_ar || confTest.reagent)) : (isEn ? "Confirmatory Reagent" : "الكاشف التأكيدي");
+            const failureDesc = document.getElementById("stage4-failure-desc");
+            if (failureDesc) {
+                if (isEn) {
+                    failureDesc.innerHTML = `The expected confirmatory sign for <span id="failed-reagent-name" style="color: #ef4444; font-weight: bold;">${reagent}</span> did not appear, indicating that the substance is not <span id="failed-ion-name" style="color: #fca5a5; font-weight: bold;">${ionName}</span>.`;
+                } else {
+                    failureDesc.innerHTML = `لم تظهر العلامة التأكيدية لكاشف <span id="failed-reagent-name" style="color: #ef4444; font-weight: bold;">${reagent}</span>، مما يعني أن المادة ليست <span id="failed-ion-name" style="color: #fca5a5; font-weight: bold;">${ionName}</span>.`;
+                }
+            } else {
+                if (failedReagentName) failedReagentName.textContent = reagent;
+                if (failedIonName) failedIonName.textContent = ionName;
+            }
         }
     }
 
@@ -1884,6 +1942,15 @@ document.addEventListener("DOMContentLoaded", () => {
         stage4FailureBlock.hidden = true;
         userErrorWarningBlock.hidden = true;
 
+        sessionData.suspectedKey = outcomeKey;
+        sessionData.suspectedData = outcomeData;
+
+        const confTest = (knowledgeBase.confirmatory_tests && knowledgeBase.confirmatory_tests[outcomeKey])
+            ? knowledgeBase.confirmatory_tests[outcomeKey]
+            : null;
+
+        sessionData.confirmatory = confTest;
+
         updateStage4Language();
 
         // Display chemical structure preview if available
@@ -1896,23 +1963,21 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        const confTest = (knowledgeBase.confirmatory_tests && knowledgeBase.confirmatory_tests[outcomeKey])
-            ? knowledgeBase.confirmatory_tests[outcomeKey]
-            : null;
-
-        sessionData.confirmatory = confTest;
-
         stage4YesBtn.onclick = () => {
             const isEn = currentLang === "en";
             if (confTest) {
                 stage4PromptBlock.hidden = true;
                 stage4ExecutionBlock.hidden = false;
-                confirmatoryReagentTitle.textContent = isEn ? `Confirmatory Reagent: ${confTest.reagent}` : `الكاشف التأكيدي: ${confTest.reagent}`;
-                confirmatoryProcedure.textContent = isEn ? `Procedure: ${confTest.procedure}` : `طريقة الإجراء: ${confTest.procedure}`;
-                confirmatorySignBadge.textContent = isEn ? `Expected Sign: ${confTest.expected_sign}` : `العلامة المتوقعة: ${confTest.expected_sign}`;
+                const reagent = isEn ? (confTest.reagent_en || confTest.reagent) : (confTest.reagent_ar || confTest.reagent);
+                const procedure = isEn ? (confTest.procedure_en || confTest.procedure) : (confTest.procedure_ar || confTest.procedure);
+                const sign = isEn ? (confTest.expected_sign_en || confTest.expected_sign) : (confTest.expected_sign_ar || confTest.expected_sign);
+
+                confirmatoryReagentTitle.textContent = isEn ? `Confirmatory Reagent: ${reagent}` : `الكاشف التأكيدي: ${reagent}`;
+                confirmatoryProcedure.textContent = isEn ? `Procedure: ${procedure}` : `طريقة الإجراء: ${procedure}`;
+                confirmatorySignBadge.textContent = isEn ? `Expected Sign: ${sign}` : `العلامة المتوقعة: ${sign}`;
                 confirmatoryQuestionText.textContent = isEn
-                    ? `Add ${confTest.reagent}. Did the expected sign (${confTest.expected_sign}) appear?`
-                    : `أضف ${confTest.reagent}. هل ظهرت العلامة المتوقعة (${confTest.expected_sign})؟`;
+                    ? `Add ${reagent}. Did the expected sign (${sign}) appear?`
+                    : `أضف ${reagent}. هل ظهرت العلامة المتوقعة (${sign})؟`;
                 window.scrollTo({ top: stage4ExecutionBlock.offsetTop - 50, behavior: "smooth" });
             } else {
                 sessionData.confirmed = true;
@@ -1944,28 +2009,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
         confirmatoryConfirmedBtn.onclick = () => {
             const isEn = currentLang === "en";
+            const reagentAr = confTest ? (confTest.reagent_ar || confTest.reagent) : "";
+            const reagentEn = confTest ? (confTest.reagent_en || confTest.reagent) : "";
+            const reagentDisplay = isEn ? reagentEn : reagentAr;
+
+            const signAr = confTest ? (confTest.expected_sign_ar || confTest.expected_sign) : "";
+            const signEn = confTest ? (confTest.expected_sign_en || confTest.expected_sign) : "";
+            const signDisplay = isEn ? signEn : signAr;
+
             sessionData.confirmed = true;
             sessionData.stepsTrail.push({
-                test: isEn ? `Confirmatory Test (${confTest.reagent})` : `الاختبار التأكيدي (${confTest.reagent})`,
-                test_ar: `الاختبار التأكيدي (${confTest.reagent})`,
-                test_en: `Confirmatory Test (${confTest.reagent})`,
-                observation: isEn ? `✓ Confirmatory sign successfully observed: ${confTest.expected_sign}` : `✓ ظهرت العلامة التأكيدية بنجاح: ${confTest.expected_sign}`,
-                observation_ar: `✓ ظهرت العلامة التأكيدية بنجاح: ${confTest.expected_sign}`,
-                observation_en: `✓ Confirmatory sign successfully observed: ${confTest.expected_sign}`
+                test: isEn ? `Confirmatory Test (${reagentDisplay})` : `الاختبار التأكيدي (${reagentDisplay})`,
+                test_ar: `الاختبار التأكيدي (${reagentAr})`,
+                test_en: `Confirmatory Test (${reagentEn})`,
+                observation: isEn ? `✓ Confirmatory sign successfully observed: ${signDisplay}` : `✓ ظهرت العلامة التأكيدية بنجاح: ${signDisplay}`,
+                observation_ar: `✓ ظهرت العلامة التأكيدية بنجاح: ${signAr}`,
+                observation_en: `✓ Confirmatory sign successfully observed: ${signEn}`
             });
             triggerStage5Report();
         };
 
         confirmatoryFailedBtn.onclick = () => {
             const isEn = currentLang === "en";
+            const reagentAr = confTest ? (confTest.reagent_ar || confTest.reagent) : "";
+            const reagentEn = confTest ? (confTest.reagent_en || confTest.reagent) : "";
+            const reagentDisplay = isEn ? reagentEn : reagentAr;
+
+            const signAr = confTest ? (confTest.expected_sign_ar || confTest.expected_sign) : "";
+            const signEn = confTest ? (confTest.expected_sign_en || confTest.expected_sign) : "";
+            const signDisplay = isEn ? signEn : signAr;
+
             sessionData.confirmed = false;
             sessionData.stepsTrail.push({
-                test: isEn ? `Confirmatory Test (${confTest.reagent})` : `الاختبار التأكيدي (${confTest.reagent})`,
-                test_ar: `الاختبار التأكيدي (${confTest.reagent})`,
-                test_en: `Confirmatory Test (${confTest.reagent})`,
-                observation: isEn ? `✗ Expected sign did not appear: ${confTest.expected_sign}` : `✗ لم تظهر العلامة المتوقعة: ${confTest.expected_sign}`,
-                observation_ar: `✗ لم تظهر العلامة المتوقعة: ${confTest.expected_sign}`,
-                observation_en: `✗ Expected sign did not appear: ${confTest.expected_sign}`
+                test: isEn ? `Confirmatory Test (${reagentDisplay})` : `الاختبار التأكيدي (${reagentDisplay})`,
+                test_ar: `الاختبار التأكيدي (${reagentAr})`,
+                test_en: `Confirmatory Test (${reagentEn})`,
+                observation: isEn ? `✗ Expected sign did not appear: ${signDisplay}` : `✗ لم تظهر العلامة المتوقعة: ${signDisplay}`,
+                observation_ar: `✗ لم تظهر العلامة المتوقعة: ${signAr}`,
+                observation_en: `✗ Expected sign did not appear: ${signEn}`
             });
 
             // Show failure resolution block (سؤال المستخدم: نعيد من الأول ولا نكمل من اللي وصلنا له)
@@ -1974,8 +2055,21 @@ document.addEventListener("DOMContentLoaded", () => {
             userErrorWarningBlock.hidden = true;
             stage4FailureBlock.hidden = false;
 
-            failedReagentName.textContent = confTest ? confTest.reagent : (isEn ? "Confirmatory Reagent" : "الكاشف التأكيدي");
-            failedIonName.textContent = outcomeData.subtitle || outcomeData.title;
+            const ionName = (isEn && confTest && confTest.name_en)
+                ? confTest.name_en
+                : getLocalizedIonName(outcomeData, isEn);
+
+            const failureDesc = document.getElementById("stage4-failure-desc");
+            if (failureDesc) {
+                if (isEn) {
+                    failureDesc.innerHTML = `The expected confirmatory sign for <span id="failed-reagent-name" style="color: #ef4444; font-weight: bold;">${reagentDisplay}</span> did not appear, indicating that the substance is not <span id="failed-ion-name" style="color: #fca5a5; font-weight: bold;">${ionName}</span>.`;
+                } else {
+                    failureDesc.innerHTML = `لم تظهر العلامة التأكيدية لكاشف <span id="failed-reagent-name" style="color: #ef4444; font-weight: bold;">${reagentDisplay}</span>، مما يعني أن المادة ليست <span id="failed-ion-name" style="color: #fca5a5; font-weight: bold;">${ionName}</span>.`;
+                }
+            } else {
+                if (failedReagentName) failedReagentName.textContent = reagentDisplay;
+                if (failedIonName) failedIonName.textContent = ionName;
+            }
 
             // الخيار 1: نعيد من الأول (البدء من السؤال الثالث مع الاحتفاظ باللون والحالة)
             failureRestartBtn.onclick = () => {
@@ -2639,6 +2733,7 @@ document.addEventListener("DOMContentLoaded", () => {
         str = str.replace(/\(أزرق\)/g, "(Blue)");
         str = str.replace(/\(بني\)/g, "(Brown)");
         str = str.replace(/\(يتكون أثناء الغليان فقط\)/g, "(Forms during boiling only)");
+        str = str.replace(/\(حلقة بنية\)/g, "(Brown ring)");
         return str;
     }
 
