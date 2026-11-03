@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chemistry Diagnosis Lab | معمل تشخيص الكيمياء (عضوي وغير عضوي)</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2.1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css?v=2.9') }}?v=2.1">
 </head>
 <body>
 
@@ -331,6 +331,11 @@
 
         <!-- DIRECT SALT EXPLORER & SYNTHESIS RECIPE PLANNER (EMBEDDED IN PRIMARY WORKSPACE) -->
         <div id="salt-explorer-workspace" class="salt-explorer-embedded-container" hidden style="margin-top: 20px;">
+        <div style="margin-bottom: 16px;">
+            <button type="button" class="action-btn" id="explorer-back-btn" style="display: inline-flex; align-items: center; gap: 8px;">
+                <span id="explorer-back-btn-text">← العودة للاختيارات الأساسية</span>
+            </button>
+        </div>
         <div class="workspace-header-text">
             <div class="eyebrow" id="explorer-eyebrow">DIRECT SALT EXPLORATION & SYNTHESIS RECIPE PLANNER</div>
             <h2 id="explorer-title">مستكشف وتحضير الأملاح بالاختيار المباشر</h2>

@@ -721,15 +721,15 @@ UNIFIED_DECISION_TREE = {
         "start_mode",
         "Step 1: Select the analytical pathway for the unknown sample (Organic or Inorganic):",
         [
-            option("Organic Chemical Analysis (25 Compounds)", "org_q_state", swatch=GREEN, arabic_label="كشف المركبات العضوية (25 مركباً)"),
-            option("Complete Inorganic Salt Diagnosis (30 Salts)", "SALT_START", swatch=WHITE, arabic_label="تشخيص الأملاح غير العضوية الكامل (30 ملحاً)"),
-            option("Single Inorganic Ion Analysis (Cations & Anions)", "start_color", swatch=BLUE, arabic_label="كشف الأيونات غير العضوية المنفردة"),
-            option("Unknown Sample (Flame & Charring Test)", "unified_q_charring_heat", swatch=YELLOW, arabic_label="عينة مجهولة: فحص التفحم والتسخين (عضوي / غير عضوي)"),
-            option("Direct Salt Explorer & Synthesis Recipe Planner", "EXPLORER_MODE_DIRECT", swatch=BLUE, arabic_label="🧭 مستكشف وتحضير الأملاح بالاختيار المباشر (توليد الوصفة والتحضير)")
+            option("Complete Inorganic Salt Diagnosis (30 Salts)", "SALT_START", swatch=WHITE, arabic_label="تشخيص ملح غير عضوي كامل"),
+            option("Single Inorganic Ion Analysis (Cations & Anions)", "start_color", swatch=BLUE, arabic_label="كشف غير عضوي (أيونات)"),
+            option("Organic Chemical Analysis (25 Compounds)", "org_q_state", swatch=GREEN, arabic_label="كشف عضوي"),
+            option("Direct Salt Explorer & Synthesis Recipe Planner", "EXPLORER_MODE_DIRECT", swatch=BLUE, arabic_label="مستكشف وتحضير الأملاح"),
+            option("Unknown Sample (Flame & Charring Test)", "unified_q_charring_heat", swatch=YELLOW, arabic_label="غير محدد (فحص اللهب)")
         ],
-        hint="Select whether your unknown sample is an Organic Compound (25 compounds), a Complete Inorganic Salt (30 salts), an Isolated Ion, or perform the preliminary Flame & Charring Test to distinguish them.",
-        arabic_text="الخطوة 1: حدد مسار الفحص التحليلي للعينة المجهولة (عضوي أم غير عضوي)",
-        arabic_hint="اختر مسار كشف المركبات العضوية (25 مركباً) أو تشخيص الأملاح غير العضوية الكاملة (30 ملحاً) أو كشف الأيونات المنفردة، أو ابدأ باختبار التسخين والتفحم للتوجيه التلقائي بين العضوي وغير العضوي."
+        hint="اختر 'تشخيص ملح غير عضوي كامل' للكشف عن الملح بشقيه، أو كشف الأيونات، أو المركبات العضوية، أو مستكشف وتحضير الأملاح لتوليد الوصفة مباشرة، أو فحص اللهب.",
+        arabic_text="المرحلة 1: حدد مسار الفحص التحليلي للعينة المجهولة",
+        arabic_hint="اختر 'تشخيص ملح غير عضوي كامل' للكشف عن الملح بشقيه الحامضي والقاعدي واكتشاف الـ 30 ملحاً المرجعية، أو اختر كشف الأيونات المنفردة أو المركبات العضوية أو مستكشف وتحضير الأملاح."
     ),
 
     "unified_q_charring_heat": question(

@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tab_nav_diag_text: "فحص وتشخيص العينة المجهولة (Inquiry Diagnosis)",
             tab_nav_exp_text: "مستكشف وتحضير الأملاح المباشر (Direct Salt Explorer & Planner)",
             tab_explorer_text: "🧭 مستكشف وتحضير الأملاح",
+            explorer_back_btn: "← العودة للاختيارات الأساسية",
             header_explorer_btn: "🧭 مستكشف الأملاح",
             explorer_eyebrow: "DIRECT SALT EXPLORATION & SYNTHESIS RECIPE PLANNER",
             explorer_title: "مستكشف وتحضير الأملاح بالاختيار المباشر",
@@ -168,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tab_nav_diag_text: "Unknown Sample Chemical Diagnosis (Inquiry)",
             tab_nav_exp_text: "Direct Salt Explorer & Synthesis Recipe Planner",
             tab_explorer_text: "🧭 Salt Explorer & Synthesis",
+            explorer_back_btn: "← Back to Main Options",
             header_explorer_btn: "🧭 Salt Explorer",
             explorer_eyebrow: "DIRECT SALT EXPLORATION & SYNTHESIS RECIPE PLANNER",
             explorer_title: "Direct Salt Explorer & Synthesis Recipe Planner",
@@ -265,6 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "tab-nav-diag-text": "tab_nav_diag_text",
         "tab-nav-exp-text": "tab_nav_exp_text",
         "tab-explorer-text": "tab_explorer_text",
+        "explorer-back-btn-text": "explorer_back_btn",
         "header-explorer-btn-text": "header_explorer_btn",
         "explorer-eyebrow": "explorer_eyebrow",
         "explorer-title": "explorer_title",
@@ -838,6 +841,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const OPTION_TRANSLATIONS_EN = {
+        "تشخيص ملح غير عضوي كامل": "Complete Inorganic Salt Diagnosis",
+        "كشف غير عضوي (أيونات)": "Single Inorganic Ion Analysis",
+        "كشف عضوي": "Organic Chemical Analysis",
+        "مستكشف وتحضير الأملاح": "Direct Salt Explorer & Synthesis",
+        "غير محدد (فحص اللهب)": "Unknown Sample (Flame Test)",
     "أبيض": "White",
     "عديم اللون": "Colorless",
     "أزرق": "Blue",
@@ -1470,22 +1478,22 @@ document.addEventListener("DOMContentLoaded", () => {
                         iconDiv.textContent = "🧂";
                         descDiv.textContent = isEn
                             ? "Comprehensive diagnosis of 30 inorganic salts across 3 automated stages (physical, anion, cation)"
-                            : "تشخيص شامل لـ 30 ملحاً غير عضوي عبر 3 مراحل (فحص فيزيائي، شق حامضي، شق قاعدي)";
-                    } else if (opt.next === "org_q_state") {
-                        iconDiv.textContent = "🧪";
-                        descDiv.textContent = isEn
-                            ? "Identification of 25 organic compounds (liquids & solids)"
-                            : "تشخيص 25 مركباً عضوياً (سوائل ومواد صلبة)";
+                            : "تشخيص شامل لـ 30 ملحاً عبر 3 مراحل (فحص فيزيائي، شق حامضي، شق قاعدي)";
                     } else if (opt.next === "start_color") {
                         iconDiv.textContent = "⚗️";
                         descDiv.textContent = isEn
                             ? "Detection of single inorganic cations and anions"
                             : "الكشف عن الكاتيونات والأنيونات غير العضوية المنفردة";
+                    } else if (opt.next === "org_q_state") {
+                        iconDiv.textContent = "🧪";
+                        descDiv.textContent = isEn
+                            ? "Identification of 25 organic compounds (liquids & solids)"
+                            : "تشخيص 25 مركباً عضوياً (سوائل ومواد صلبة)";
                     } else if (opt.next === "EXPLORER_MODE_DIRECT") {
                         iconDiv.textContent = "🧭";
                         descDiv.textContent = isEn
-                            ? "Directly select cation and anion to generate salt identity, synthesis recipe, and verification protocol"
-                            : "اختر الشق القاعدي والشق الحامضي مباشرة لتوليد بطاقة الملح ووصفة التحضير والتخليق المعملي الموزونة";
+                            ? "Direct salt synthesis recipe, balanced equations, and lab steps"
+                            : "توليد وصفة تحضير وتخليق الملح الموزونة بالاختيار المباشر للشقين";
                     } else {
                         iconDiv.textContent = "🔥";
                         descDiv.textContent = isEn
@@ -3147,6 +3155,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function setupSaltExplorer() {
+        const explorerBackBtn = document.getElementById("explorer-back-btn");
+        if (explorerBackBtn) {
+            explorerBackBtn.addEventListener("click", () => {
+                startConsultation();
+            });
+        }
         if (tabNavDiagnostic) {
             tabNavDiagnostic.addEventListener("click", () => startConsultation());
         }
