@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
             page_footer: "CHEMLAB — نظام خبير الكيمياء غير العضوية الاستدلالي وتشخيص العينات المجهولة",
             tab_nav_diag_text: "فحص وتشخيص العينة المجهولة (Inquiry Diagnosis)",
             tab_nav_exp_text: "مستكشف وتحضير الأملاح المباشر (Direct Salt Explorer & Planner)",
+            tab_explorer_text: "🧭 مستكشف وتحضير الأملاح",
             header_explorer_btn: "🧭 مستكشف الأملاح",
             explorer_eyebrow: "DIRECT SALT EXPLORATION & SYNTHESIS RECIPE PLANNER",
             explorer_title: "مستكشف وتحضير الأملاح بالاختيار المباشر",
@@ -166,6 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
             page_footer: "CHEMLAB — Expert Diagnostic System for Qualitative Chemical Analysis",
             tab_nav_diag_text: "Unknown Sample Chemical Diagnosis (Inquiry)",
             tab_nav_exp_text: "Direct Salt Explorer & Synthesis Recipe Planner",
+            tab_explorer_text: "🧭 Salt Explorer & Synthesis",
             header_explorer_btn: "🧭 Salt Explorer",
             explorer_eyebrow: "DIRECT SALT EXPLORATION & SYNTHESIS RECIPE PLANNER",
             explorer_title: "Direct Salt Explorer & Synthesis Recipe Planner",
@@ -262,6 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "page-footer-text": "page_footer",
         "tab-nav-diag-text": "tab_nav_diag_text",
         "tab-nav-exp-text": "tab_nav_exp_text",
+        "tab-explorer-text": "tab_explorer_text",
         "header-explorer-btn-text": "header_explorer_btn",
         "explorer-eyebrow": "explorer_eyebrow",
         "explorer-title": "explorer_title",
@@ -364,6 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const modeSaltBtn = document.getElementById("mode-salt-btn");
     const modeOrganicBtn = document.getElementById("mode-organic-btn");
     const modeIonsBtn = document.getElementById("mode-ions-btn");
+    const modeExplorerBtn = document.getElementById("mode-explorer-btn");
     let activeMode = "all";
 
     // DOM Elements - Shell
@@ -594,6 +598,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (modeSaltBtn) modeSaltBtn.classList.toggle("active", mode === "salt");
         if (modeOrganicBtn) modeOrganicBtn.classList.toggle("active", mode === "organic");
         if (modeIonsBtn) modeIonsBtn.classList.toggle("active", mode === "ions");
+        if (modeExplorerBtn) modeExplorerBtn.classList.toggle("active", mode === "explorer");
 
         const isEn = currentLang === "en";
         const titleEl = document.getElementById("workspace-title");
@@ -614,11 +619,16 @@ document.addEventListener("DOMContentLoaded", () => {
             if (descEl) descEl.textContent = isEn
                 ? "Qualitative diagnosis of 25 organic laboratory compounds (liquids & solids) through sequential functional tests."
                 : "تشخيص كيفي لـ 25 مركباً عضوياً معملياً (سوائل ومواد صلبة) عبر الفحوصات الوظيفية المتتالية.";
-        } else {
+        } else if (mode === "ions") {
             if (titleEl) titleEl.textContent = isEn ? "Single Ion Analysis (Cations & Anions)" : "كشف الأيونات المنفردة (كاتيونات وأنيونات)";
             if (descEl) descEl.textContent = isEn
                 ? "Sequential precipitation and group reagent tests for isolated inorganic ions."
                 : "فحوصات الترسيب وسلسلة الكواشف النوعية للأيونات غير العضوية المنفردة.";
+        } else if (mode === "explorer") {
+            if (titleEl) titleEl.textContent = isEn ? "Direct Salt Explorer & Synthesis Recipe Planner" : "مستكشف وتحضير الأملاح بالاختيار المباشر";
+            if (descEl) descEl.textContent = isEn
+                ? "Directly select a basic radical (cation) and acidic radical (anion) to generate salt identity, balanced synthesis recipe, and verification protocol."
+                : "اختر الشق القاعدي (الكاتيون) والشق الحامضي (الأنيون) يدوياً لتوليد بطاقة هوية الملح، وصفة التحضير والتخليق المعملي الموزونة، وبروتوكول التحقق والكشف المعملي الكامل.";
         }
     }
 
@@ -643,10 +653,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 startIonDiagnosis();
             });
         }
+        if (modeExplorerBtn) {
+            modeExplorerBtn.addEventListener("click", () => {
+                startExplorerMode();
+            });
+        }
     }
 
     function startSaltDiagnosis() {
-        if (typeof switchToWorkspace === "function") switchToWorkspace("diagnostic");
+        if (saltExplorerWorkspace) saltExplorerWorkspace.hidden = true;
+        if (questionContainer) questionContainer.hidden = false;
         setActiveModeTab("salt");
         previousFailedAttempt = null;
         sessionData = {
@@ -690,6 +706,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function startOrganicDiagnosis() {
+        if (saltExplorerWorkspace) saltExplorerWorkspace.hidden = true;
+        if (questionContainer) questionContainer.hidden = false;
         setActiveModeTab("organic");
         previousFailedAttempt = null;
         sessionData = {
@@ -732,6 +750,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function startIonDiagnosis() {
+        if (saltExplorerWorkspace) saltExplorerWorkspace.hidden = true;
+        if (questionContainer) questionContainer.hidden = false;
         setActiveModeTab("ions");
         previousFailedAttempt = null;
         sessionData = {
@@ -774,7 +794,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function startConsultation() {
-        if (typeof switchToWorkspace === "function") switchToWorkspace("diagnostic");
+        if (saltExplorerWorkspace) saltExplorerWorkspace.hidden = true;
+        if (questionContainer) questionContainer.hidden = false;
         setActiveModeTab("all");
         previousFailedAttempt = null;
         sessionData = {
@@ -1460,6 +1481,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         descDiv.textContent = isEn
                             ? "Detection of single inorganic cations and anions"
                             : "الكشف عن الكاتيونات والأنيونات غير العضوية المنفردة";
+                    } else if (opt.next === "EXPLORER_MODE_DIRECT") {
+                        iconDiv.textContent = "🧭";
+                        descDiv.textContent = isEn
+                            ? "Directly select cation and anion to generate salt identity, synthesis recipe, and verification protocol"
+                            : "اختر الشق القاعدي والشق الحامضي مباشرة لتوليد بطاقة الملح ووصفة التحضير والتخليق المعملي الموزونة";
                     } else {
                         iconDiv.textContent = "🔥";
                         descDiv.textContent = isEn
@@ -1549,6 +1575,11 @@ document.addEventListener("DOMContentLoaded", () => {
             phase: phase,
             stepId: parentStep.id
         });
+
+        if (nextKey === "EXPLORER_MODE_DIRECT") {
+            startExplorerMode();
+            return;
+        }
 
         if (tree && tree[nextKey]) {
             const nextNode = tree[nextKey];
@@ -2853,34 +2884,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentExplorerDossier = null;
 
+    function startExplorerMode() {
+        setActiveModeTab("explorer");
+        if (tabNavExplorer) {
+            tabNavExplorer.classList.add("active");
+            tabNavExplorer.setAttribute("aria-selected", "true");
+        }
+        if (tabNavDiagnostic) {
+            tabNavDiagnostic.classList.remove("active");
+            tabNavDiagnostic.setAttribute("aria-selected", "false");
+        }
+        if (questionContainer) questionContainer.hidden = true;
+        if (stage4Container) stage4Container.hidden = true;
+        if (stage5Container) stage5Container.hidden = true;
+        if (breadcrumbTrail) breadcrumbTrail.style.display = "none";
+        if (saltHowContainer) saltHowContainer.style.display = "none";
+        if (saltHowPanel) saltHowPanel.style.display = "none";
+        if (saltHowBtn) saltHowBtn.classList.remove("active");
+        if (stepBackBtn) stepBackBtn.style.display = "none";
+        if (saltExplorerWorkspace) {
+            saltExplorerWorkspace.hidden = false;
+            saltExplorerWorkspace.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    }
+
     function switchToWorkspace(workspace) {
         if (workspace === "explorer") {
-            if (tabNavExplorer) {
-                tabNavExplorer.classList.add("active");
-                tabNavExplorer.setAttribute("aria-selected", "true");
-            }
-            if (tabNavDiagnostic) {
-                tabNavDiagnostic.classList.remove("active");
-                tabNavDiagnostic.setAttribute("aria-selected", "false");
-            }
-            if (diagnosticWorkspace) diagnosticWorkspace.hidden = true;
-            if (saltExplorerWorkspace) {
-                saltExplorerWorkspace.hidden = false;
-                saltExplorerWorkspace.scrollIntoView({ behavior: "smooth", block: "start" });
-            }
+            startExplorerMode();
         } else {
-            if (tabNavDiagnostic) {
-                tabNavDiagnostic.classList.add("active");
-                tabNavDiagnostic.setAttribute("aria-selected", "true");
-            }
-            if (tabNavExplorer) {
-                tabNavExplorer.classList.remove("active");
-                tabNavExplorer.setAttribute("aria-selected", "false");
-            }
-            if (saltExplorerWorkspace) saltExplorerWorkspace.hidden = true;
-            if (diagnosticWorkspace) {
-                diagnosticWorkspace.hidden = false;
-            }
+            startConsultation();
         }
     }
 
@@ -3116,13 +3148,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function setupSaltExplorer() {
         if (tabNavDiagnostic) {
-            tabNavDiagnostic.addEventListener("click", () => switchToWorkspace("diagnostic"));
+            tabNavDiagnostic.addEventListener("click", () => startConsultation());
         }
         if (tabNavExplorer) {
-            tabNavExplorer.addEventListener("click", () => switchToWorkspace("explorer"));
+            tabNavExplorer.addEventListener("click", () => startExplorerMode());
         }
         if (explorerHeaderBtn) {
-            explorerHeaderBtn.addEventListener("click", () => switchToWorkspace("explorer"));
+            explorerHeaderBtn.addEventListener("click", () => startExplorerMode());
         }
         if (explorerGenerateBtn) {
             explorerGenerateBtn.addEventListener("click", () => generateSaltDossier());

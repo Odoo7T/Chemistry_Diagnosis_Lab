@@ -724,7 +724,8 @@ UNIFIED_DECISION_TREE = {
             option("Organic Chemical Analysis (25 Compounds)", "org_q_state", swatch=GREEN, arabic_label="كشف المركبات العضوية (25 مركباً)"),
             option("Complete Inorganic Salt Diagnosis (30 Salts)", "SALT_START", swatch=WHITE, arabic_label="تشخيص الأملاح غير العضوية الكامل (30 ملحاً)"),
             option("Single Inorganic Ion Analysis (Cations & Anions)", "start_color", swatch=BLUE, arabic_label="كشف الأيونات غير العضوية المنفردة"),
-            option("Unknown Sample (Flame & Charring Test)", "unified_q_charring_heat", swatch=YELLOW, arabic_label="عينة مجهولة: فحص التفحم والتسخين (عضوي / غير عضوي)")
+            option("Unknown Sample (Flame & Charring Test)", "unified_q_charring_heat", swatch=YELLOW, arabic_label="عينة مجهولة: فحص التفحم والتسخين (عضوي / غير عضوي)"),
+            option("Direct Salt Explorer & Synthesis Recipe Planner", "EXPLORER_MODE_DIRECT", swatch=BLUE, arabic_label="🧭 مستكشف وتحضير الأملاح بالاختيار المباشر (توليد الوصفة والتحضير)")
         ],
         hint="Select whether your unknown sample is an Organic Compound (25 compounds), a Complete Inorganic Salt (30 salts), an Isolated Ion, or perform the preliminary Flame & Charring Test to distinguish them.",
         arabic_text="الخطوة 1: حدد مسار الفحص التحليلي للعينة المجهولة (عضوي أم غير عضوي)",

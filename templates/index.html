@@ -86,6 +86,9 @@
             <button type="button" class="mode-tab" id="mode-ions-btn" title="الكشف عن الأيونات المنفردة">
                 <span id="tab-ions-text">⚗️ كشف أيونات منفردة</span>
             </button>
+            <button type="button" class="mode-tab" id="mode-explorer-btn" title="مستكشف وتحضير الأملاح بالاختيار المباشر">
+                <span id="tab-explorer-text">🧭 مستكشف وتحضير الأملاح</span>
+            </button>
         </div>
 
         <!-- Breadcrumb / Trail of choices -->
@@ -325,10 +328,9 @@
                 </button>
             </div>
         </div>
-    </section>
 
-    <!-- DIRECT SALT EXPLORER & SYNTHESIS RECIPE PLANNER WORKSPACE -->
-    <section id="salt-explorer-workspace" class="diagnostic-card" hidden style="margin-top: 15px;">
+        <!-- DIRECT SALT EXPLORER & SYNTHESIS RECIPE PLANNER (EMBEDDED IN PRIMARY WORKSPACE) -->
+        <div id="salt-explorer-workspace" class="salt-explorer-embedded-container" hidden style="margin-top: 20px;">
         <div class="workspace-header-text">
             <div class="eyebrow" id="explorer-eyebrow">DIRECT SALT EXPLORATION & SYNTHESIS RECIPE PLANNER</div>
             <h2 id="explorer-title">مستكشف وتحضير الأملاح بالاختيار المباشر</h2>
@@ -541,6 +543,7 @@
                 </div>
             </div>
         </div>
+        </div>
     </section>
 
     <!-- AUXILIARY REACTION PREDICTOR MODAL / VIEW (TOGGLEABLE) -->
@@ -684,6 +687,6 @@
     </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/main.js') }}?v=2.7"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}?v=2.8"></script>
 </body>
 </html>
