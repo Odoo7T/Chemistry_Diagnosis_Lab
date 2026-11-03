@@ -703,6 +703,16 @@ ALL_OUTCOMES = {
     **ORGANIC_OUTCOMES
 }
 
+# Apply extended notes for complete bilingual support
+for _key, _dict in {'PB': {'notes_ar': ['يذوب كلوريد الرصاص الثنائي (PbCl₂) في الماء المغلي وينفصل كإبر لامعة براقة عند التبريد.', 'يعطي راسباً أصفر ساطعاً من يوديد الرصاص (PbI₂) مع يوديد البوتاسيوم (اختبار المطر الذهبي).'], 'notes_en': ['PbCl₂ dissolves in boiling water and separates as glistening needles on cooling.', 'Forms a brilliant yellow precipitate of PbI₂ with KI (Golden Rain test).']}, 'MN': {'notes_ar': ['هيدروكسيد المنغنيز الثنائي الأبيض يتأكسد سريعاً عند تعرضه لأكسجين الهواء الجوي ليتكون ثاني أكسيد المنغنيز المائي البني.', 'يؤكد باختبار فوق البزموتات أو فوق الكبريتات في وسط حمضي ليعطي لون البرمنجنات البنفسجي المميز.'], 'notes_en': ['White manganese(II) hydroxide oxidizes rapidly on exposure to atmospheric oxygen to form brown hydrated manganese dioxide.', 'Confirmed by bismuthate or persulfate oxidation in acidic medium, yielding the characteristic purple permanganate coloration.']}, 'AG': {'notes_ar': ['راسب كلوريد الفضة الأبيض (AgCl) يذوب تماماً وبسهولة في محلول النشادر المائي المخفف بفعل تكوين معقد ثنائي أمين الفضة.', 'يتحول لون راسب AgCl إلى اللون البنفسجي ثم الرمادي القاتم عند تعرضه لضوء الشمس المباشر.'], 'notes_en': ['Silver chloride (AgCl) white precipitate dissolves completely in dilute aqueous ammonia solution forming diamminesilver(I) complex.', 'AgCl precipitate turns violet then grayish-black upon prolonged exposure to sunlight.']}, 'HG2': {'notes_ar': ['اسوداد راسب كلوريد الزئبقوز عند إضافة محلول النشادر يرجع إلى تفاعل التفكك الذاتي (Disproportionation) الذي ينتج الزئبق الفلزي الأسود الدقيق.', 'أملاح الزئبق شديدة السمية معملياً ويجب التخلص منها بحذر فائق.'], 'notes_en': ['The blackening upon adding ammonia is due to disproportionation yielding finely divided black metallic mercury.', 'Mercury compounds are highly toxic and require strict hazardous waste management.']}, 'HCO3': {'notes_ar': ['التمييز الجوهري عن الكربونات: البيكربونات لا تعطي راسباً مع كبريتات المغنيسيوم على البارد، ولكن يتكون راسب أبيض بعد الغليان فقط.', 'محلول البيكربونات المائي متعادل تقريباً أو ضعيف القلوية تجاه الفينولفثالين.'], 'notes_en': ['Crucial distinction from CO₃²⁻: Bicarbonates do not form precipitate with MgSO₄ in the cold, only after boiling.', 'Aqueous bicarbonate solutions are weakly alkaline and do not color phenolphthalein.']}, 'S2O3': {'notes_ar': ['يتصاعد غاز SO₂ مع ترسب كبريت أصفر غروي معلق بمرور الوقت في المحلول الحمضي.', 'يزيل لون محلول اليود البني فورياً مع تكوين رباعي ثيونات الصوديوم عديم اللون.'], 'notes_en': ['Characteristic colloidal yellow sulfur precipitates out over time with SO₂ gas in acidic medium.', 'Decolorizes brown iodine solution immediately via oxidation to tetrathionate.']}, 'NO2': {'notes_ar': ['يتصاعد غاز أكسيد النيتريك (NO) عديم اللون والذي يتأكسد عند فوهة الأنبوبة إلى أبخرة بنية حمراء من NO₂.', 'يزيل لون برمنجنات البوتاسيوم البنفسجية المحمضة، ويعطي راسباً أسود أو حلقة بنية مميزة مع كبريتات الحديد الثنائي.'], 'notes_en': ['Colorless NO oxidizes to reddish-brown NO₂ on contact with atmospheric oxygen at the test tube mouth.', 'Decolorizes acidified potassium permanganate and gives brown ring / black coloration with FeSO₄.']}, 'PO4': {'notes_ar': ['راسب فوسفات الفضة أصفر اللون، يذوب في حمض النيتريك المخفف وفي محلول النشادر المائي.', 'يعطي راسباً أصفر كنارياً بلورياً من فوسفوموليبدات الأمونيوم مع كاشف موليبدات الأمونيوم في وسط حمضي نيتريكي ساخن.'], 'notes_en': ['Silver phosphate is yellow, soluble in dilute HNO₃ and aqueous ammonia.', 'Forms canary-yellow ammonium phosphomolybdate precipitate with molybdate reagent in hot nitric acid medium.']}, 'CRO4': {'notes_ar': ['راسب كرومات الفضة ذو لون أحمر طوبي / بني محمر، بينما كرومات الباريوم راسب أصفر.', 'اللون الأصفر لمحلول الكرومات في الوسط القاعدي يتحول إلى اللون البرتقالي لثنائي الكرومات عند التحميض بحمض مخفف.'], 'notes_en': ['Silver chromate is brick-red / reddish-brown, while barium chromate forms a bright yellow precipitate.', 'Yellow color in alkaline solution shifts to orange dichromate upon acidification with dilute acid.']}, 'CH3COO': {'notes_ar': ['التفاعل مع محلول كلوريد الحديد الثلاثي المتعادل يعطي لوناً أحمر دامياً مكثفاً يرسب كأسيتات الحديد القاعدية بالتسخين للغليان.', 'تفاعل الأسترة بالتسخين مع الكحول الإيثيلي وحمض الكبريتيك المركز يطلق رائحة إستر أسيتات الإيثيل الذكية المميزة.'], 'notes_en': ['Reaction with neutral iron(III) chloride gives an intense blood-red color which precipitates as basic iron acetate upon boiling.', 'Esterification by heating with ethanol and conc. H₂SO₄ yields the pleasant fruity fragrance of ethyl acetate.']}, 'UNKNOWN_INCONCLUSIVE': {'notes_ar': ['تأكد من استخدام كواشف معملية طازجة التحضير ومن ضبط التركيزات القياسية بدقة.', 'تحقق مما إذا كانت العينة تحتوي على خليط أملاح أو أيونات متداخلة تحجب التفاعلات النموذجية.', 'يُنصح بإجراء الفصل المجموعي المنهجي المعتمد (من المجموعة الأولى إلى السادسة) وفقاً لمرجع فوجل للتحليل غير العضوي.'], 'notes_en': ['Ensure that reagents are freshly prepared and standard lab concentrations are maintained.', 'Confirm whether sample contains mixed salts or complex interfering ions.', "Consider systematic separation groups (Group I to Group VI) following Vogel's Qualitative Inorganic Analysis."]}, 'ORG_SUCROSE': {'notes_ar': ['سكر ثنائي صلب بلوري أبيض يذوب في الماء بسهولة، يتفحم برائحة السكر المحروق وتفاعل موليش إيجابي بحلقة بنفسجية.', 'سكر غير مختزل مباشرة (سلبي تماماً مع فهلنج وبارفويد)؛ وعند غليه مع قطرات من HCl المركز ثم معادلته بهيدروكسيد الصوديوم يتحلل مائياً ويختزل فهلنج فورياً.'], 'notes_en': ['White crystalline disaccharide solid readily soluble in water; chars with burnt sugar odor; Molisch test is positive yielding a violet ring.', "Directly non-reducing (strictly negative with Fehling's and Barfoed's); upon boiling with dilute HCl and neutralizing with NaOH, it hydrolyzes and immediately reduces Fehling's reagent."]}}.items():
+    if _key in EXTENDED_OUTCOMES:
+        EXTENDED_OUTCOMES[_key].update(_dict)
+    if _key in ORGANIC_OUTCOMES:
+        ORGANIC_OUTCOMES[_key].update(_dict)
+    if _key in ALL_OUTCOMES:
+        ALL_OUTCOMES[_key].update(_dict)
+
+
 UNIFIED_DECISION_TREE = {
     "start_mode": question(
         "start_mode",
@@ -1930,3 +1940,455 @@ ELEMENTS = {
 }
 
 # The dictionary will be used when generating the final report to display detailed element info.
+
+
+# ========================================================
+# COMPREHENSIVE BILINGUAL DATA ENRICHMENT (Arabic & English)
+# ========================================================
+# -*- coding: utf-8 -*-
+"""
+Bilingual notes and options definitions
+"""
+
+CATION_NOTES_AR = {
+    "CU": [
+        "يتكون راسب أزرق باهت مميز من هيدروكسيد النحاس الثنائي Cu(OH)₂.",
+        "الراسب لا يذوب في الزيادة من محلول هيدروكسيد الصوديوم في الظروف العادية.",
+        "يذوب الراسب في الزيادة من محلول النشادر المائي ليعطي محلولاً أزرق ملكياً داكناً لمعقد النحاس النشادرى: [Cu(NH₃)₄]²⁺."
+    ],
+    "FE2": [
+        "الراسب الابتدائي هو هيدروكسيد الحديد الثنائي Fe(OH)₂ ذو اللون الأبيض المخضر.",
+        "يتأكسد سريعاً عند تعرضه لأكسجين الهواء الجوي ليتحول لونه إلى البني المحمر Fe(OH)₃.",
+        "لا يذوب في الزيادة من محلول هيدروكسيد الصوديوم NaOH."
+    ],
+    "FE3": [
+        "يتكون راسب جيلاتيني بني محمر فوراً من هيدروكسيد الحديد الثلاثي Fe(OH)₃.",
+        "لا يذوب الراسب في الزيادة من هيدروكسيد الصوديوم.",
+        "يمكن تأكيد الأيون بإضافة ثيوسيانات البوتاسيوم (KSCN) ليعطي محلولاً أحمر دامي مميز."
+    ],
+    "ZN": [
+        "يتكون راسب أبيض من هيدروكسيد الزنك Zn(OH)₂.",
+        "نظراً لطبيعته المترددة (Amphoteric)، فإنه يذوب في الزيادة من NaOH مكوناً أيون الخارصينات الذائب [Zn(OH)₄]²⁻.",
+        "فارق جوهري عن الألومنيوم: يذوب راسب هيدروكسيد الزنك في الزيادة من محلول النشادر مكوناً معقد الزنك النشادرى."
+    ],
+    "AL": [
+        "يتكون راسب أبيض جيلاتيني من هيدروكسيد الألومنيوم Al(OH)₃.",
+        "نظراً لطبيعته المترددة، فإنه يذوب بسهولة في الزيادة من NaOH مكوناً ألومينات الصوديوم الذائبة [Al(OH)₄]⁻.",
+        "فارق جوهري عن الزنك: راسب هيدروكسيد الألومنيوم لا يذوب إطلاقاً في الزيادة من محلول النشادر."
+    ],
+    "CA": [
+        "هيدروكسيد الكالسيوم شحيح الذوبان، لذا قد يكون الترسيب خفيفاً أو يتطلب تركيزاً كافياً للأيون.",
+        "لا يذوب في الزيادة من هيدروكسيد الصوديوم.",
+        "كشف اللهب يؤكد وجود الكالسيوم بإعطاء لهب أحمر طوبي (برتقالي محمر) مميز.",
+        "يمكن استخدام أوكسالات الأمونيوم كاختبار تأكيدي إضافي لترسيب أوكسالات الكالسيوم البيضاء."
+    ],
+    "MG": [
+        "يتكون راسب أبيض ناصع ومميز من هيدروكسيد المغنيسيوم Mg(OH)₂.",
+        "لا يذوب الراسب في الزيادة من NaOH في الظروف المعملية القياسية.",
+        "المغنيسيوم لا يعطي لوناً مميزاً للهب في كشف اللهب العادي (وهذا يميزه عن الكالسيوم).",
+        "يمكن تأكيده باستخدام كاشف الماغنسون حيث يعطي راسباً أزرق مميزاً."
+    ],
+    "NH4": [
+        "لا يتكون أي راسب مع محلول هيدروكسيد الصوديوم على البارد.",
+        "عند التسخين اللطيف مع هيدروكسيد الصوديوم، يتصاعد غاز النشادر (NH₃) ذو الرائحة النفاذة.",
+        "غاز النشادر يزرق ورقة تباع الشمس الحمراء المبللة ويكون سحباً بيضاء كثيفة من NH₄Cl مع ساق مبللة بـ HCl.",
+        "تنبيه سلامة: لا تستنشق الغاز بشكل مباشر وأجرِ التجربة في بيئة جيدة التهوية."
+    ],
+    "CATION_INCONCLUSIVE": [
+        "تحقق من نقاء الكواشف وعدم تلوثها وتأكد من التركيزات المعملية المناسبة.",
+        "إذا لم يتكون أي راسب، يوصى باختبار كاتيونات الفلزات القلوية (Na⁺, K⁺) عبر كشف اللهب الجاف:",
+        "• الصوديوم (Na⁺): لهب أصفر ذهبي ساطع ومستمر.",
+        "• البوتاسيوم (K⁺): لهب بنفسجي فاتح / ليلكي (يُرى عبر زجاج الكوبالت).",
+        "راجع المراجع المعملية المعتمدة لتحليلات الفصل المجموعي الموسعة."
+    ]
+}
+
+ANION_NOTES_AR = {
+    "CO3": [
+        "إضافة حمض الهيدروكلوريك أو الكبريتيك المخفف تؤدي إلى فوران وتصاعد غاز ثاني أكسيد الكربون عديم اللون والرائحة.",
+        "إمرار غاز CO₂ في ماء الجير الرائق Ca(OH)₂ يعكره بتكوين كربونات الكالسيوم غير الذائبة.",
+        "البيكربونات (HCO₃⁻) تطلق غاز CO₂ أيضاً؛ والتفرقة تتم باستخدام كبريتات المغنيسيوم MgSO₄ على البارد (راسب فوري مع الكربونات، وبعد الغليان فقط مع البيكربونات)."
+    ],
+    "S2": [
+        "إضافة الحمض المخفف تؤدي لتصاعد غاز كبريتيد الهيدروجين (H₂S) ذو رائحة البيض الفاسد المميزة.",
+        "ورقة الترشيح المبللة بمحلول أسيتات الرصاص تسود فوراً بسبب تكون كبريتيد الرصاص الأسود (PbS).",
+        "تحذير سلامة: غاز كبريتيد الهيدروجين غاز سام جداً ويشل العصب الشمي، يُكتشف فقط بأوراق الاختبار تحت شفاط المعمل المعتمد."
+    ],
+    "SO3": [
+        "إضافة الحمض المخفف تؤدي لتصاعد غاز ثاني أكسيد الكبريت (SO₂) الخانق ذو الرائحة النفاذة.",
+        "غاز SO₂ عامل مختزل قوي يحول لون ورقة مبللة بثاني كرومات البوتاسيوم المحمضة من البرتقالي إلى الأخضر.",
+        "تحذير سلامة: غاز SO₂ مخرش للجهاز التنفسي، يجب التعامل معه داخل شفاط المعمل فقط."
+    ],
+    "SO4": [
+        "محلول كلوريد الباريوم يعطي راسباً أبيض كثيفاً من كبريتات الباريوم (BaSO₄).",
+        "تحقق جوهري: راسب BaSO₄ لا يذوب إطلاقاً في حمض HCl أو HNO₃ المخفف (مما يميزه عن كربونات وكبريتيت الباريوم).",
+        "أملاح الباريوم سامة؛ يجب التعامل معها بحذر معملي ملائم."
+    ],
+    "CL": [
+        "محلول نترات الفضة يعطي راسباً أبيض متجبناً من كلوريد الفضة (AgCl).",
+        "الراسب يتحول للون البنفسجي الرمادي عند تعرضه لضوء الشمس بسبب التفكك الضوئي.",
+        "يذوب الراسب بسهولة وبسرعة في محلول النشادر المائي المخفف مكوناً معقد الفضة النشادرى."
+    ],
+    "BR": [
+        "محلول نترات الفضة يعطي راسباً أبيض مصفراً (كريمي) من بروميد الفضة (AgBr).",
+        "الراسب شحيح الذوبان في النشادر المخفف، ولكنه يذوب في محلول النشادر المركز.",
+        "اختبار ماء الكلور: إضافة ماء الكلور ومذيب عضوي تحرر البروم البرتقالي المحمر الذائب في الطبقة العضوية."
+    ],
+    "IODIDE": [
+        "محلول نترات الفضة يعطي راسباً أصفر فاقعاً من يوديد الفضة (AgI).",
+        "الراسب لا يذوب نهائياً في محلول النشادر سواء كان مخففاً أو مركزاً.",
+        "اختبار ماء الكلور: يحرر اليود البنفسجي الذي يلون الطبقة العضوية باللون البنفسجي أو يزرق محلول النشا بشدة."
+    ],
+    "NO3_CHECK": [
+        "تجربة الحلقة البنية: اخلط العينة بمحلول كبريتات الحديد الثنائي FeSO₄ حديث التحضير، وأمل الأنبوبة وأضف بحرص حمض H₂SO₄ المركز على الجدار الداخلي.",
+        "تتكون حلقة بنية مميزة عند السطح الفاصل بين الطبقتين: معقد النتروزوفيروز.",
+        "بديل سبيكة ديفاردا: تسخين محلول النترات مع سبيكة ديفاردا و NaOH يطلق غاز النشادر.",
+        "تحذير سلامة: حمض الكبريتيك المركز كاوٍ جداً ويولد حرارة هائلة عند تلامسه مع المحاليل، يجب سكبه بحذر شديد."
+    ],
+    "ANION_INCONCLUSIVE": [
+        "تأكد من أن المحلول الأصلي تم تحضيره بصورة صحيحة (متعادل أو حمضي خفيف) قبل الاختبار بكواشف الترسيب.",
+        "إذا لم تتكون رواسب أو تتصاعد غازات، أجرِ تجربة الحلقة البنية الخاصة بالنترات (NO₃⁻).",
+        "الأنيونات الأخرى (كالفوسفات PO₄³⁻، والنيتريت NO₂⁻، والFileكبريتات S₂O₃²⁻) تتطلب اختبارات مجموعية نوعية إضافية."
+    ]
+}
+
+ORGANIC_NOTES_EN = {
+    "ORG_FORMIC": [
+        "Contains a carboxylic group directly attached to hydrogen, giving it unique aldehyde-like reducing properties.",
+        "Effervesces vigorously with NaHCO₃, decolorizes acidified KMnO₄, and forms a shining silver mirror with Tollens' reagent."
+    ],
+    "ORG_ACETIC": [
+        "Characteristic pungent vinegar odor; resists oxidation by acidified potassium permanganate.",
+        "Gives an intense blood-red color with neutral FeCl₃ that converts to a reddish-brown precipitate upon boiling."
+    ],
+    "ORG_FORMALDEHYDE": [
+        "Gas dissolved in water at 40% concentration (formalin), with a pungent, suffocating, and lacrimatory odor.",
+        "Yields a brick-red precipitate with Fehling's reagent and a silver mirror with Tollens'; completely negative in the iodoform test."
+    ],
+    "ORG_ACETALDEHYDE": [
+        "Volatile liquid completely miscible with water in all proportions; gives a shining silver mirror with Tollens' reagent.",
+        "Positive in the iodoform test (forms yellow crystalline CHI₃) due to the presence of the CH₃-C=O methyl carbonyl group."
+    ],
+    "ORG_BENZALDEHYDE": [
+        "Oily liquid sparingly soluble in water, characteristic aromatic bitter almond odor; burns with a smoky sooty black flame.",
+        "Forms a silver mirror with Tollens' but is negative with Fehling's solution due to being an aromatic aldehyde."
+    ],
+    "ORG_ACETONE": [
+        "Highly volatile, flammable, pleasantly smelling liquid; miscible with water in all proportions.",
+        "Gives a prompt orange precipitate with 2,4-DNP; strongly positive in the iodoform test (yellow crystals); negative with Tollens' and Fehling's."
+    ],
+    "ORG_ETHYL_METHYL_KETONE": [
+        "Volatile liquid with an acetone-like odor; positive with 2,4-DNP and gives a prompt yellow iodoform precipitate.",
+        "Resists mild oxidation (Tollens' and Fehling's negative), confirming it as an aliphatic methyl ketone."
+    ],
+    "ORG_ACETOPHENONE": [
+        "High-boiling liquid with a sweet, persistent floral odor; insoluble in water; burns with a dense sooty flame.",
+        "Gives a prompt crystalline precipitate with 2,4-DNP and a positive iodoform test; negative with Tollens' and Fehling's."
+    ],
+    "ORG_ETHANOL": [
+        "Volatile liquid completely miscible with water; neutral to litmus and bicarbonate; negative with 2,4-DNP.",
+        "Distinctly positive in the iodoform test (yellow crystals with antiseptic odor); turns orange potassium dichromate to emerald green."
+    ],
+    "ORG_METHANOL": [
+        "Light volatile liquid completely miscible with water; completely negative in the iodoform test (distinguishing it from ethanol).",
+        "Oxidizes to formaldehyde upon testing with a glowing hot copper spiral, evolving pungent formalin vapors."
+    ],
+    "ORG_GLYCEROL": [
+        "Viscous, heavy, sweet-tasting, non-volatile syrupy liquid; completely miscible with water.",
+        "Decolorizes the pink color of borax-phenolphthalein in the cold; evolves pungent, lacrimatory acrolein fumes upon heating with KHSO₄."
+    ],
+    "ORG_ETHYL_ACETATE": [
+        "Immiscible neutral organic liquid with a pleasant fruity odor; neutral to litmus and bicarbonate.",
+        "Hydrolyzes with hot dilute NaOH to yield ethanol (iodoform positive) and acetate (blood-red with neutral FeCl₃)."
+    ],
+    "ORG_ANILINE": [
+        "Oily liquid turning yellow to brown on air exposure; insoluble in water but completely dissolves in dilute HCl (basic amine).",
+        "Reacts in diazotization at 0-5°C with NaNO₂/HCl, coupling with 2-naphthol to form a brilliant orange-red azo dye."
+    ],
+    "ORG_OXALIC": [
+        "White crystalline solid soluble in water; strongly acidic, effervescing vigorously with NaHCO₃.",
+        "Forms an immediate white precipitate with CaCl₂ in the cold, insoluble in acetic acid; rapidly decolorizes warm acidified KMnO₄."
+    ],
+    "ORG_TARTARIC": [
+        "White acidic crystalline solid completely soluble in water; effervesces with NaHCO₃.",
+        "Forms a white precipitate with CaCl₂ that dissolves in cold NaOH; positive in Fenton's test (deep violet color); chars with a burnt sugar smell."
+    ],
+    "ORG_CITRIC": [
+        "White acidic solid completely soluble in water; effervesces with sodium bicarbonate.",
+        "Forms a white calcium citrate precipitate with CaCl₂ only upon boiling (distinguishing it from oxalic and tartaric acids)."
+    ],
+    "ORG_BENZOIC": [
+        "White crystalline solid insoluble in cold water; dissolves in NaHCO₃ with effervescence; burns with a dense sooty flame.",
+        "Neutral solution gives a characteristic flesh-colored buff precipitate of ferric benzoate with neutral FeCl₃."
+    ],
+    "ORG_SALICYLIC": [
+        "White needle-like crystals sparingly soluble in cold water; dissolves in NaHCO₃ with effervescence; phenolic carboxylic acid.",
+        "Gives an intense, persistent, deep violet coloration with FeCl₃ that does not disappear with excess reagent."
+    ],
+    "ORG_PHENOL": [
+        "Pinkish crystalline masses with a characteristic carbolic odor; partially soluble in cold water; turns blue litmus faint red.",
+        "Forms a white precipitate of 2,4,6-tribromophenol with bromine water, and gives a deep violet color with neutral FeCl₃."
+    ],
+    "ORG_RESORCINOL": [
+        "White to light pink crystalline solid soluble in water; dihydric phenol.",
+        "Gives a prompt dark violet color with FeCl₃; phthalein reaction with phthalic anhydride produces intensely green fluorescent fluorescein."
+    ],
+    "ORG_ALPHA_NAPHTHOL": [
+        "Solid insoluble in cold water; burns with a heavy smoky flame; mono-hydroxy naphthalene.",
+        "Gives a transient deep violet coloration with bleaching powder solution that immediately converts into a dense reddish-brown precipitate."
+    ],
+    "ORG_BETA_NAPHTHOL": [
+        "Crystalline solid insoluble in cold water; burns with a heavy smoky flame; position isomer of alpha-naphthol.",
+        "Gives no violet color with bleaching powder; couples with diazotized aniline to form an intense scarlet-red azo dye."
+    ],
+    "ORG_GLUCOSE": [
+        "White crystalline solid soluble in water; reducing aldohexose; positive in Molisch's test (purple ring at interface).",
+        "Promptly reduces Fehling's solution to red Cu₂O; forms yellow needle-like phenylglucosazone crystals in 4-5 minutes; negative in Seliwanoff's test within 2 minutes."
+    ],
+    "ORG_FRUCTOSE": [
+        "White crystalline solid soluble in water; reducing ketohexose; positive in Molisch's test.",
+        "Strongly positive in Seliwanoff's test (develops a deep red color within 1-2 minutes); reduces Fehling's solution; forms identical glucosazone crystals."
+    ],
+    "ORG_STARCH": [
+        "White non-crystalline powder insoluble in cold water, forming a colloidal opalescent solution on boiling; non-reducing polysaccharide.",
+        "Gives an intense deep blue complex with iodine solution (Lugol's) that vanishes upon heating and reappears on cooling."
+    ],
+    "ORG_UREA": [
+        "White crystalline neutral solid soluble in water; non-reducing, negative with Molisch and FeCl₃.",
+        "Melts upon dry heating evolving ammonia gas; residue gives a positive biuret test (violet-pink color with alkaline CuSO₄)."
+    ]
+}
+
+
+# -*- coding: utf-8 -*-
+"""
+Option translations for all Arabic options in the decision trees
+"""
+
+OPTION_TRANSLATIONS_EN = {
+    'لا تغيير / لا يتكون راسب على البارد': 'No change / no precipitate in the cold',
+    'لا تغيير / يظل راسباً': 'No change / remains as precipitate',
+    'لا تغيير / لا يتصاعد غاز بعد التسخين': 'No change / no gas evolved after heating',
+    'لا يتكون راسب / لا تغيير': 'No precipitate forms / no change',
+    'لا يذوب الراسب إطلاقاً في حمض HCl المخفف أو المركز': 'Precipitate is completely insoluble in dilute or concentrated HCl',
+    'لا يتكون أي راسب': 'No precipitate formed',
+    'ظهور لون أحمر دامي مميز عند إضافة كلوريد الحديد الثلاثي المتعادل': 'Appearance of characteristic blood-red coloration with neutral FeCl₃',
+    'لا تغيير واضح / لا تفاعل': 'No obvious change / no reaction',
+    'فوران وتصاعد فقاعات غاز ثاني أكسيد الكربون CO2 (حمض كربوكسيلي سائل)': 'Effervescence with CO₂ bubbles (Liquid carboxylic acid)',
+    'لا يحدث فوران (المركب متعادل — ألدهيد، كيتون، أو كحول)': 'No effervescence (Neutral compound: Aldehyde, Ketone, or Alcohol)',
+    'لا يتكون أي راسب ويظل المحلول رائقاً أصفر شفافاً (كحول أليفاتي)': 'No precipitate; solution remains clear transparent yellow (Aliphatic alcohol)',
+    'لا تتكون مرآة فضية ويظل المحلول صافياً بدون اختزال (كيتون — أسيتون)': 'No silver mirror forms; solution remains clear (Ketone — Acetone)',
+    'سلبي تماماً مع اليودوفورم، وله رائحة نفاذة خانقة مدمعة ويعطي راسباً أحمر مع فهلنج (فورمالدهيد)': 'Negative with iodoform; pungent lacrimatory odor, red ppt with Fehling (Formaldehyde)',
+    'سلبي تماماً مع اليودوفورم؛ وعند تسخينه مع حمض الساليسيليك وH2SO4 يعطي رائحة إستر الكافور (ميثانول)': 'Negative with iodoform; heating with salicylic acid yields wintergreen ester odor (Methanol)',
+    'سلبي مع كاشف تولن؛ يعطي راسباً أصفر متبلوراً في اختبار اليودوفورم (قد يتجمد في الشتاء < 20°م) (أسيتوفينون)': 'Negative with Tollens; yellow iodoform ppt, freezes below 20°C (Acetophenone)',
+    'شحيحة الذوبان أو عديمة الذوبان في الماء البارد (Insoluble / Sparingly Soluble Solids)': 'Sparingly or insoluble in cold water (Insoluble / Sparingly soluble solids)',
+    'فوران شديد وتصاعد فقاعات غاز CO2 (حمض كربوكسيلي أليفاتي صلب ذائب بالماء)': 'Vigorous effervescence with CO₂ bubbles (Water-soluble solid aliphatic carboxylic acid)',
+    'لا يحدث أي فوران مع بيكربونات الصوديوم (مركب متعادل، سكر، أو فينول ذائب)': 'No effervescence with NaHCO₃ (Neutral compound, sugar, or soluble phenol)',
+    'لا يتكون أي راسب على البارد، ولكن يتكون راسب أبيض فقط بعد الغليان الشديد لعدة دقائق (حمض الستريك)': 'No precipitate in the cold; white ppt forms only after boiling for several minutes (Citric acid)',
+    'لا تتكون حلقة بنفسجية (سلبي مع موليش — ليس كربوهيدرات: ريسورسينول أو يوريا)': 'No purple ring (Negative with Molisch: Resorcinol or Urea)',
+    'لا يتكون أي راسب أحمر ويظل المحلول أزرق صافياً (سكر غير مختزل مباشرة — سكروز)': 'No red precipitate; solution remains clear blue (Non-reducing sugar — Sucrose)',
+    'ظهور لون أحمر كرزي / قرمزي داكن فوري وسريع جداً خلال أقل من دقيقتين (سكر كيتوزي — فركتوز)': 'Rapid intense cherry-red color within 1-2 minutes (Ketose sugar — Fructose)',
+    'لا تفور مع بيكربونات الصوديوم ولكنها تذوب تماماً في هيدروكسيد الصوديوم NaOH (فينولات ونافثولات)': 'Does not effervesce with NaHCO₃ but completely dissolves in NaOH (Phenols and Naphthols)',
+    'لا تفور مع البيكربونات ولا تذوب في NaOH على البارد، وتكوّن معلقاً غروياً عند الغليان بالماء (نشا)': 'Does not effervesce or dissolve in cold NaOH; forms colloidal solution on boiling (Starch)',
+
+    # Colors
+    "أبيض": "White",
+    "عديم اللون": "Colorless",
+    "أزرق": "Blue",
+    "أخضر": "Green",
+    "أصفر": "Yellow",
+    "بني": "Brown",
+    "وردي": "Pink",
+    "أسود": "Black",
+    "برتقالي": "Orange",
+    "غير محدد": "Unspecified / Other",
+    "أبيض أو بلورات عديمة اللون": "White or colorless crystals",
+    "أزرق أو أزرق مخضر": "Blue or blue-green",
+    "أخضر باهت": "Pale green",
+    "أصفر أو بني محمر / أسود رمادي": "Yellow, reddish-brown, or grayish-black",
+
+    # Physical State & Solubility
+    "محلول مائي (Solution)": "Aqueous Solution",
+    "محلول مائي": "Aqueous Solution",
+    "مادة صلبة (Solid)": "Solid Substance",
+    "مادة صلبة": "Solid Substance",
+    "سائل (Liquid)": "Liquid",
+    "سائل": "Liquid",
+    "صلب (Solid)": "Solid",
+    "صلب": "Solid",
+    "سائل (Liquid) — يحصر البحث في 11 مركباً عضوياً": "Liquid (Narrows search to 11 organic liquids)",
+    "مادة صلبة (Solid) — يحصر البحث في 14 مركباً عضوياً": "Solid (Narrows search to 14 organic solids)",
+    "يمتزج تماماً مع الماء البارد (Miscible — طبقة واحدة شفافة)": "Completely miscible with cold water (Single clear layer)",
+    "لا يمتزج / شحيح الذوبان (Immiscible — ينفصل في طبقتين أو قطرات زيتية)": "Immiscible / sparingly soluble (Separates into two layers or oily droplets)",
+    "تذوب بسهولة وبشكل كامل في الماء البارد (Water-Soluble Organic Solids)": "Easily and completely soluble in cold water (Water-soluble organic solids)",
+    "شحيحة أو عديمة الذوبان في الماء البارد (Water-Insoluble Organic Solids)": "Sparingly or insoluble in cold water (Water-insoluble organic solids)",
+    "يذوب في الماء البارد مكوناً محلولاً رائقاً": "Dissolves in cold water forming a clear solution",
+    "لا يذوب أو شحيح الذوبان جداً في الماء البارد": "Insoluble or sparingly soluble in cold water",
+
+    # Heating & Flame Charring Test
+    "انصهار وتفحم وتصاعد أدخنة أو رائحة سكر محروق (مركب عضوي)": "Melting, charring, and evolution of fumes or burnt sugar smell (Organic Compound)",
+    "انصهار وتفحم / رائحة سكر محروق (عضوي)": "Melting and charring / burnt sugar smell (Organic)",
+    "لا تفحم، بقاء راسب معدني ثابت مع تغير اللون أثناء التسخين أو أبخرة غير متفحمة (مركب غير عضوي)": "No charring, stable mineral residue with color change on heating or non-charring vapors (Inorganic Compound)",
+    "لا تفحم / بقاء مادة معدنية ثابتة (غير عضوي)": "No charring / stable mineral residue (Inorganic)",
+
+    # First Reagent Reactions
+    "فوران وتصاعد غاز": "Effervescence and gas evolution",
+    "راسب أبيض": "White precipitate",
+    "لا تغيير / لا يتكون راسب أو غاز": "No change / no precipitate or gas formed",
+    "تغير لون المحلول": "Solution color changes",
+    "أخرى": "Other observation",
+
+    # Gas Observations
+    "غاز عديم اللون يعكر ماء الجير الرائق لفترة وجيزة": "Colorless gas turning clear lime water turbid temporarily (CO₂)",
+    "غاز عديم اللون يعكر ماء الجير (CO₂)": "Colorless gas turning lime water turbid (CO₂)",
+    "فوران سريع ولحظي بتصاعد غاز CO₂ (لا يرسب MgSO₄ على البارد)": "Rapid instantaneous effervescence with CO₂ (No MgSO₄ ppt in the cold, HCO₃⁻)",
+    "فوران سريع ولحظي (HCO₃⁻)": "Rapid instantaneous effervescence (HCO₃⁻)",
+    "رائحة بيض فاسد يسود ورقة مبللة بأسيتات الرصاص": "Rotten-egg odor gas turning lead acetate paper black (H₂S)",
+    "رائحة بيض فاسد يسود أسيتات الرصاص (H₂S)": "Rotten-egg odor blackening lead acetate (H₂S)",
+    "رائحة نفاذة خانقة تخضر ورقة مبللة بثاني كرومات البوتاسيوم": "Suffocating pungent gas turning acidified K₂Cr₂O₇ paper green (SO₂)",
+    "رائحة خانقة تخضر ثاني كرومات البوتاسيوم (SO₂)": "Pungent gas turning K₂Cr₂O₇ paper green (SO₂)",
+    "تصاعد غاز SO₂ مع ظهور تعكر كبريتي أصفر معلق": "SO₂ gas evolution with yellow suspended sulfur turbidity (Thiosulfate)",
+    "تعكر كبريتي أصفر مع غاز SO₂ (ثيوكبريتات)": "Yellow sulfur turbidity with SO₂ gas (Thiosulfate)",
+    "أبخرة بنية حمراء عند فوهة الأنبوبة": "Reddish-brown fumes at the tube mouth (NO₂)",
+    "أبخرة بنية حمراء عند فوهة الأنبوبة (NO₂)": "Reddish-brown fumes at the tube mouth (NO₂)",
+    "لا غاز / أخرى": "No gas / other",
+
+    # Dilute HCl / Group I Reactions
+    "نعم (يذوب بالماء الساخن المغلي ويعود للترسيب بالتبريد)": "Yes (dissolves in boiling hot water and recrystallizes upon cooling)",
+    "نعم (يذوب بالماء الساخن)": "Yes (dissolves in hot water)",
+    "لا يذوب في الماء الساخن، ولكن يذوب في محلول النشادر المخفف": "Does not dissolve in hot water, but dissolves in dilute ammonia",
+    "لا (يذوب في النشادر المخفف)": "No (dissolves in dilute ammonia)",
+    "لا يذوب في الماء الساخن، ويسود الراسب عند إضافة محلول النشادر": "Does not dissolve in hot water, and precipitate blackens with ammonia",
+    "لا (ويسود بمحلول النشادر)": "No (blackens with ammonia)",
+
+    # NaOH Addition Reactions
+    "راسب أزرق": "Blue precipitate",
+    "راسب أخضر": "Green precipitate",
+    "راسب بني محمر جيلاتيني": "Reddish-brown gelatinous precipitate",
+    "راسب أبيض يتأكسد ويتحول إلى بني بالهواء": "White precipitate oxidizing and turning brown in air",
+    "راسب أبيض": "White precipitate",
+    "يظل لونه أخضر ثابتاً": "Remains green and stable",
+    "يتحول السطح تدريجياً إلى بني محمر نتيجة التأكسد": "Surface gradually turns reddish-brown due to oxidation",
+    "أزرق داكن (محلول معقد أزرق ملكي ساطع)": "Deep royal blue solution (Tetraamminecopper complex)",
+    "نعم، يذوب الراسب في الزيادة من NaOH مع الرج": "Yes, precipitate dissolves in excess NaOH with shaking",
+    "لا، لا يذوب الراسب في الزيادة من NaOH": "No, precipitate does not dissolve in excess NaOH",
+    "نعم، يذوب الراسب في زيادة الأمونيا": "Yes, precipitate dissolves in excess ammonia",
+    "لا، لا يذوب الراسب في زيادة الأمونيا": "No, precipitate does not dissolve in excess ammonia",
+
+    # Flame Tests
+    "لهب أحمر طوبي (brick-red flame) وراسب أبيض مع الأوكسالات": "Brick-red flame and white precipitate with ammonium oxalate (Ca²⁺)",
+    "لا يوجد لون مميز للهب (راسب أبيض ثابت يعطي لوناً مع الماغنسون)": "No distinctive flame color (White precipitate giving blue color with Magneson, Mg²⁺)",
+    "يذوب في الماء الساخن ويعود بالتبريد": "Dissolves in hot water and recrystallizes on cooling",
+
+    # Heating Test (Dry Tube)
+    "تصاعد غاز النشادر (رائحة نفاذة يزرق ورقة تباع الشمس المبللة)": "Evolution of ammonia gas (Pungent odor turning moist red litmus blue)",
+
+    # BaCl₂ Reactions
+    "يذوب الراسب في حمض HCl مع فوران وتصاعد غاز CO₂": "Precipitate dissolves in HCl with effervescence evolving CO₂ gas",
+    "يذوب الراسب في حمض HCl مع تصاعد غاز SO₂ الخانق": "Precipitate dissolves in HCl evolving suffocating SO₂ gas",
+    "يذوب الراسب في حمض HCl دون فوران (يعطي راسباً أصفر مع الموليبدات)": "Precipitate dissolves in HCl without gas (Forms yellow precipitate with ammonium molybdate)",
+    "لا يذوب الراسب إطلاقاً في حمض HCl المخفف الساخن": "Precipitate is completely insoluble in hot dilute HCl (BaSO₄)",
+
+    # Silver Nitrate Reactions
+    "راسب أبيض متجبن": "White curdy precipitate (AgCl)",
+    "راسب كريمي / أصفر باهت": "Cream / pale-yellow precipitate (AgBr)",
+    "راسب أصفر فاقع": "Bright yellow precipitate (AgI)",
+    "راسب أسود من كبريتيد الفضة": "Black precipitate of silver sulfide (Ag₂S)",
+    "راسب أحمر طوبي / بني محمر من كرومات الفضة": "Brick-red / reddish-brown precipitate of silver chromate",
+    "نعم، يذوب تماماً وبسرعة في النشادر المخفف": "Yes, completely and rapidly dissolves in dilute ammonia",
+    "لا يذوب في المخفف": "Does not dissolve in dilute ammonia",
+    "يذوب بصعوبة في المخفف ويذوب في النشادر المركز": "Slowly soluble in dilute ammonia, dissolves in concentrated ammonia",
+    "لا يذوب في المخفف أو المركز": "Does not dissolve in dilute or concentrated ammonia",
+    "يذوب في النشادر المخفف وحمض النيتريك": "Dissolves in dilute ammonia and dilute nitric acid (Phosphate)",
+    "لا يذوب نهائياً في النشادر سواء مخفف أو مركز": "Completely insoluble in both dilute and concentrated ammonia (Iodide)",
+
+    # Conc. H₂SO₄ Reaction
+    "تكون حلقة بنية فاصلة عند السطح الفاصل بين الطبقتين (الحلقة البنية)": "Formation of a brown ring at the liquid junction (Brown Ring Test, Nitrate)",
+
+    # Organic Liquid Diagnosis Questions
+    "حمضي قوي (تفور وتذوب في محلول بيكربونات الصوديوم NaHCO3 مع تصاعد غاز CO2)": "Strongly acidic (Effervesces with NaHCO₃ solution evolving CO₂ gas)",
+    "متعادل مع عباد الشمس ولا يفور مع كربونات أو بيكربونات الصوديوم": "Neutral to litmus and does not effervesce with carbonate or bicarbonate",
+    "يزيل لون KMnO4 المحمض البنفسجي، أو يكوّن مرآة فضية مع تولن (خواص اختزالية)": "Decolorizes acidified purple KMnO₄ or forms silver mirror with Tollens' (Reducing properties, Formic acid)",
+    "لا يزيل لون KMnO4، وله رائحة الخل المميزة (يعطي لوناً أحمر دامي مع FeCl3 المتعادل)": "Does not decolorize KMnO₄; distinct vinegar odor (Blood-red with neutral FeCl₃, Acetic acid)",
+    "يتكون راسب أصفر أو برتقالي فوري متبلور (مركب كربونيل: ألدهيد أو كيتون أليفاتي)": "Forms an immediate yellow or orange crystalline precipitate (Carbonyl compound: Aldehyde or Ketone)",
+    "سلبي تماماً مع 2,4-DNP (لا يتكون راسب أصفر أو برتقالي)": "Completely negative with 2,4-DNP (No yellow or orange precipitate, Alcohol)",
+    "تكوّن مرآة فضية لامعة Ag على الجدار الداخلي للأنبوبة أو راسب رمادي (ألدهيد مختزل)": "Formation of a shining silver mirror on the tube wall or grey precipitate (Reducing aldehyde)",
+    "سلبي مع كاشف تولن (يبقى المحلول رائقاً ولا تتكون مرآة فضية — كيتون أليفاتي)": "Negative with Tollens' reagent (Remains clear with no silver mirror, Aliphatic ketone)",
+    "تكوّن راسب أصفر متبلور من اليودوفورم CHI3 ذو رائحة مطهرة مميزة (أسيتالدهيد)": "Formation of a yellow crystalline iodoform (CHI₃) precipitate with antiseptic odor (Acetaldehyde)",
+    "سلبي مع اختبار اليودوفورم (لا يتكون راسب أصفر) مع رائحة الفورمالين النفاذة (فورمالدهيد)": "Negative with iodoform test (No yellow precipitate) with pungent formalin odor (Formaldehyde)",
+    "إيجابي سريع وفوري مع اختبار اليودوفورم برائحة مميزة بدون تدفئة (أسيتون)": "Rapid and immediate positive iodoform test with characteristic odor without heating (Acetone)",
+    "سلبي مع اليودوفورم على البارد، ويتطلب تدفئة خفيفة لتكوين اليودوفورم (إيثيل ميثيل كيتون)": "Negative with cold iodoform, requires gentle warming to form iodoform (Ethyl methyl ketone)",
+    "سائل خفيف القوام وسريع التطاير وذو رائحة كحولية معروفة (كحول أحادي الهيدروكسيل)": "Light, volatile liquid with characteristic alcohol odor (Monohydric alcohol)",
+    "سائل لزج جداً وثقيل (قوام شرباتي)، غير متطاير، يزيل اللون الوردي للبوراكس-فينولفثالين على البارد": "Very viscous and heavy syrupy liquid, non-volatile; decolorizes borax-phenolphthalein in the cold (Glycerol)",
+    "تكوّن راسب أصفر بلوري من اليودوفورم CHI3 برائحة مطهرة، ويخضر لون ثاني كرومات البوتاسيوم (إيثانول)": "Forms yellow crystalline iodoform precipitate with antiseptic odor; turns dichromate green (Ethanol)",
+    "سلبي تماماً مع اليودوفورم، وله رائحة كحولية ويعطي رائحة الفورمالين النفاذة مع سلك النحاس الساخن (ميثانول)": "Completely negative with iodoform; alcohol odor evolving pungent formalin with hot copper spiral (Methanol)",
+    "يذوب تماماً في حمض HCl المخفف؛ سائل زيتي أصفر يغمق بالهواء ولهب مدخن (قاعدة أمينية — أنيلين)": "Completely soluble in dilute HCl; yellow oily liquid darkening in air, sooty flame (Basic amine — Aniline)",
+    "لا يذوب في حمض HCl المخفف؛ مركب أروماتي متعادل يتفاعل إيجابياً مع كاشف 2,4-DNP": "Insoluble in dilute HCl; neutral aromatic compound positive with 2,4-DNP (Aromatic carbonyl)",
+    "له رائحة استر فواكه مميزة عطرة، يتصبن بالتسخين مع الصودا الكاوية معطياً كحولاً وأسيتات (إيثيل أسيتات)": "Pleasant fruity ester odor; hydrolyzes on heating with NaOH yielding alcohol and acetate (Ethyl acetate)",
+    "رائحة اللوز المر المميزة؛ يكوّن مرآة فضية لامعة مع كاشف تولن، وسلبي مع اليودوفورم وفهلنج (بنزالدهيد)": "Distinctive bitter almond odor; forms silver mirror with Tollens', negative with iodoform and Fehling's (Benzaldehyde)",
+    "رائحة زهرية عطرية قوية تشبه الفل / الياسمين؛ إيجابي مع اليودوفورم وسلبي مع تولن وفهلنج (أسيتوفينون)": "Strong sweet floral odor; positive with iodoform, negative with Tollens' and Fehling's (Acetophenone)",
+
+    # Organic Solid Diagnosis Questions
+    "حمضي قوي (تذوب في NaHCO3 مع فوران وتصاعد غاز CO2 وتغير لون عباد الشمس للأحمر)": "Strongly acidic (Dissolves in NaHCO₃ with effervescence evolving CO₂; turns litmus red)",
+    "متعادل كيميائياً (لا يذوب في NaHCO3 ولا يعطي فوراناً؛ متعادل مع عباد الشمس)": "Chemically neutral (Insoluble in NaHCO₃ without effervescence; neutral to litmus)",
+    "راسب أبيض فوري على البارد لا يذوب في حمض الخليك، ويزيل لون KMnO4 الساخن (حمض الأكساليك)": "Immediate white precipitate with CaCl₂ in the cold, insoluble in acetic acid; decolorizes warm KMnO₄ (Oxalic acid)",
+    "راسب أبيض على البارد يذوب في هيدروكسيد الصوديوم، وتفاعل فنتون يعطي لوناً بنفسجياً ويتفحم برائحة سكر محروق (حمض الطرطريك)": "White precipitate with CaCl₂ soluble in NaOH; positive in Fenton's test (violet) and chars with burnt sugar odor (Tartaric acid)",
+    "لا يتكون راسب على البارد، ولكن يتكون راسب أبيض فقط عند غليان المحلول بالحرارة (حمض الستريك)": "No precipitate in the cold; white precipitate forms only upon boiling the solution (Citric acid)",
+    "تكوّن حلقة بنفسجية مميزة عند السطح الفاصل تتفحم بالحرارة برائحة السكر المحروق (كربوهيدرات / سكر ذائب)": "Formation of a characteristic purple ring at interface with Molisch test; chars with burnt sugar odor (Carbohydrate / Soluble sugar)",
+    "سلبي مع اختبار مولش (لا تتكون حلقة بنفسجية؛ مادة صلبة غير سكرية)": "Negative with Molisch's test (No purple ring; non-sugar solid)",
+    "تكوّن راسب أحمر طوبي كثيف ومباشر من Cu2O (سكر أحادي مختزل)": "Immediate dense brick-red precipitate of Cu₂O (Reducing monosaccharide)",
+    "لا يتكون أي راسب أحمر طوبي مع فهلنج (محلول أزرق رائق وثابت — سكر غير مختزل)": "No brick-red precipitate with Fehling's solution (Solution remains clear blue — Non-reducing sugar)",
+    "يظهر لون أحمر كريزي داكن سريع ومكثف خلال دقيقة إلى دقيقتين من الغليان (سكر كيتوزي — فركتوز)": "Rapid intense cherry-red color develops within 1-2 minutes of boiling (Ketose sugar — Fructose)",
+    "لا يظهر لون أحمر خلال أول دقيقتين (يظل المحلول عديم اللون أو وردياً باهتاً جداً بعد وقت طويل) (سكر ألدوزي — جلوكوز)": "No red color within first 2 minutes; remains colorless or very faint pink after prolonged boiling (Aldose sugar — Glucose)",
+    "تلوّن فوري بلون بنفسجي داكن مميز، وتفاعل الفثالين يعطي فلورسين أخضر فسفورياً مشعاً (ريسورسينول)": "Immediate deep violet coloration with FeCl₃; phthalein reaction yields fluorescent green fluorescein (Resorcinol)",
+    "لا يعطي لوناً بنفسجياً مع FeCl3، وينصهر بالتسخين الجاف مع تصاعد النشادر وتفاعل البيوريت وردي بنفسجي (يوريا)": "No violet color with FeCl₃; melts on dry heating evolving ammonia, positive biuret test (violet-pink, Urea)",
+    "تفور وتذوب في بيكربونات الصوديوم NaHCO3 مع تصاعد فقاعات CO2 (حمض أروماتي صلب)": "Dissolves in NaHCO₃ with effervescence evolving CO₂ bubbles (Solid aromatic acid)",
+    "لا تفور ولا تذوب في بيكربونات الصوديوم (مركب فينولي أو غير حمضي)": "Does not dissolve or effervesce in NaHCO₃ (Phenolic or neutral non-acidic compound)",
+    "يتكون راسب بيج / بني مصفر لحمي مميز (Buff precipitate) من بنزوات الحديديك (حمض البنزويك)": "Flesh-colored buff precipitate of ferric benzoate with neutral FeCl₃ (Benzoic acid)",
+    "يتكون لون بنفسجي داكن كثيف وثابت جداً لا يزول مع FeCl3 (حمض الساليسيليك)": "Intense, deep, persistent violet coloration with neutral FeCl₃ that does not fade (Salicylic acid)",
+    "بلورات متميعة وردية برائحة كربولية معروفة، تذوب جزئياً بالماء البارد وتعطي راسباً أبيض مع ماء البروم ولوناً بنفسجياً مع FeCl3 (الفينول)": "Pinkish deliquescent crystals with carbolic odor; partially soluble in cold water; white ppt with bromine water, violet with FeCl₃ (Phenol)",
+    "مسحوق صلب لا يذوب في الماء البارد إطلاقاً، ذو لهب مدخن شديد (نافثولات أروماتية)": "Solid powder completely insoluble in cold water; burns with heavy smoky sooty flame (Aromatic naphthols)",
+    "يعطي تلوناً بنفسجياً داكناً يتحول فورياً إلى راسب بني محمر كثيف مع مسحوق القصر (ألفا-نافثول)": "Transient deep violet color instantly turning into a dense reddish-brown precipitate with bleaching powder (Alpha-Naphthol)",
+    "لا يعطي أي لون بنفسجي مع مسحوق القصر، ويعطي تلوناً أخضر باهتاً مع FeCl3 وصبغة آزو حمراء ساطعة مع الأنيلين (بيتا-نافثول)": "No violet color with bleaching powder; pale green with FeCl₃, brilliant scarlet azo dye with diazotized aniline (Beta-Naphthol)"
+}
+
+
+# Enrich CATION_OUTCOMES with Arabic and English notes
+for _k, _notes in CATION_NOTES_AR.items():
+    if _k in CATION_OUTCOMES:
+        CATION_OUTCOMES[_k]["notes_ar"] = _notes
+        if "notes_en" not in CATION_OUTCOMES[_k]:
+            CATION_OUTCOMES[_k]["notes_en"] = list(CATION_OUTCOMES[_k]["notes"])
+
+# Enrich ANION_OUTCOMES with Arabic and English notes
+for _k, _notes in ANION_NOTES_AR.items():
+    if _k in ANION_OUTCOMES:
+        ANION_OUTCOMES[_k]["notes_ar"] = _notes
+        if "notes_en" not in ANION_OUTCOMES[_k]:
+            ANION_OUTCOMES[_k]["notes_en"] = list(ANION_OUTCOMES[_k]["notes"])
+
+# Enrich ORGANIC_OUTCOMES with Arabic and English notes
+for _k, _notes in ORGANIC_NOTES_EN.items():
+    if _k in ORGANIC_OUTCOMES:
+        ORGANIC_OUTCOMES[_k]["notes_en"] = _notes
+        if "notes_ar" not in ORGANIC_OUTCOMES[_k]:
+            ORGANIC_OUTCOMES[_k]["notes_ar"] = list(ORGANIC_OUTCOMES[_k]["notes"])
+
+import re
+# Enrich all options in UNIFIED_DECISION_TREE with label_en and English labels
+for _qid, _q in UNIFIED_DECISION_TREE.items():
+    if _q.get("kind") == "question":
+        for _opt in _q.get("options", []):
+            _lbl = _opt.get("label", "")
+            _ar_lbl = _opt.get("arabic_label", "")
+            if _lbl in OPTION_TRANSLATIONS_EN:
+                _opt["label_en"] = OPTION_TRANSLATIONS_EN[_lbl]
+                if re.search(r'[\u0600-\u06FF]', _lbl):
+                    if not _ar_lbl:
+                        _opt["arabic_label"] = _lbl
+                    _opt["label"] = OPTION_TRANSLATIONS_EN[_lbl]
+            elif _ar_lbl in OPTION_TRANSLATIONS_EN:
+                _opt["label_en"] = OPTION_TRANSLATIONS_EN[_ar_lbl]
+                if re.search(r'[\u0600-\u06FF]', _lbl):
+                    _opt["label"] = OPTION_TRANSLATIONS_EN[_ar_lbl]
+
