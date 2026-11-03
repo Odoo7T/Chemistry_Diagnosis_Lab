@@ -334,23 +334,27 @@ SALT_DIAGNOSIS_NODES = {
     "SALT_START": {
         "kind": "question",
         "phase": "physical",
-        "text": "الخطوة 1 (الفحص الفيزيائي): ما هو لون الملح الصلب المجهول أمامك؟",
-        "hint": "لون الملح الصلب يعطي مؤشراً استباقياً قوياً حول الكاتيونات الانتقالية (مثل النحاس والحديد).",
+        "text": "Step 1 (Physical Examination): What is the color of the unknown solid salt?",
+        "arabic_text": "الخطوة 1 (الفحص الفيزيائي): ما هو لون الملح الصلب المجهول أمامك؟",
+        "hint": "Solid salt color provides a strong preliminary indication of transition metal cations (e.g., copper and iron).",
+        "arabic_hint": "لون الملح الصلب يعطي مؤشراً استباقياً قوياً حول الكاتيونات الانتقالية (مثل النحاس والحديد).",
         "options": [
-            {"label": "أبيض أو بلورات عديمة اللون", "next": "SALT_SOLUBILITY", "swatch": WHITE},
-            {"label": "أزرق أو أزرق مخضر", "next": "SALT_SOLUBILITY", "swatch": BLUE},
-            {"label": "أخضر باهت", "next": "SALT_SOLUBILITY", "swatch": GREEN},
-            {"label": "أصفر أو بني محمر / أسود رمادي", "next": "SALT_SOLUBILITY", "swatch": BROWN}
+            {"label": "White or colorless crystals", "arabic_label": "أبيض أو بلورات عديمة اللون", "next": "SALT_SOLUBILITY", "swatch": WHITE},
+            {"label": "Blue or blue-green", "arabic_label": "أزرق أو أزرق مخضر", "next": "SALT_SOLUBILITY", "swatch": BLUE},
+            {"label": "Pale green", "arabic_label": "أخضر باهت", "next": "SALT_SOLUBILITY", "swatch": GREEN},
+            {"label": "Yellow, reddish-brown, or grayish-black", "arabic_label": "أصفر أو بني محمر / أسود رمادي", "next": "SALT_SOLUBILITY", "swatch": BROWN}
         ]
     },
     "SALT_SOLUBILITY": {
         "kind": "question",
         "phase": "physical",
-        "text": "الخطوة 2 (الذوبانية): أضف عينة صغيرة من الملح إلى الماء المقطر البارد مع الرج، ماذا تلاحظ؟",
-        "hint": "الذوبان في الماء يحدد طريقة تحضير المحلول الأصلي ويحصر احتمالات الأنيونات.",
+        "text": "Step 2 (Solubility): Add a small sample of the salt to cold distilled water with shaking. What do you observe?",
+        "arabic_text": "الخطوة 2 (الذوبانية): أضف عينة صغيرة من الملح إلى الماء المقطر البارد مع الرج، ماذا تلاحظ؟",
+        "hint": "Water solubility determines how the stock solution is prepared and narrows anion possibilities.",
+        "arabic_hint": "الذوبان في الماء يحدد طريقة تحضير المحلول الأصلي ويحصر احتمالات الأنيونات.",
         "options": [
-            {"label": "يذوب في الماء البارد مكوناً محلولاً رائقاً", "next": "ANION_HCL_TEST", "swatch": NONE},
-            {"label": "لا يذوب أو شحيح الذوبان جداً في الماء البارد", "next": "ANION_HCL_TEST", "swatch": WHITE}
+            {"label": "Dissolves in cold water forming a clear solution", "arabic_label": "يذوب في الماء البارد مكوناً محلولاً رائقاً", "next": "ANION_HCL_TEST", "swatch": NONE},
+            {"label": "Insoluble or sparingly soluble in cold water", "arabic_label": "لا يذوب أو شحيح الذوبان جداً في الماء البارد", "next": "ANION_HCL_TEST", "swatch": WHITE}
         ]
     },
 
@@ -358,57 +362,67 @@ SALT_DIAGNOSIS_NODES = {
     "ANION_HCL_TEST": {
         "kind": "question",
         "phase": "anion",
-        "text": "الخطوة 3 (كشف الشق الحامضي - المجموعة الأولى): أضف حمض الهيدروكلوريك المخفف (Dil. HCl) إلى الملح الصلب، ماذا تلاحظ؟",
-        "hint": "حمض HCl المخفف يطرد الأحماض الأضعف والأقل ثباتاً على هيئة غازات مميزة.",
+        "text": "Step 3 (Acidic Radical - Group 1): Add dilute hydrochloric acid (Dil. HCl) to the solid salt. What do you observe?",
+        "arabic_text": "الخطوة 3 (كشف الشق الحامضي - المجموعة الأولى): أضف حمض الهيدروكلوريك المخفف (Dil. HCl) إلى الملح الصلب، ماذا تلاحظ؟",
+        "hint": "Dilute HCl displaces weaker, volatile acids as characteristic gases.",
+        "arabic_hint": "حمض HCl المخفف يطرد الأحماض الأضعف والأقل ثباتاً على هيئة غازات مميزة.",
         "options": [
-            {"label": "حدوث فوران وتصاعد غاز عديم اللون والرائحة يعكر ماء الجير الرائق (CO₂)", "next": "ANION_CO3_CONFIRM", "swatch": WHITE},
-            {"label": "تصاعد غاز ذي رائحة نفاذة خانقة (SO₂) يخضر ورقة مبللة بثاني كرومات البوتاسيوم المحمضة", "next": "ANION_SO2_CHECK", "swatch": GREEN},
-            {"label": "تصاعد غاز كريه الرائحة (رائحة البيض الفاسد H₂S) يسود ورقة مبللة بأسيتات الرصاص", "next": "SET_ANION_S", "swatch": BLACK},
-            {"label": "تصاعد غاز عديم اللون يتحول عند فوهة الأنبوبة إلى أبخرة بنية حمراء (NO₂)", "next": "SET_ANION_NO2", "swatch": BROWN},
-            {"label": "لم يحدث فوران ولم يتصاعد أي غاز", "next": "ANION_H2SO4_TEST", "swatch": NONE}
+            {"label": "Effervescence with colorless, odorless gas that turns clear lime water milky (CO₂)", "arabic_label": "حدوث فوران وتصاعد غاز عديم اللون والرائحة يعكر ماء الجير الرائق (CO₂)", "next": "ANION_CO3_CONFIRM", "swatch": WHITE},
+            {"label": "Choking pungent gas (SO₂) that turns acidified potassium dichromate paper green", "arabic_label": "تصاعد غاز ذي رائحة نفاذة خانقة (SO₂) يخضر ورقة مبللة بثاني كرومات البوتاسيوم المحمضة", "next": "ANION_SO2_CHECK", "swatch": GREEN},
+            {"label": "Foul rotten-egg odor gas (H₂S) that turns lead acetate paper black", "arabic_label": "تصاعد غاز كريه الرائحة (رائحة البيض الفاسد H₂S) يسود ورقة مبللة بأسيتات الرصاص", "next": "SET_ANION_S", "swatch": BLACK},
+            {"label": "Colorless gas turning into reddish-brown fumes (NO₂) at the mouth of the tube", "arabic_label": "تصاعد غاز عديم اللون يتحول عند فوهة الأنبوبة إلى أبخرة بنية حمراء (NO₂)", "next": "SET_ANION_NO2", "swatch": BROWN},
+            {"label": "No effervescence and no gas evolved", "arabic_label": "لم يحدث فوران ولم يتصاعد أي غاز", "next": "ANION_H2SO4_TEST", "swatch": NONE}
         ]
     },
     "ANION_CO3_CONFIRM": {
         "kind": "question",
         "phase": "anion",
-        "text": "تجربة تأكيدية للتفرقة بين الكربونات والبيكربونات: أضف محلول كبريتات المغنيسيوم (MgSO₄) إلى محلول الملح:",
-        "hint": "كربونات المغنيسيوم شحيحة الذوبان تترسب على البارد، بينما بيكربونات المغنيسيوم تذوب في الماء ولا تترسب إلا بعد الغليان.",
+        "text": "Confirmatory test to distinguish Carbonate from Bicarbonate: Add magnesium sulfate (MgSO₄) solution to salt solution:",
+        "arabic_text": "تجربة تأكيدية للتفرقة بين الكربونات والبيكربونات: أضف محلول كبريتات المغنيسيوم (MgSO₄) إلى محلول الملح:",
+        "hint": "Magnesium carbonate precipitates in the cold; magnesium bicarbonate is water-soluble and precipitates only after boiling.",
+        "arabic_hint": "كربونات المغنيسيوم شحيحة الذوبان تترسب على البارد، بينما بيكربونات المغنيسيوم تذوب في الماء ولا تترسب إلا بعد الغليان.",
         "options": [
-            {"label": "يتكون راسب أبيض فوراً على البارد", "next": "SET_ANION_CO3", "swatch": WHITE},
-            {"label": "لا يتكون راسب على البارد، ويتكون الراسب الأبيض بعد الغليان والتسخين", "next": "SET_ANION_HCO3", "swatch": WHITE}
+            {"label": "White precipitate forms immediately in the cold", "arabic_label": "يتكون راسب أبيض فوراً على البارد", "next": "SET_ANION_CO3", "swatch": WHITE},
+            {"label": "No precipitate in the cold; white precipitate forms only after boiling and heating", "arabic_label": "لا يتكون راسب على البارد، ويتكون الراسب الأبيض بعد الغليان والتسخين", "next": "SET_ANION_HCO3", "swatch": WHITE}
         ]
     },
     "ANION_SO2_CHECK": {
         "kind": "question",
         "phase": "anion",
-        "text": "افحص محلول الأنبوبة أثناء تصاعد غاز SO₂، هل تلاحظ تكون راسب أصفر معلق من الكبريت؟",
-        "hint": "التمييز بين الكبريتيت والثيوكبريتات يعتمد على ترسب الكبريت الأصفر الغروي في حالة الثيوكبريتات فقط.",
+        "text": "Inspect the solution during SO₂ gas evolution. Do you observe a yellow colloidal sulfur precipitate?",
+        "arabic_text": "افحص محلول الأنبوبة أثناء تصاعد غاز SO₂، هل تلاحظ تكون راسب أصفر معلق من الكبريت؟",
+        "hint": "Distinguishing sulfite from thiosulfate relies on the precipitation of colloidal yellow sulfur in thiosulfate only.",
+        "arabic_hint": "التمييز بين الكبريتيت والثيوكبريتات يعتمد على ترسب الكبريت الأصفر الغروي في حالة الثيوكبريتات فقط.",
         "options": [
-            {"label": "لا يوجد راسب أصفر (والمحلول يعطي راسباً أبيض يسود بالتسخين مع AgNO₃)", "next": "SET_ANION_SO3", "swatch": NONE},
-            {"label": "نعم، ظهر راسب أصفر معلق من الكبريت (والمحلول يزيل لون اليود البني)", "next": "SET_ANION_S2O3", "swatch": YELLOW}
+            {"label": "No yellow precipitate (solution gives white ppt with AgNO₃ turning black upon heating)", "arabic_label": "لا يوجد راسب أصفر (والمحلول يعطي راسباً أبيض يسود بالتسخين مع AgNO₃)", "next": "SET_ANION_SO3", "swatch": NONE},
+            {"label": "Yes, yellow suspended sulfur precipitate appears (solution decolorizes brown iodine)", "arabic_label": "نعم، ظهر راسب أصفر معلق من الكبريت (والمحلول يزيل لون اليود البني)", "next": "SET_ANION_S2O3", "swatch": YELLOW}
         ]
     },
     "ANION_H2SO4_TEST": {
         "kind": "question",
         "phase": "anion",
-        "text": "الخطوة 4 (المجموعة الثانية): أضف حمض الكبريتيك المركز (Conc. H₂SO₄) إلى عينة جافة من الملح الصلب مع التسخين الهادئ:",
-        "hint": "حمض الكبريتيك المركز أكثر ثباتاً من أحماض الهاليدات والنيتريك فيطردها على هيئة غازات وأبخرة ملونة.",
+        "text": "Step 4 (Group 2 Anions): Add concentrated sulfuric acid (Conc. H₂SO₄) to a dry salt sample with gentle heating:",
+        "arabic_text": "الخطوة 4 (المجموعة الثانية): أضف حمض الكبريتيك المركز (Conc. H₂SO₄) إلى عينة جافة من الملح الصلب مع التسخين الهادئ:",
+        "hint": "Concentrated H₂SO₄ is more stable and displaces halide and nitric acids as characteristic colored gases and fumes.",
+        "arabic_hint": "حمض الكبريتيك المركز أكثر ثباتاً من أحماض الهاليدات والنيتريك فيطردها على هيئة غازات وأبخرة ملونة.",
         "options": [
-            {"label": "تصاعد غاز عديم اللون (HCl) يكون سحباً بيضاء كثيفة مع ساق مبللة بالنشادر (+ راسب أبيض مع AgNO₃)", "next": "SET_ANION_CL", "swatch": WHITE},
-            {"label": "تصاعد أبخرة برتقالية حمراء (Br₂) تصفر ورقة مبللة بالنشا (+ راسب كريمي مع AgNO₃)", "next": "SET_ANION_BR", "swatch": ORANGE},
-            {"label": "تصاعد أبخرة بنفسجية كثيفة (I₂) تزرق ورقة مبللة بالنشا (+ راسب أصفر مع AgNO₃)", "next": "SET_ANION_I", "swatch": VIOLET},
-            {"label": "تصاعد أبخرة بنية حمراء (NO₂) تزداد كثافتها بإضافة خراطة نحاس (+ حلقة بنية مع FeSO₄)", "next": "SET_ANION_NO3", "swatch": BROWN},
-            {"label": "لم تتصاعد أي غازات أو أبخرة مع حمض الكبريتيك المركز", "next": "ANION_BACL2_TEST", "swatch": NONE}
+            {"label": "Colorless gas (HCl) forming dense white fumes with ammonia-dipped rod (+ white ppt with AgNO₃)", "arabic_label": "تصاعد غاز عديم اللون (HCl) يكون سحباً بيضاء كثيفة مع ساق مبللة بالنشادر (+ راسب أبيض مع AgNO₃)", "next": "SET_ANION_CL", "swatch": WHITE},
+            {"label": "Orange-red vapors (Br₂) that turn starch-moistened paper yellow (+ cream ppt with AgNO₃)", "arabic_label": "تصاعد أبخرة برتقالية حمراء (Br₂) تصفر ورقة مبللة بالنشا (+ راسب كريمي مع AgNO₃)", "next": "SET_ANION_BR", "swatch": ORANGE},
+            {"label": "Dense violet vapors (I₂) that turn starch-moistened paper blue (+ yellow ppt with AgNO₃)", "arabic_label": "تصاعد أبخرة بنفسجية كثيفة (I₂) تزرق ورقة مبللة بالنشا (+ راسب أصفر مع AgNO₃)", "next": "SET_ANION_I", "swatch": VIOLET},
+            {"label": "Reddish-brown fumes (NO₂) increasing upon adding copper turnings (+ brown ring test with FeSO₄)", "arabic_label": "تصاعد أبخرة بنية حمراء (NO₂) تزداد كثافتها بإضافة خراطة نحاس (+ حلقة بنية مع FeSO₄)", "next": "SET_ANION_NO3", "swatch": BROWN},
+            {"label": "No gases or vapors evolved with concentrated sulfuric acid", "arabic_label": "لم تتصاعد أي غازات أو أبخرة مع حمض الكبريتيك المركز", "next": "ANION_BACL2_TEST", "swatch": NONE}
         ]
     },
     "ANION_BACL2_TEST": {
         "kind": "question",
         "phase": "anion",
-        "text": "الخطوة 5 (المجموعة الثالثة): أضف محلول كلوريد الباريوم (BaCl₂) إلى محلول الملح، ثم اختبر ذوبان الراسب الأبيض في حمض HCl المخفف:",
-        "hint": "تستخدم مجموعة كلوريد الباريوم للكشف عن الأنيونات الثابتة حرارياً مثل الكبريتات والفوسفات.",
+        "text": "Step 5 (Group 3 Anions): Add barium chloride (BaCl₂) solution to salt solution, then test precipitate solubility in dilute HCl:",
+        "arabic_text": "الخطوة 5 (المجموعة الثالثة): أضف محلول كلوريد الباريوم (BaCl₂) إلى محلول الملح، ثم اختبر ذوبان الراسب الأبيض في حمض HCl المخفف:",
+        "hint": "BaCl₂ reagent group detects thermally stable anions such as sulfate and phosphate.",
+        "arabic_hint": "تستخدم مجموعة كلوريد الباريوم للكشف عن الأنيونات الثابتة حرارياً مثل الكبريتات والفوسفات.",
         "options": [
-            {"label": "يتكون راسب أبيض لا يذوب في حمض الهيدروكلوريك المخفف (+ راسب أبيض مع أسيتات الرصاص)", "next": "SET_ANION_SO4", "swatch": WHITE},
-            {"label": "يتكون راسب أبيض يذوب في حمض الهيدروكلوريك المخفف (+ راسب أصفر مع نترات الفضة AgNO₃)", "next": "SET_ANION_PO4", "swatch": YELLOW}
+            {"label": "White precipitate insoluble in dilute HCl (+ white ppt with lead acetate)", "arabic_label": "يتكون راسب أبيض لا يذوب في حمض الهيدروكلوريك المخفف (+ راسب أبيض مع أسيتات الرصاص)", "next": "SET_ANION_SO4", "swatch": WHITE},
+            {"label": "White precipitate soluble in dilute HCl (+ yellow ppt with silver nitrate AgNO₃)", "arabic_label": "يتكون راسب أبيض يذوب في حمض الهيدروكلوريك المخفف (+ راسب أصفر مع نترات الفضة AgNO₃)", "next": "SET_ANION_PO4", "swatch": YELLOW}
         ]
     },
 
@@ -430,66 +444,78 @@ SALT_DIAGNOSIS_NODES = {
     "CATION_START": {
         "kind": "question",
         "phase": "cation",
-        "text": "الآن ننتقل لتحديد الشق القاعدي (Cation): أضف قطرات من حمض HCl المخفف إلى محلول الملح المائي، هل تكون راسب؟",
-        "hint": "تترسب كاتيونات المجموعة التحليلية الأولى (مثل الرصاص الثنائي Pb²⁺) على هيئة كلوريدات شحيحة الذوبان.",
+        "text": "Now proceeding to identify the Basic Radical (Cation): Add drops of dilute HCl to the aqueous salt solution. Does a precipitate form?",
+        "arabic_text": "الآن ننتقل لتحديد الشق القاعدي (Cation): أضف قطرات من حمض HCl المخفف إلى محلول الملح المائي، هل تكون راسب؟",
+        "hint": "Group I analytical cations (e.g. Lead(II) Pb²⁺) precipitate as sparingly soluble chlorides.",
+        "arabic_hint": "تترسب كاتيونات المجموعة التحليلية الأولى (مثل الرصاص الثنائي Pb²⁺) على هيئة كلوريدات شحيحة الذوبان.",
         "options": [
-            {"label": "نعم، تكون راسب أبيض يذوب في الماء الساخن، ويعطي راسباً أصفر فاقعاً مع يوديد البوتاسيوم (KI)", "next": "FINISH_PB", "swatch": YELLOW},
-            {"label": "لا، لم يتكون أي راسب مع حمض HCl المخفف", "next": "CATION_NAOH_TEST", "swatch": NONE}
+            {"label": "Yes, white precipitate soluble in hot water, giving bright yellow ppt with KI", "arabic_label": "نعم، تكون راسب أبيض يذوب في الماء الساخن، ويعطي راسباً أصفر فاقعاً مع يوديد البوتاسيوم (KI)", "next": "FINISH_PB", "swatch": YELLOW},
+            {"label": "No, no precipitate formed with dilute HCl", "arabic_label": "لا، لم يتكون أي راسب مع حمض HCl المخفف", "next": "CATION_NAOH_TEST", "swatch": NONE}
         ]
     },
     "CATION_NAOH_TEST": {
         "kind": "question",
         "phase": "cation",
-        "text": "أضف محلول هيدروكسيد الصوديوم (NaOH) تدريجياً إلى محلول الملح، ما هو لون الراسب المتكون؟",
-        "hint": "محلول NaOH يرسب معظم الفلزات الانتقالية والقاعدية على هيئة هيدروكسيدات ذات ألوان مميزة.",
+        "text": "Add sodium hydroxide (NaOH) solution dropwise to the salt solution. What is the color of the precipitate?",
+        "arabic_text": "أضف محلول هيدروكسيد الصوديوم (NaOH) تدريجياً إلى محلول الملح، ما هو لون الراسب المتكون؟",
+        "hint": "NaOH precipitates most transition and base metals as hydroxides with distinct colors.",
+        "arabic_hint": "محلول NaOH يرسب معظم الفلزات الانتقالية والقاعدية على هيئة هيدروكسيدات ذات ألوان مميزة.",
         "options": [
-            {"label": "راسب أزرق يسود بالتسخين، ويذوب في الزيادة من النشادر مكوناً محلولاً أزرق قاتماً", "next": "FINISH_CU", "swatch": BLUE},
-            {"label": "راسب أبيض مخضر لا يذوب في الزيادة، ويعطي راسباً أزرق مع حديديسيانيد البوتاسيوم", "next": "FINISH_FE2", "swatch": GREEN},
-            {"label": "راسب جيلاتيني بني محمر لا يذوب في الزيادة، ويعطي لوناً أحمر دامياً مع ثيوسيانات البوتاسيوم (KSCN)", "next": "FINISH_FE3", "swatch": BROWN},
-            {"label": "راسب أبيض", "next": "CATION_WHITE_PPT_EXCESS", "swatch": WHITE},
-            {"label": "لم يتكون أي راسب", "next": "CATION_NO_PPT", "swatch": NONE}
+            {"label": "Blue precipitate turning black on heating; dissolves in excess ammonia to royal deep blue solution", "arabic_label": "راسب أزرق يسود بالتسخين، ويذوب في الزيادة من النشادر مكوناً محلولاً أزرق قاتماً", "next": "FINISH_CU", "swatch": BLUE},
+            {"label": "Dirty white-green precipitate insoluble in excess; blue ppt with potassium ferricyanide", "arabic_label": "راسب أبيض مخضر لا يذوب في الزيادة، ويعطي راسباً أزرق مع حديديسيانيد البوتاسيوم", "next": "FINISH_FE2", "swatch": GREEN},
+            {"label": "Reddish-brown gelatinous precipitate insoluble in excess; blood-red color with KSCN", "arabic_label": "راسب جيلاتيني بني محمر لا يذوب في الزيادة، ويعطي لوناً أحمر دامياً مع ثيوسيانات البوتاسيوم (KSCN)", "next": "FINISH_FE3", "swatch": BROWN},
+            {"label": "White precipitate", "arabic_label": "راسب أبيض", "next": "CATION_WHITE_PPT_EXCESS", "swatch": WHITE},
+            {"label": "No precipitate formed", "arabic_label": "لم يتكون أي راسب", "next": "CATION_NO_PPT", "swatch": NONE}
         ]
     },
     "CATION_WHITE_PPT_EXCESS": {
         "kind": "question",
         "phase": "cation",
-        "text": "أضف الزيادة من محلول هيدروكسيد الصوديوم (Excess NaOH) إلى الراسب الأبيض مع الرج:",
-        "hint": "الهيدروكسيدات المترددة (Amphoteric) مثل الألومنيوم والزنك تذوب في الزيادة من NaOH، بينما هيدروكسيدات الكالسيوم والمغنيسيوم والباريوم لا تذوب.",
+        "text": "Add excess sodium hydroxide (Excess NaOH) solution to the white precipitate with shaking:",
+        "arabic_text": "أضف الزيادة من محلول هيدروكسيد الصوديوم (Excess NaOH) إلى الراسب الأبيض مع الرج:",
+        "hint": "Amphoteric hydroxides (Al, Zn) dissolve in excess NaOH; Ca, Mg, Ba hydroxides do not.",
+        "arabic_hint": "الهيدروكسيدات المترددة (Amphoteric) مثل الألومنيوم والزنك تذوب في الزيادة من NaOH، بينما هيدروكسيدات الكالسيوم والمغنيسيوم والباريوم لا تذوب.",
         "options": [
-            {"label": "يذوب الراسب الأبيض في الزيادة من NaOH مكوناً محلولاً رائقاً", "next": "CATION_AMMONIA_TEST", "swatch": NONE},
-            {"label": "لا يذوب الراسب الأبيض في الزيادة من NaOH", "next": "CATION_INSOLUBLE_WHITE_FLAME", "swatch": WHITE}
+            {"label": "White precipitate dissolves in excess NaOH forming clear solution", "arabic_label": "يذوب الراسب الأبيض في الزيادة من NaOH مكوناً محلولاً رائقاً", "next": "CATION_AMMONIA_TEST", "swatch": NONE},
+            {"label": "White precipitate does not dissolve in excess NaOH", "arabic_label": "لا يذوب الراسب الأبيض في الزيادة من NaOH", "next": "CATION_INSOLUBLE_WHITE_FLAME", "swatch": WHITE}
         ]
     },
     "CATION_AMMONIA_TEST": {
         "kind": "question",
         "phase": "cation",
-        "text": "خذ عينة جديدة من محلول الملح وأضف إليها محلول النشادر (NH₄OH) تدريجياً ثم بزيادة:",
-        "hint": "هيدروكسيد الزنك يذوب في الزيادة من النشادر لتكوين معقد رباعي أمين الزنك، بينما هيدروكسيد الألومنيوم لا يذوب في النشادر.",
+        "text": "Take a fresh sample and add aqueous ammonia (NH₄OH) dropwise then in excess:",
+        "arabic_text": "خذ عينة جديدة من محلول الملح وأضف إليها محلول النشادر (NH₄OH) تدريجياً ثم بزيادة:",
+        "hint": "Zinc hydroxide dissolves in excess ammonia forming tetraammine complex; aluminium hydroxide is insoluble in excess ammonia.",
+        "arabic_hint": "هيدروكسيد الزنك يذوب في الزيادة من النشادر لتكوين معقد رباعي أمين الزنك، بينما هيدروكسيد الألومنيوم لا يذوب في النشادر.",
         "options": [
-            {"label": "يتكون راسب أبيض جيلاتيني لا يذوب في الزيادة من محلول النشادر", "next": "FINISH_AL", "swatch": WHITE},
-            {"label": "يتكون راسب أبيض يذوب تماماً في الزيادة من محلول النشادر", "next": "FINISH_ZN", "swatch": NONE}
+            {"label": "White gelatinous precipitate insoluble in excess ammonia", "arabic_label": "يتكون راسب أبيض جيلاتيني لا يذوب في الزيادة من محلول النشادر", "next": "FINISH_AL", "swatch": WHITE},
+            {"label": "White precipitate dissolves completely in excess ammonia", "arabic_label": "يتكون راسب أبيض يذوب تماماً في الزيادة من محلول النشادر", "next": "FINISH_ZN", "swatch": NONE}
         ]
     },
     "CATION_INSOLUBLE_WHITE_FLAME": {
         "kind": "question",
         "phase": "cation",
-        "text": "أجرِ اختبار اللهب الجاف (Flame Test) والتجارب التأكيدية للكاتيون ذي الراسب الأبيض غير الذائب في الزيادة:",
-        "hint": "الكالسيوم والباريوم يلونان لهب بنزن بألوان مميزة، بينما المغنيسيوم لا يلون اللهب.",
+        "text": "Perform dry flame test and confirmatory tests for the cation with white precipitate insoluble in excess NaOH:",
+        "arabic_text": "أجرِ اختبار اللهب الجاف (Flame Test) والتجارب التأكيدية للكاتيون ذي الراسب الأبيض غير الذائب في الزيادة:",
+        "hint": "Calcium and Barium impart distinct colors to Bunsen flame; Magnesium does not.",
+        "arabic_hint": "الكالسيوم والباريوم يلونان لهب بنزن بألوان مميزة، بينما المغنيسيوم لا يلون اللهب.",
         "options": [
-            {"label": "يلون اللهب باللون الأحمر الطوبي، ويعطي راسباً أبيض مع حمض الكبريتيك المخفف", "next": "FINISH_CA", "swatch": BRICK_RED},
-            {"label": "يلون اللهب باللون الأخضر التفاحي، ويعطي راسباً أصفر مع كرومات البوتاسيوم (K₂CrO₄)", "next": "FINISH_BA", "swatch": APPLE_GREEN},
-            {"label": "لا يلون اللهب بأي لون مميز، ويعطي راسباً أبيض بلورياً مع فوسفات الصوديوم النشادرية", "next": "FINISH_MG", "swatch": WHITE}
+            {"label": "Brick-red flame; gives white precipitate with dilute H₂SO₄", "arabic_label": "يلون اللهب باللون الأحمر الطوبي، ويعطي راسباً أبيض مع حمض الكبريتيك المخفف", "next": "FINISH_CA", "swatch": BRICK_RED},
+            {"label": "Apple-green flame; gives yellow precipitate with K₂CrO₄", "arabic_label": "يلون اللهب باللون الأخضر التفاحي، ويعطي راسباً أصفر مع كرومات البوتاسيوم (K₂CrO₄)", "next": "FINISH_BA", "swatch": APPLE_GREEN},
+            {"label": "No distinctive flame coloration; gives white crystalline ppt with ammoniacal sodium phosphate", "arabic_label": "لا يلون اللهب بأي لون مميز، ويعطي راسباً أبيض بلورياً مع فوسفات الصوديوم النشادرية", "next": "FINISH_MG", "swatch": WHITE}
         ]
     },
     "CATION_NO_PPT": {
         "kind": "question",
         "phase": "cation",
-        "text": "سخّن أنبوبة الاختبار المحتوية على الملح مع هيدروكسيد الصوديوم (NaOH)، أو أجرِ كشف اللهب الجاف:",
-        "hint": "أملاح الأمونيوم تطلق غاز النشادر بالتسخين مع القلويات، بينما الصوديوم والبوتاسيوم يكشف عنهما بلون اللهب.",
+        "text": "Heat the test tube containing the salt with NaOH, or perform dry flame test:",
+        "arabic_text": "سخّن أنبوبة الاختبار المحتوية على الملح مع هيدروكسيد الصوديوم (NaOH)، أو أجرِ كشف اللهب الجاف:",
+        "hint": "Ammonium salts evolve ammonia gas upon heating with alkali; Sodium and Potassium are detected by flame color.",
+        "arabic_hint": "أملاح الأمونيوم تطلق غاز النشادر بالتسخين مع القلويات، بينما الصوديوم والبوتاسيوم يكشف عنهما بلون اللهب.",
         "options": [
-            {"label": "يتصاعد غاز النشادر (NH₃) الذي يزرق ورقة عباد الشمس ويعطي راسباً بنياً محمراً مع كاشف نيسلر", "next": "FINISH_NH4", "swatch": BROWN},
-            {"label": "لا يتصاعد غاز، والملح الجاف يلون لهب بنزن باللون الأصفر الذهبي الساطع", "next": "FINISH_NA", "swatch": GOLDEN_YELLOW},
-            {"label": "لا يتصاعد غاز، والملح الجاف يلون لهب بنزن باللون البنفسجي الفاتح (الليلكي)", "next": "FINISH_K", "swatch": LILAC}
+            {"label": "Ammonia gas (NH₃) evolved, turning litmus blue and giving reddish-brown ppt with Nessler's reagent", "arabic_label": "يتصاعد غاز النشادر (NH₃) الذي يزرق ورقة عباد الشمس ويعطي راسباً بنياً محمراً مع كاشف نيسلر", "next": "FINISH_NH4", "swatch": BROWN},
+            {"label": "No gas evolved; dry salt colors Bunsen flame persistent golden-yellow", "arabic_label": "لا يتصاعد غاز، والملح الجاف يلون لهب بنزن باللون الأصفر الذهبي الساطع", "next": "FINISH_NA", "swatch": GOLDEN_YELLOW},
+            {"label": "No gas evolved; dry salt colors Bunsen flame pale violet / lilac", "arabic_label": "لا يتصاعد غاز، والملح الجاف يلون لهب بنزن باللون البنفسجي الفاتح (الليلكي)", "next": "FINISH_K", "swatch": LILAC}
         ]
     },
 

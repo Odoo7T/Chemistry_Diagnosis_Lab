@@ -115,6 +115,137 @@ body::before {
   color: var(--red);
 }
 
+/* Language Switcher Component */
+.lang-switch-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 3px 6px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  transition: all 0.25s ease;
+}
+
+.lang-switch-container:hover {
+  border-color: #3b82d6;
+  background: rgba(59, 130, 214, 0.08);
+}
+
+.lang-icon {
+  font-size: 13px;
+  line-height: 1;
+  opacity: 0.85;
+  margin: 0 2px;
+  user-select: none;
+}
+
+.lang-switcher {
+  display: inline-flex;
+  gap: 2px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px;
+  border-radius: 16px;
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+  outline: none;
+  line-height: 1;
+}
+
+.lang-btn:hover:not(.active) {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lang-btn.active {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.45);
+}
+
+/* Direction & Layout Adaptations (RTL & LTR) */
+html[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="ltr"] {
+  direction: ltr;
+  text-align: left;
+}
+
+html[dir="ltr"] .logo small {
+  margin-right: 0 !important;
+  margin-left: 8px !important;
+}
+
+html[dir="ltr"] .question-card {
+  border-left: 3px solid var(--red);
+  border-right: none;
+}
+
+html[dir="rtl"] .question-card {
+  border-right: 3px solid var(--red);
+  border-left: none;
+}
+
+html[dir="ltr"] .question-hint-box {
+  border-left: 2px solid #555;
+  border-right: none;
+}
+
+html[dir="rtl"] .question-hint-box {
+  border-right: 2px solid #555;
+  border-left: none;
+}
+
+html[dir="ltr"] .question-controls {
+  justify-content: flex-start !important;
+}
+
+html[dir="rtl"] .question-controls {
+  justify-content: flex-end !important;
+}
+
+html[dir="ltr"] .report-meta {
+  text-align: right;
+}
+
+html[dir="rtl"] .report-meta {
+  text-align: left;
+}
+
+html[dir="ltr"] .modal-close-btn {
+  right: 18px;
+  left: auto;
+}
+
+html[dir="rtl"] .modal-close-btn {
+  left: 18px;
+  right: auto;
+}
+
+html[dir="ltr"] .structure-modal-close {
+  right: 14px;
+  left: auto;
+}
+
+html[dir="rtl"] .structure-modal-close {
+  left: 14px;
+  right: auto;
+}
+
 /* Hero Section */
 .hero {
   max-width: 1450px;

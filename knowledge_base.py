@@ -706,13 +706,14 @@ UNIFIED_DECISION_TREE = {
         "start_mode",
         "Select the analytical path for the unknown sample:",
         [
-            option("تشخيص ملح غير عضوي مجهول (Complete Salt Diagnosis)", "SALT_START", swatch=WHITE, arabic_label="تشخيص ملح غير عضوي كامل"),
-            option("كشف غير عضوي (Inorganic Analysis)", "start_color", swatch=BLUE, arabic_label="كشف غير عضوي (أيونات)"),
-            option("كشف عضوي (Organic Analysis)", "org_q_state", swatch=GREEN, arabic_label="كشف عضوي"),
-            option("غير محدد — فحص تفحم اللهب", "unified_q_charring_heat", swatch=YELLOW, arabic_label="غير محدد (فحص اللهب)")
+            option("Complete Inorganic Salt Diagnosis", "SALT_START", swatch=WHITE, arabic_label="تشخيص ملح غير عضوي كامل"),
+            option("Inorganic Ion Analysis", "start_color", swatch=BLUE, arabic_label="كشف غير عضوي (أيونات)"),
+            option("Organic Analysis", "org_q_state", swatch=GREEN, arabic_label="كشف عضوي"),
+            option("Unknown (Flame & Charring Test)", "unified_q_charring_heat", swatch=YELLOW, arabic_label="غير محدد (فحص اللهب)")
         ],
-        hint="اختر 'تشخيص ملح غير عضوي كامل' للكشف عن الملح بشقيه الحامضي والقاعدي واكتشاف الـ 30 ملحاً المرجعية، أو اختر كشف الأيونات المنفردة أو المركبات العضوية.",
-        arabic_text="المرحلة 1: حدد مسار الفحص التحليلي للعينة المجهولة"
+        hint="Choose 'Complete Inorganic Salt Diagnosis' to detect both acidic and basic radicals of 30 reference salts, or choose individual ions or organic compounds.",
+        arabic_text="المرحلة 1: حدد مسار الفحص التحليلي للعينة المجهولة",
+        arabic_hint="اختر 'تشخيص ملح غير عضوي كامل' للكشف عن الملح بشقيه الحامضي والقاعدي واكتشاف الـ 30 ملحاً المرجعية، أو اختر كشف الأيونات المنفردة أو المركبات العضوية."
     ),
 
     "unified_q_charring_heat": question(

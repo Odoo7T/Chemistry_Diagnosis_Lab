@@ -15,23 +15,32 @@
 </div>
 
 <header class="site-header">
-    <div class="logo" id="header-logo">CHEMISTRY DIAGNOSIS <span>LAB</span> <small style="font-size: 11px; color: #888; font-weight: normal; margin-right: 8px;">نظام تشخيص العينات العضوية وغير العضوية</small></div>
+    <div class="logo" id="header-logo">CHEMISTRY DIAGNOSIS <span>LAB</span> <small id="header-logo-sub" style="font-size: 11px; color: #888; font-weight: normal; margin-right: 8px;">نظام تشخيص العينات العضوية وغير العضوية</small></div>
     <div class="header-actions">
+        <!-- Language Switcher Toggle -->
+        <div class="lang-switch-container" id="lang-switch-container">
+            <span class="lang-icon" aria-hidden="true">🌐</span>
+            <div class="lang-switcher" id="lang-switcher" role="group" aria-label="Language Selector">
+                <button type="button" class="lang-btn active" id="lang-btn-ar" data-lang="ar" title="التحويل إلى اللغة العربية">العربية</button>
+                <button type="button" class="lang-btn" id="lang-btn-en" data-lang="en" title="Switch to English">English</button>
+            </div>
+        </div>
+
         <button id="salt-direct-header-btn" class="ref-toggle-btn" title="تشخيص ملح غير عضوي كامل عبر 3 مراحل">
-            <span>🧂 تشخيص ملح كامل</span>
+            <span id="header-salt-btn-text">🧂 تشخيص ملح كامل</span>
         </button>
         <button id="new-sample-header-btn" class="ref-toggle-btn" title="بدء فحص عينة جديدة">
-            <span>↺ عينة جديدة</span>
+            <span id="header-new-btn-text">↺ عينة جديدة</span>
         </button>
         <button id="toggle-predictor-btn" class="ref-toggle-btn" title="فتح محاكي التفاعلات الكيميائية">
-            <span>⚗ محاكي التفاعلات</span>
+            <span id="header-predictor-btn-text">⚗ محاكي التفاعلات</span>
         </button>
         <button id="ref-modal-btn" class="ref-toggle-btn" title="الملاحظات المرجعية وكشف اللهب">
-            <span>دليل اللهب</span>
+            <span id="header-flame-btn-text">دليل اللهب</span>
         </button>
         <div class="status">
             <span class="status-dot"></span>
-            النظام جاهز
+            <span id="header-status-text">النظام جاهز</span>
         </div>
     </div>
 </header>
@@ -41,7 +50,7 @@
     <!-- PRIMARY DIAGNOSTIC WORKSPACE (UNKNOWN SAMPLE INQUIRY) -->
     <section id="diagnostic-workspace" class="diagnostic-card">
         <div class="workspace-header-text">
-            <div class="eyebrow">CHEMISTRY DIAGNOSIS LAB — EXPERT SYSTEM</div>
+            <div class="eyebrow" id="workspace-eyebrow">CHEMISTRY DIAGNOSIS LAB — EXPERT SYSTEM</div>
             <h2 id="workspace-title">فحص وتشخيص العينة المجهولة</h2>
             <p id="workspace-description" class="workspace-subdesc">
                 حدد مسار الفحص (عضوي أو غير عضوي أو غير محدد) وأجب عن الأسئلة المعملية وسيقوم محرك الاستدلال بإرشادك خطوة بخطوة حتى الوصول للنتيجة والتجربة التأكيدية.
@@ -72,7 +81,7 @@
 
             <div class="question-controls" style="margin-top: 20px; display: flex; justify-content: flex-end;">
                 <button class="action-btn" id="step-back-btn" style="display: none;">
-                    ← الرجوع للسؤال السابق
+                    <span id="step-back-text">← الرجوع للسؤال السابق</span>
                 </button>
             </div>
         </div>
@@ -80,9 +89,9 @@
         <!-- Confirmatory Test Container (المرحلة 4) -->
         <div id="stage4-container" class="confirmatory-card" hidden>
             <div class="stage-header">
-                <div class="eyebrow" style="color: #60a5fa;">CONFIRMATORY PROTOCOL</div>
+                <div class="eyebrow" id="stage4-eyebrow" style="color: #60a5fa;">CONFIRMATORY PROTOCOL</div>
                 <h3 class="stage-title" id="stage4-title">النتيجة المحتملة والاختبار التأكيدي</h3>
-                <p class="stage-desc">التأكيد المعملي النهائي لهوية الأيون المشخص لضمان صحة النتيجة علمياً.</p>
+                <p class="stage-desc" id="stage4-desc">التأكيد المعملي النهائي لهوية الأيون المشخص لضمان صحة النتيجة علمياً.</p>
             </div>
 
             <!-- Initial Confirmation Prompt -->
@@ -93,17 +102,17 @@
 
                 <div class="stage4-preview-row" id="stage4-structure-preview" style="display: none;">
                     <div class="structure-preview-card" id="stage4-structure-card" title="اضغط للتكبير">
-                        <span class="preview-badge">🧪 الصيغة البنائية للمركب</span>
+                        <span class="preview-badge" id="stage4-structure-badge">🧪 الصيغة البنائية للمركب</span>
                         <img id="stage4-structure-img" src="" alt="Structure Preview" />
                     </div>
                 </div>
 
                 <div class="state-btn-group">
                     <button class="action-btn btn-primary" id="stage4-yes-btn">
-                        <span>نعم، إجراء الاختبار التأكيدي (Recommended)</span>
+                        <span id="stage4-yes-text">نعم، إجراء الاختبار التأكيدي (Recommended)</span>
                     </button>
                     <button class="action-btn" id="stage4-skip-btn">
-                        <span>لا، الاكتفاء بهذه النتيجة وعرض التقرير</span>
+                        <span id="stage4-skip-text">لا، الاكتفاء بهذه النتيجة وعرض التقرير</span>
                     </button>
                 </div>
             </div>
@@ -122,10 +131,10 @@
 
                 <div class="state-btn-group" style="margin-top: 15px;">
                     <button class="action-btn btn-primary" id="confirmatory-confirmed-btn" style="background:#16a34a; border-color:#22c55e;">
-                        <span>✓ نعم، ظهرت العلامة التأكيدية بنجاح</span>
+                        <span id="confirmatory-confirmed-text">✓ نعم، ظهرت العلامة التأكيدية بنجاح</span>
                     </button>
                     <button class="action-btn" id="confirmatory-failed-btn" style="background:#dc2626; border-color:#ef4444;">
-                        <span>✗ لا، لم تظهر العلامة المتوقعة</span>
+                        <span id="confirmatory-failed-text">✗ لا، لم تظهر العلامة المتوقعة</span>
                     </button>
                 </div>
             </div>
@@ -135,7 +144,7 @@
                 <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 15px;">
                     <span style="font-size: 28px; line-height: 1;">⚠️</span>
                     <div>
-                        <h4 style="color: #f87171; font-size: 16px; margin: 0 0 4px 0;">لم يتم تأكيد هوية الأيون (التوقع غير صحيح)</h4>
+                        <h4 id="stage4-failure-title" style="color: #f87171; font-size: 16px; margin: 0 0 4px 0;">لم يتم تأكيد هوية الأيون (التوقع غير صحيح)</h4>
                         <p style="font-size: 13px; color: #cbd5e1; margin: 0; line-height: 1.6;">
                             لم تظهر العلامة التأكيدية لكاشف <span id="failed-reagent-name" style="color: #60a5fa; font-weight: bold;"></span>، مما يعني أن المادة ليست <span id="failed-ion-name" style="color: #fca5a5; font-weight: bold;"></span>.
                         </p>
@@ -143,35 +152,35 @@
                 </div>
 
                 <div style="font-size: 14px; color: #fff; margin: 18px 0 12px 0;">
-                    <strong>كيف تريد المتابعة الآن؟</strong>
+                    <strong id="stage4-failure-how">كيف تريد المتابعة الآن؟</strong>
                 </div>
 
                 <div class="state-btn-group">
                     <button class="action-btn btn-primary" id="failure-restart-btn">
-                        <span>↺ نعيد من الأول (البدء من الكاشف الأول مع الاحتفاظ باللون والحالة)</span>
+                        <span id="failure-restart-text">↺ نعيد من الأول (البدء من الكاشف الأول مع الاحتفاظ باللون والحالة)</span>
                     </button>
                     <button class="action-btn" id="failure-resume-btn" style="border-color: #3b82d6; color: #93c5fd; background: rgba(59, 130, 214, 0.1);">
-                        <span>⤺ نكمل من اللي وصلنا له (متابعة البحث من الخطوة السابقة كمسألة جديدة)</span>
+                        <span id="failure-resume-text">⤺ نكمل من اللي وصلنا له (متابعة البحث من الخطوة السابقة كمسألة جديدة)</span>
                     </button>
                 </div>
             </div>
 
             <!-- Repeated Mistake User Warning Card -->
             <div id="user-error-warning-block" class="user-error-card" hidden>
-                <div style="font-size: 22px; font-weight: 800; color: #ef4444; margin-bottom: 10px;">
+                <div id="user-error-title" style="font-size: 22px; font-weight: 800; color: #ef4444; margin-bottom: 10px;">
                     ⚠️ تنبيه: خطأ في المشاهدات المعملية لديك!
                 </div>
-                <p style="font-size: 14px; line-height: 1.8; color: #e5e7eb;">
+                <p id="user-error-msg" style="font-size: 14px; line-height: 1.8; color: #e5e7eb;">
                     لقد قمت بإدخال نفس الملاحظات السابقة ووصلت لنفس الأيون (<strong id="repeated-failed-ion" style="color: #f87171;"></strong>) الذي فشل اختباره التأكيدي في المحاولة السابقة!
                     <br>
                     <strong>الخطأ ناتج من عندك في تسجيل المشاهدات المعملية، أو بسبب تلوث في الكواشف/الأدوات لديك.</strong>
                 </p>
                 <div class="state-btn-group" style="margin-top: 20px;">
                     <button class="action-btn btn-primary" id="user-error-resume-btn">
-                        <span>⤺ تغيير المشاهدة وتجربة مسار آخر</span>
+                        <span id="user-error-resume-text">⤺ تغيير المشاهدة وتجربة مسار آخر</span>
                     </button>
                     <button class="action-btn" id="user-error-restart-btn">
-                        <span>↺ بدء فحص عينة جديدة من الصفر</span>
+                        <span id="user-error-restart-text">↺ بدء فحص عينة جديدة من الصفر</span>
                     </button>
                 </div>
             </div>
@@ -183,7 +192,7 @@
                 <div class="report-header-banner">
                     <div>
                         <div class="report-logo">CHEM<span>LAB</span></div>
-                        <div style="font-size: 13px; color: #888; margin-top: 4px; font-family: 'Noto Sans Arabic', sans-serif;">
+                        <div id="report-banner-sub" style="font-size: 13px; color: #888; margin-top: 4px; font-family: 'Noto Sans Arabic', sans-serif;">
                             تقرير التحليل الكيميائي النوعي غير العضوي — Qualitative Unknown Analysis Report
                         </div>
                     </div>
@@ -196,39 +205,39 @@
 
                 <div class="report-grid">
                     <div class="report-box">
-                        <h4>1. الخواص الأولية للعينة (Physical Properties)</h4>
+                        <h4 id="report-box1-title">1. الخواص الأولية للعينة (Physical Properties)</h4>
                         <div class="report-detail-row">
-                            <span class="label">لون العينة الأصلي:</span>
+                            <span class="label" id="report-label-color">لون العينة الأصلي:</span>
                             <span class="val" id="report-color-val">أبيض</span>
                         </div>
                         <div class="report-detail-row">
-                            <span class="label">الحالة الفيزيائية:</span>
+                            <span class="label" id="report-label-state">الحالة الفيزيائية:</span>
                             <span class="val" id="report-state-val">محلول مائي</span>
                         </div>
                         <div class="report-detail-row">
-                            <span class="label">تصنيف المادة:</span>
+                            <span class="label" id="report-label-type">تصنيف المادة:</span>
                             <span class="val" id="report-type-val">مركب غير عضوي</span>
                         </div>
                     </div>
 
                     <div class="report-box report-box-identified">
-                        <h4>2. التشخيص الكيميائي النهائي (Identified Species)</h4>
+                        <h4 id="report-box2-title">2. التشخيص الكيميائي النهائي (Identified Species)</h4>
                         <div class="report-detail-row">
-                            <span class="label">الصيغة الكيميائية:</span>
+                            <span class="label" id="report-label-formula">الصيغة الكيميائية:</span>
                             <span class="val" id="report-formula-val" style="color: #8be9fd; font-size: 18px; font-family: 'JetBrains Mono', monospace;">Cu²⁺</span>
                         </div>
                         <div class="report-detail-row">
-                            <span class="label">الاسم العلمي:</span>
+                            <span class="label" id="report-label-name">الاسم العلمي:</span>
                             <span class="val" id="report-name-val">نحاس ثنائي — Copper(II)</span>
                         </div>
                         <div class="report-detail-row">
-                            <span class="label">حالة الاختبار التأكيدي:</span>
+                            <span class="label" id="report-label-confirm">حالة الاختبار التأكيدي:</span>
                             <span class="val" id="report-confirm-val" style="color: #69bd78;">مؤكد معملياً بنجاح ✓</span>
                         </div>
 
                         <!-- Chemical Structure Image Display -->
                         <div class="report-structure-card" id="report-structure-card" style="display: none;" title="اضغط لتكبير الصيغة البنائية">
-                            <div class="structure-badge">🧪 الصيغة البنائية للمركب (Chemical Structure)</div>
+                            <div class="structure-badge" id="report-structure-badge">🧪 الصيغة البنائية للمركب (Chemical Structure)</div>
                             <div class="structure-img-wrapper">
                                 <img id="report-structure-img" src="" alt="Chemical Structure" />
                             </div>
@@ -241,7 +250,7 @@
                     <div class="salt-how-header-row">
                         <button type="button" id="salt-how-btn" class="action-btn how-btn" title="عرض تفاصيل خطوات الاستدلال العلمي للملح">
                             <span class="how-icon">🔍</span>
-                            <span>كيف وصلت لهذه النتيجة؟ (How did we deduce this salt?)</span>
+                            <span id="salt-how-btn-text">كيف وصلت لهذه النتيجة؟ (How did we deduce this salt?)</span>
                             <span id="salt-how-arrow" class="how-arrow">▼</span>
                         </button>
                     </div>
@@ -251,21 +260,21 @@
                 </div>
 
                 <div class="report-box" style="margin-bottom: 25px;">
-                    <h4>3. مسار الفحوصات والكواشف المضافة وملاحظاتها (Analytical Trail)</h4>
+                    <h4 id="report-box3-title">3. مسار الفحوصات والكواشف المضافة وملاحظاتها (Analytical Trail)</h4>
                     <div class="report-steps-timeline" id="report-timeline-list">
                         <!-- Dynamic trail steps -->
                     </div>
                 </div>
 
                 <div class="report-box" style="margin-bottom: 25px;">
-                    <h4>4. المعادلات الكيميائية الموزونة (Verified Equations)</h4>
+                    <h4 id="report-box4-title">4. المعادلات الكيميائية الموزونة (Verified Equations)</h4>
                     <div class="equation-list" id="report-equation-list">
                         <!-- Injected equations -->
                     </div>
                 </div>
 
                 <div class="report-box">
-                    <h4>5. ملاحظات السلامة والاستدلال المعملي (Safety & Diagnostic Notes)</h4>
+                    <h4 id="report-box5-title">5. ملاحظات السلامة والاستدلال المعملي (Safety & Diagnostic Notes)</h4>
                     <ul class="notes-list" id="report-notes-list">
                         <!-- Injected notes -->
                     </ul>
@@ -275,13 +284,13 @@
             <!-- Report Questions & Action Controls -->
             <div class="report-actions-panel">
                 <div style="width: 100%; margin-bottom: 12px; font-size: 15px; color: #ddd;">
-                    <strong>هل تريد حفظ التقرير النهائي أو بدء عينة جديدة؟</strong>
+                    <strong id="report-action-prompt">هل تريد حفظ التقرير النهائي أو بدء عينة جديدة؟</strong>
                 </div>
                 <button class="btn-report-save" id="report-print-btn">
-                    <span>🖨️ حفظ / طباعة التقرير النهائي (Print / Save Report)</span>
+                    <span id="report-print-text">🖨️ حفظ / طباعة التقرير النهائي (Print / Save Report)</span>
                 </button>
                 <button class="btn-report-restart" id="report-new-sample-btn">
-                    <span>↺ بدء فحص عينة جديدة (New Sample)</span>
+                    <span id="report-new-sample-text">↺ بدء فحص عينة جديدة (New Sample)</span>
                 </button>
             </div>
         </div>
@@ -290,9 +299,9 @@
     <!-- AUXILIARY REACTION PREDICTOR MODAL / VIEW (TOGGLEABLE) -->
     <section id="predictor-view" class="diagnostic-card" hidden style="margin-top: 30px;">
         <div class="workspace-header-text">
-            <div class="eyebrow">AUXILIARY LAB TOOL</div>
-            <h2>محاكي التفاعلات الكيميائية (50 تفاعلاً خبيراً)</h2>
-            <p class="workspace-subdesc">
+            <div class="eyebrow" id="predictor-eyebrow">AUXILIARY LAB TOOL</div>
+            <h2 id="predictor-title">محاكي التفاعلات الكيميائية (50 تفاعلاً خبيراً)</h2>
+            <p class="workspace-subdesc" id="predictor-desc">
                 استكشف النواتج وتغيرات الألوان والمعادلات الكيميائية باختيار أي أيون وكاشف مباشرة من قاعدة البيانات.
             </p>
         </div>
@@ -300,20 +309,20 @@
         <div class="predictor-layout">
             <div class="predictor-controls">
                 <div class="control-group">
-                    <label>1. اختر الأيون (Ion):</label>
-                    <div style="font-size: 11px; color: #888; margin-bottom: 6px;">كاتيونات (Cations):</div>
+                    <label id="predictor-label-ion">1. اختر الأيون (Ion):</label>
+                    <div id="predictor-sublabel-cations" style="font-size: 11px; color: #888; margin-bottom: 6px;">كاتيونات (Cations):</div>
                     <div class="pills-grid" id="cations-pills"></div>
-                    <div style="font-size: 11px; color: #888; margin: 12px 0 6px;">أنيونات (Anions):</div>
+                    <div id="predictor-sublabel-anions" style="font-size: 11px; color: #888; margin: 12px 0 6px;">أنيونات (Anions):</div>
                     <div class="pills-grid" id="anions-pills"></div>
                 </div>
 
                 <div class="control-group">
-                    <label>2. اختر الكاشف (Reagent):</label>
+                    <label id="predictor-label-reagent">2. اختر الكاشف (Reagent):</label>
                     <div class="pills-grid" id="reagents-pills"></div>
                 </div>
 
                 <div class="control-group">
-                    <label>أمثلة سريعة مؤكدة:</label>
+                    <label id="predictor-label-combos">أمثلة سريعة مؤكدة:</label>
                     <div class="quick-combos">
                         <button class="combo-btn" data-ion="Cu²⁺" data-reagent="NaOH">Cu²⁺ + NaOH</button>
                         <button class="combo-btn" data-ion="Cu²⁺" data-reagent="NH₃">Cu²⁺ + NH₃</button>
@@ -331,8 +340,8 @@
                 </div>
 
                 <button id="predict-btn" class="predict-trigger-btn">
-                    <span>مــزج وتوقع التفاعل الكيميائي</span>
-                    <span>→</span>
+                    <span id="predict-btn-text">مــزج وتوقع التفاعل الكيميائي</span>
+                    <span id="predict-btn-arrow">→</span>
                 </button>
             </div>
 
@@ -346,7 +355,7 @@
                 </div>
 
                 <div id="predict-result-placeholder" class="predict-result-placeholder">
-                    <span>اختر أيوناً وكاشفاً ثم اضغط <strong>مـزج وتوقع التفاعل</strong> لمعاينة النتيجة والمعادلة الكيميائية.</span>
+                    <span id="predict-placeholder-text">اختر أيوناً وكاشفاً ثم اضغط <strong>مـزج وتوقع التفاعل</strong> لمعاينة النتيجة والمعادلة الكيميائية.</span>
                 </div>
 
                 <div id="predict-result-card" class="predict-result-card" hidden>
@@ -355,12 +364,12 @@
                     <div id="predict-result-ar" style="font-family: 'Noto Sans Arabic', sans-serif; color: #aaa; margin-bottom: 16px;"></div>
 
                     <div id="predict-equations-container">
-                        <div class="section-title">المعادلات الكيميائية — EQUATIONS</div>
+                        <div class="section-title" id="predict-eq-title">المعادلات الكيميائية — EQUATIONS</div>
                         <div class="equation-list" id="predict-equations-list"></div>
                     </div>
 
                     <div id="predict-notes-container">
-                        <div class="section-title">الملاحظات والشروط المعملية — NOTES</div>
+                        <div class="section-title" id="predict-notes-title">الملاحظات والشروط المعملية — NOTES</div>
                         <ul class="notes-list" id="predict-notes-list"></ul>
                     </div>
                 </div>
@@ -374,8 +383,8 @@
 <div id="ref-modal" class="modal-overlay" hidden>
     <div class="modal-card">
         <button id="ref-modal-close" class="modal-close-btn" aria-label="Close modal">✕</button>
-        <h3>الملاحظات المرجعية وكشوفات اللهب الجافة</h3>
-        <p class="desc">دليل كشف اللهب للفلزات القلوية وملاحظات التحليل النوعي.</p>
+        <h3 id="ref-modal-title">الملاحظات المرجعية وكشوفات اللهب الجافة</h3>
+        <p class="desc" id="ref-modal-desc">دليل كشف اللهب للفلزات القلوية وملاحظات التحليل النوعي.</p>
 
         <div class="ref-card">
             <div class="color-swatch" style="background: #f0cf2e; box-shadow: 0 0 12px #f0cf2e;"></div>
@@ -406,8 +415,8 @@
     </div>
 </div>
 
-<footer class="page-footer">
-    CHEMLAB <span>—</span> نظام خبير الكيمياء غير العضوية الاستدلالي وتشخيص العينات المجهولة
+<footer class="page-footer" id="page-footer">
+    <span id="page-footer-text">CHEMLAB — نظام خبير الكيمياء غير العضوية الاستدلالي وتشخيص العينات المجهولة</span>
 </footer>
 
 <!-- Structure Zoom Modal -->

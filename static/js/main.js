@@ -1,4 +1,244 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Language Switcher Elements & State
+    const langBtnAr = document.getElementById("lang-btn-ar");
+    const langBtnEn = document.getElementById("lang-btn-en");
+    let currentLang = localStorage.getItem("chemlab_lang") || "ar";
+
+    // Bilingual Localization (Arabic & English)
+    const TRANSLATIONS = {
+        ar: {
+            header_logo_sub: "نظام تشخيص العينات العضوية وغير العضوية",
+            header_salt_btn: "🧂 تشخيص ملح كامل",
+            header_new_btn: "↺ عينة جديدة",
+            header_predictor_btn: "⚗ محاكي التفاعلات",
+            header_flame_btn: "دليل اللهب",
+            header_status: "النظام جاهز",
+            workspace_eyebrow: "CHEMISTRY DIAGNOSIS LAB — EXPERT SYSTEM",
+            workspace_title: "فحص وتشخيص العينة المجهولة",
+            workspace_desc: "حدد مسار الفحص (عضوي أو غير عضوي أو غير محدد) وأجب عن الأسئلة المعملية وسيقوم محرك الاستدلال بإرشادك خطوة بخطوة حتى الوصول للنتيجة والتجربة التأكيدية.",
+            step_back: "← الرجوع للسؤال السابق",
+            stage4_eyebrow: "CONFIRMATORY PROTOCOL",
+            stage4_title: "النتيجة المحتملة والاختبار التأكيدي",
+            stage4_desc: "التأكيد المعملي النهائي لهوية الأيون المشخص لضمان صحة النتيجة علمياً.",
+            stage4_structure_badge: "🧪 الصيغة البنائية للمركب",
+            stage4_yes: "نعم، إجراء الاختبار التأكيدي (Recommended)",
+            stage4_skip: "لا، الاكتفاء بهذه النتيجة وعرض التقرير",
+            confirmatory_confirmed: "✓ نعم، ظهرت العلامة التأكيدية بنجاح",
+            confirmatory_failed: "✗ لا، لم تظهر العلامة المتوقعة",
+            stage4_failure_title: "لم يتم تأكيد هوية الأيون (التوقع غير صحيح)",
+            stage4_failure_how: "كيف تريد المتابعة الآن؟",
+            failure_restart: "↺ نعيد من الأول (البدء من الكاشف الأول مع الاحتفاظ باللون والحالة)",
+            failure_resume: "⤺ نكمل من اللي وصلنا له (متابعة البحث من الخطوة السابقة كمسألة جديدة)",
+            user_error_title: "⚠️ تنبيه: خطأ في المشاهدات المعملية لديك!",
+            user_error_resume: "⤺ تغيير المشاهدة وتجربة مسار آخر",
+            user_error_restart: "↺ بدء فحص عينة جديدة من الصفر",
+            report_banner_sub: "تقرير التحليل الكيميائي النوعي غير العضوي — Qualitative Unknown Analysis Report",
+            report_box1_title: "1. الخواص الأولية للعينة (Physical Properties)",
+            report_label_color: "لون العينة الأصلي:",
+            report_label_state: "الحالة الفيزيائية:",
+            report_label_type: "تصنيف المادة:",
+            report_box2_title: "2. التشخيص الكيميائي النهائي (Identified Species)",
+            report_label_formula: "الصيغة الكيميائية:",
+            report_label_name: "الاسم العلمي:",
+            report_label_confirm: "حالة الاختبار التأكيدي:",
+            report_structure_badge: "🧪 الصيغة البنائية للمركب (Chemical Structure)",
+            salt_how_btn: "كيف وصلت لهذه النتيجة؟ (How did we deduce this salt?)",
+            report_box3_title: "3. مسار الفحوصات والكواشف المضافة وملاحظاتها (Analytical Trail)",
+            report_box4_title: "4. المعادلات الكيميائية الموزونة (Verified Equations)",
+            report_box5_title: "5. ملاحظات السلامة والاستدلال المعملي (Safety & Diagnostic Notes)",
+            report_action_prompt: "هل تريد حفظ التقرير النهائي أو بدء عينة جديدة؟",
+            report_print: "🖨️ حفظ / طباعة التقرير النهائي (Print / Save Report)",
+            report_new_sample: "↺ بدء فحص عينة جديدة (New Sample)",
+            predictor_eyebrow: "AUXILIARY LAB TOOL",
+            predictor_title: "محاكي التفاعلات الكيميائية (50 تفاعلاً خبيراً)",
+            predictor_desc: "استكشف النواتج وتغيرات الألوان والمعادلات الكيميائية باختيار أي أيون وكاشف مباشرة من قاعدة البيانات.",
+            predictor_label_ion: "1. اختر الأيون (Ion):",
+            predictor_sublabel_cations: "كاتيونات (Cations):",
+            predictor_sublabel_anions: "أنيونات (Anions):",
+            predictor_label_reagent: "2. اختر الكاشف (Reagent):",
+            predictor_label_combos: "أمثلة سريعة مؤكدة:",
+            predict_btn: "مــزج وتوقع التفاعل الكيميائي",
+            tube_label: "جاهز للاختبار",
+            predict_placeholder: "اختر أيوناً وكاشفاً ثم اضغط مـزج وتوقع التفاعل لمعاينة النتيجة والمعادلة الكيميائية.",
+            predict_eq_title: "المعادلات الكيميائية — EQUATIONS",
+            predict_notes_title: "الملاحظات والشروط المعملية — NOTES",
+            ref_modal_title: "الملاحظات المرجعية وكشوفات اللهب الجافة",
+            ref_modal_desc: "دليل كشف اللهب للفلزات القلوية وملاحظات التحليل النوعي.",
+            structure_modal_title: "الصيغة البنائية للمركب (Chemical Structure)",
+            page_footer: "CHEMLAB — نظام خبير الكيمياء غير العضوية الاستدلالي وتشخيص العينات المجهولة"
+        },
+        en: {
+            header_logo_sub: "Organic & Inorganic Qualitative Diagnostic System",
+            header_salt_btn: "🧂 Complete Salt Diagnosis",
+            header_new_btn: "↺ New Sample",
+            header_predictor_btn: "⚗ Reaction Simulator",
+            header_flame_btn: "Flame Guide",
+            header_status: "SYSTEM READY",
+            workspace_eyebrow: "CHEMISTRY DIAGNOSIS LAB — EXPERT SYSTEM",
+            workspace_title: "Unknown Sample Analysis & Diagnosis",
+            workspace_desc: "Select your diagnostic route and answer the laboratory prompts. The inference engine will guide you step by step to identify the substance and perform confirmatory tests.",
+            step_back: "← Back to Previous Question",
+            stage4_eyebrow: "CONFIRMATORY PROTOCOL",
+            stage4_title: "Suspected Outcome & Confirmatory Test",
+            stage4_desc: "Final experimental verification of the identified species to ensure scientific accuracy.",
+            stage4_structure_badge: "🧪 Chemical Structure",
+            stage4_yes: "Yes, Run Confirmatory Test (Recommended)",
+            stage4_skip: "No, Skip to Final Report",
+            confirmatory_confirmed: "✓ Yes, Confirmatory Sign Appeared",
+            confirmatory_failed: "✗ No, Expected Sign Did Not Appear",
+            stage4_failure_title: "Identity Not Confirmed (Hypothesis Disproved)",
+            stage4_failure_how: "How would you like to proceed?",
+            failure_restart: "↺ Restart from First Reagent (Keep color & physical state)",
+            failure_resume: "⤺ Resume from Previous Step (Re-examine branch)",
+            user_error_title: "⚠️ Warning: Inconsistent Laboratory Observations!",
+            user_error_resume: "⤺ Adjust Observation & Try Another Path",
+            user_error_restart: "↺ Start Fresh with New Sample",
+            report_banner_sub: "Qualitative Unknown Chemical Analysis Report",
+            report_box1_title: "1. Initial Sample Properties (Physical)",
+            report_label_color: "Original Color:",
+            report_label_state: "Physical State:",
+            report_label_type: "Classification:",
+            report_box2_title: "2. Final Chemical Diagnosis (Identified Species)",
+            report_label_formula: "Chemical Formula:",
+            report_label_name: "Scientific Name:",
+            report_label_confirm: "Confirmatory Status:",
+            report_structure_badge: "🧪 Chemical Structure",
+            salt_how_btn: "How did we deduce this salt? (Inference Reasoning)",
+            report_box3_title: "3. Analytical Progression Trail & Observations",
+            report_box4_title: "4. Verified Balanced Chemical Equations",
+            report_box5_title: "5. Safety & Diagnostic Laboratory Notes",
+            report_action_prompt: "Would you like to print/save the final report or test a new sample?",
+            report_print: "🖨️ Print / Save Final Report",
+            report_new_sample: "↺ Start New Unknown Sample",
+            predictor_eyebrow: "AUXILIARY LAB TOOL",
+            predictor_title: "Chemical Reaction Simulator (50 Expert Reactions)",
+            predictor_desc: "Explore reaction products, color changes, and chemical equations by selecting any ion and reagent directly from the database.",
+            predictor_label_ion: "1. Select Ion:",
+            predictor_sublabel_cations: "Cations:",
+            predictor_sublabel_anions: "Anions:",
+            predictor_label_reagent: "2. Select Reagent:",
+            predictor_label_combos: "Quick Reference Combos:",
+            predict_btn: "Mix & Predict Reaction",
+            tube_label: "Ready for test",
+            predict_placeholder: "Select an ion and a reagent, then click Mix & Predict Reaction to view products and balanced equations.",
+            predict_eq_title: "BALANCED CHEMICAL EQUATIONS",
+            predict_notes_title: "LABORATORY OBSERVATIONS & CONDITIONS",
+            ref_modal_title: "Reference Notes & Dry Flame Tests",
+            ref_modal_desc: "Flame test guide for alkali/alkaline earth metals and qualitative analysis notes.",
+            structure_modal_title: "Chemical Structure",
+            page_footer: "CHEMLAB — Expert Diagnostic System for Qualitative Chemical Analysis"
+        }
+    };
+
+    const ELEMENT_TRANSLATION_MAP = {
+        "header-logo-sub": "header_logo_sub",
+        "header-salt-btn-text": "header_salt_btn",
+        "header-new-btn-text": "header_new_btn",
+        "header-predictor-btn-text": "header_predictor_btn",
+        "header-flame-btn-text": "header_flame_btn",
+        "header-status-text": "header_status",
+        "workspace-eyebrow": "workspace_eyebrow",
+        "workspace-title": "workspace_title",
+        "workspace-description": "workspace_desc",
+        "step-back-text": "step_back",
+        "stage4-eyebrow": "stage4_eyebrow",
+        "stage4-title": "stage4_title",
+        "stage4-desc": "stage4_desc",
+        "stage4-structure-badge": "stage4_structure_badge",
+        "stage4-yes-text": "stage4_yes",
+        "stage4-skip-text": "stage4_skip",
+        "confirmatory-confirmed-text": "confirmatory_confirmed",
+        "confirmatory-failed-text": "confirmatory_failed",
+        "stage4-failure-title": "stage4_failure_title",
+        "stage4-failure-how": "stage4_failure_how",
+        "failure-restart-text": "failure_restart",
+        "failure-resume-text": "failure_resume",
+        "user-error-title": "user_error_title",
+        "user-error-resume-text": "user_error_resume",
+        "user-error-restart-text": "user_error_restart",
+        "report-banner-sub": "report_banner_sub",
+        "report-box1-title": "report_box1_title",
+        "report-label-color": "report_label_color",
+        "report-label-state": "report_label_state",
+        "report-label-type": "report_label_type",
+        "report-box2-title": "report_box2_title",
+        "report-label-formula": "report_label_formula",
+        "report-label-name": "report_label_name",
+        "report-label-confirm": "report_label_confirm",
+        "report-structure-badge": "report_structure_badge",
+        "salt-how-btn-text": "salt_how_btn",
+        "report-box3-title": "report_box3_title",
+        "report-box4-title": "report_box4_title",
+        "report-box5-title": "report_box5_title",
+        "report-action-prompt": "report_action_prompt",
+        "report-print-text": "report_print",
+        "report-new-sample-text": "report_new_sample",
+        "predictor-eyebrow": "predictor_eyebrow",
+        "predictor-title": "predictor_title",
+        "predictor-desc": "predictor_desc",
+        "predictor-label-ion": "predictor_label_ion",
+        "predictor-sublabel-cations": "predictor_sublabel_cations",
+        "predictor-sublabel-anions": "predictor_sublabel_anions",
+        "predictor-label-reagent": "predictor_label_reagent",
+        "predictor-label-combos": "predictor_label_combos",
+        "predict-btn-text": "predict_btn",
+        "tube-label": "tube_label",
+        "predict-placeholder-text": "predict_placeholder",
+        "predict-eq-title": "predict_eq_title",
+        "predict-notes-title": "predict_notes_title",
+        "ref-modal-title": "ref_modal_title",
+        "ref-modal-desc": "ref_modal_desc",
+        "structure-modal-title": "structure_modal_title",
+        "page-footer-text": "page_footer"
+    };
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem("chemlab_lang", lang);
+        document.documentElement.lang = lang;
+        document.documentElement.dir = (lang === "ar" ? "rtl" : "ltr");
+
+        if (langBtnAr) langBtnAr.classList.toggle("active", lang === "ar");
+        if (langBtnEn) langBtnEn.classList.toggle("active", lang === "en");
+
+        const t = TRANSLATIONS[lang] || TRANSLATIONS.ar;
+        for (const [id, val] of Object.entries(ELEMENT_TRANSLATION_MAP)) {
+            const el = document.getElementById(id);
+            if (el && t[val]) {
+                el.textContent = t[val];
+            }
+        }
+
+        // Re-render question if active
+        if (questionContainer && !questionContainer.hidden) {
+            renderCurrentQuestion();
+        }
+
+        // Re-render stage 4 if active
+        if (stage4Container && !stage4Container.hidden) {
+            updateStage4Language();
+        }
+
+        // Re-render stage 5 report if active
+        if (stage5Container && !stage5Container.hidden) {
+            triggerStage5Report();
+        }
+    }
+
+    function setupLanguageSwitcher() {
+        if (langBtnAr) {
+            langBtnAr.addEventListener("click", () => {
+                if (currentLang !== "ar") setLanguage("ar");
+            });
+        }
+        if (langBtnEn) {
+            langBtnEn.addEventListener("click", () => {
+                if (currentLang !== "en") setLanguage("en");
+            });
+        }
+        setLanguage(currentLang);
+    }
+
     // DOM Elements - Shell
     const newSampleHeaderBtn = document.getElementById("new-sample-header-btn");
     const togglePredictorBtn = document.getElementById("toggle-predictor-btn");
@@ -206,6 +446,7 @@ document.addEventListener("DOMContentLoaded", () => {
             knowledgeBase = await res.json();
             setupPredictorControls();
             setupSaltDiagnosisListeners();
+            setupLanguageSwitcher();
             startConsultation();
         } catch (err) {
             console.error("Error loading knowledge base:", err);
@@ -285,13 +526,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            questionTextAr.textContent = qData.arabic_text || qData.text;
-            questionText.textContent = qData.text !== qData.arabic_text ? qData.text : "";
+            const isEn = currentLang === "en";
+            const primaryText = isEn ? (qData.text || qData.arabic_text) : (qData.arabic_text || qData.text);
+            const secondaryText = isEn
+                ? (qData.arabic_text && qData.arabic_text !== qData.text ? qData.arabic_text : "")
+                : (qData.text && qData.text !== qData.arabic_text ? qData.text : "");
 
-            if (qData.hint) {
+            questionTextAr.textContent = primaryText;
+            questionText.textContent = secondaryText;
+
+            const hintText = isEn ? (qData.hint || qData.arabic_hint) : (qData.arabic_hint || qData.hint);
+            const hintSub = isEn
+                ? (qData.arabic_hint && qData.arabic_hint !== qData.hint ? qData.arabic_hint : "")
+                : (qData.hint && qData.hint !== qData.arabic_hint ? qData.hint : "");
+
+            if (hintText) {
                 questionHintBox.style.display = "flex";
-                questionHintAr.textContent = "💡 " + (qData.arabic_hint || qData.hint);
-                questionHintEn.textContent = qData.hint !== qData.arabic_hint ? qData.hint : "";
+                questionHintAr.textContent = "💡 " + hintText;
+                questionHintEn.textContent = hintSub;
             } else {
                 questionHintBox.style.display = "none";
             }
@@ -328,17 +580,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 const labelsDiv = document.createElement("div");
                 labelsDiv.className = "option-labels";
 
-                const arLabel = document.createElement("span");
-                arLabel.className = "option-label-en";
-                arLabel.textContent = opt.arabic_label || opt.label;
-                labelsDiv.appendChild(arLabel);
+                const labelSpan = document.createElement("span");
+                labelSpan.className = "option-label-en";
+                labelSpan.textContent = isEn ? (opt.label || opt.arabic_label) : (opt.arabic_label || opt.label);
+                labelsDiv.appendChild(labelSpan);
 
                 mainDiv.appendChild(swatchSpan);
                 mainDiv.appendChild(labelsDiv);
 
                 const arrowSpan = document.createElement("span");
                 arrowSpan.className = "arrow";
-                arrowSpan.textContent = "←";
+                arrowSpan.textContent = isEn ? "→" : "←";
 
                 // Special start-mode 4-card presentation
                 if (currentStep.id === "start_mode") {
@@ -353,16 +605,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     if (opt.next === "SALT_START") {
                         iconDiv.textContent = "🧂";
-                        descDiv.textContent = "تشخيص شامل لـ 30 ملحاً غير عضوي عبر 3 مراحل (فحص فيزيائي، شق حامضي، شق قاعدي)";
+                        descDiv.textContent = isEn
+                            ? "Comprehensive diagnosis of 30 inorganic salts across 3 automated stages (physical, anion, cation)"
+                            : "تشخيص شامل لـ 30 ملحاً غير عضوي عبر 3 مراحل (فحص فيزيائي، شق حامضي، شق قاعدي)";
                     } else if (opt.next === "org_q_state") {
                         iconDiv.textContent = "🧪";
-                        descDiv.textContent = "تشخيص 25 مركباً عضوياً (سوائل ومواد صلبة)";
+                        descDiv.textContent = isEn
+                            ? "Identification of 25 organic compounds (liquids & solids)"
+                            : "تشخيص 25 مركباً عضوياً (سوائل ومواد صلبة)";
                     } else if (opt.next === "start_color") {
                         iconDiv.textContent = "⚗️";
-                        descDiv.textContent = "الكشف عن الكاتيونات والأنيونات غير العضوية المنفردة";
+                        descDiv.textContent = isEn
+                            ? "Detection of single inorganic cations and anions"
+                            : "الكشف عن الكاتيونات والأنيونات غير العضوية المنفردة";
                     } else {
                         iconDiv.textContent = "🔥";
-                        descDiv.textContent = "فحص مبدئي بالتسخين واللهب للتوجيه التلقائي";
+                        descDiv.textContent = isEn
+                            ? "Preliminary flame & dry heating test for automated guidance"
+                            : "فحص مبدئي بالتسخين واللهب للتوجيه التلقائي";
                     }
 
                     mainDiv.prepend(iconDiv);
@@ -386,16 +646,27 @@ document.addEventListener("DOMContentLoaded", () => {
         const outcomes = knowledgeBase.unified.outcomes;
         const nextKey = opt.next;
 
-        const obsText = opt.arabic_label || opt.label;
+        const isEn = currentLang === "en";
+        const obsTextAr = opt.arabic_label || opt.label;
+        const obsTextEn = opt.label || opt.arabic_label;
+        const obsText = isEn ? obsTextEn : obsTextAr;
 
         // Save physical observations
         if (parentStep.id === "start_color" || parentStep.id === "SALT_START") {
             sessionData.color = obsText;
+            sessionData.color_ar = obsTextAr;
+            sessionData.color_en = obsTextEn;
         } else if (parentStep.id === "q_physical_state" || parentStep.id === "org_q_state") {
             sessionData.state = obsText;
+            sessionData.state_ar = obsTextAr;
+            sessionData.state_en = obsTextEn;
         } else if (parentStep.id === "SALT_SOLUBILITY") {
             sessionData.solubility = obsText;
-            sessionData.state = "ملح صلب / محلول مائي";
+            sessionData.solubility_ar = obsTextAr;
+            sessionData.solubility_en = obsTextEn;
+            sessionData.state = isEn ? "Solid salt / Aqueous solution" : "ملح صلب / محلول مائي";
+            sessionData.state_ar = "ملح صلب / محلول مائي";
+            sessionData.state_en = "Solid salt / Aqueous solution";
         }
 
         // Determine analytical phase
@@ -406,10 +677,18 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (parentStep.id.startsWith("org_")) phase = "organic";
 
         // Record in chronological analytical trail
-        const testLabel = parentStep.label || (tree[parentStep.id] ? (tree[parentStep.id].arabic_text || tree[parentStep.id].text) : "اختبار كيميائي");
+        const parentQ = tree[parentStep.id];
+        const testLabelAr = parentStep.label_ar || parentStep.label || (parentQ ? (parentQ.arabic_text || parentQ.text) : "اختبار كيميائي");
+        const testLabelEn = parentStep.label_en || (parentQ ? (parentQ.text || parentQ.arabic_text) : "Chemical Test");
+        const testLabel = isEn ? testLabelEn : testLabelAr;
+
         sessionData.stepsTrail.push({
             test: testLabel,
+            test_ar: testLabelAr,
+            test_en: testLabelEn,
             observation: obsText,
+            observation_ar: obsTextAr,
+            observation_en: obsTextEn,
             phase: phase,
             stepId: parentStep.id
         });
@@ -422,10 +701,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 sessionData.isSaltDiagnosis = true;
                 sessionData.detected_anion = nextNode.anion;
                 const aData = (knowledgeBase.anions_data && knowledgeBase.anions_data[nextNode.anion]) || null;
-                const aName = aData ? `${aData.name_ar} (${aData.symbol})` : nextNode.anion;
+                const aNameAr = aData ? `${aData.name_ar} (${aData.symbol})` : nextNode.anion;
+                const aNameEn = aData ? `${aData.name_en} (${aData.symbol})` : nextNode.anion;
                 sessionData.stepsTrail.push({
-                    test: "الشق الحامضي المشخص (Anion)",
-                    observation: `✓ تم رصد وتحديد الشق الحامضي بنجاح: ${aName}`,
+                    test: isEn ? "Identified Acidic Radical (Anion)" : "الشق الحامضي المشخص (Anion)",
+                    test_ar: "الشق الحامضي المشخص (Anion)",
+                    test_en: "Identified Acidic Radical (Anion)",
+                    observation: isEn ? `✓ Successfully identified acidic radical: ${aNameEn}` : `✓ تم رصد وتحديد الشق الحامضي بنجاح: ${aNameAr}`,
+                    observation_ar: `✓ تم رصد وتحديد الشق الحامضي بنجاح: ${aNameAr}`,
+                    observation_en: `✓ Successfully identified acidic radical: ${aNameEn}`,
                     phase: "anion",
                     isCheckpoint: true,
                     anionKey: nextNode.anion
@@ -435,7 +719,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 historyStack.push({
                     type: "question",
                     id: nextNode.next,
-                    label: `الانتقال لشجرة الشق القاعدي (${aName})`,
+                    label: isEn ? `Transition to basic radical tree (${aNameEn})` : `الانتقال لشجرة الشق القاعدي (${aNameAr})`,
+                    label_ar: `الانتقال لشجرة الشق القاعدي (${aNameAr})`,
+                    label_en: `Transition to basic radical tree (${aNameEn})`,
                     autoFrom: nextKey
                 });
                 renderCurrentQuestion();
@@ -447,10 +733,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 sessionData.isSaltDiagnosis = true;
                 sessionData.detected_cation = nextNode.cation;
                 const cData = (knowledgeBase.cations_data && knowledgeBase.cations_data[nextNode.cation]) || null;
-                const cName = cData ? `${cData.name_ar} (${cData.symbol})` : nextNode.cation;
+                const cNameAr = cData ? `${cData.name_ar} (${cData.symbol})` : nextNode.cation;
+                const cNameEn = cData ? `${cData.name_en} (${cData.symbol})` : nextNode.cation;
                 sessionData.stepsTrail.push({
-                    test: "الشق القاعدي المشخص (Cation)",
-                    observation: `✓ تم رصد وتحديد الشق القاعدي بنجاح: ${cName}`,
+                    test: isEn ? "Identified Basic Radical (Cation)" : "الشق القاعدي المشخص (Cation)",
+                    test_ar: "الشق القاعدي المشخص (Cation)",
+                    test_en: "Identified Basic Radical (Cation)",
+                    observation: isEn ? `✓ Successfully identified basic radical: ${cNameEn}` : `✓ تم رصد وتحديد الشق القاعدي بنجاح: ${cNameAr}`,
+                    observation_ar: `✓ تم رصد وتحديد الشق القاعدي بنجاح: ${cNameAr}`,
+                    observation_en: `✓ Successfully identified basic radical: ${cNameEn}`,
                     phase: "cation",
                     isCheckpoint: true,
                     cationKey: nextNode.cation
@@ -531,6 +822,29 @@ document.addEventListener("DOMContentLoaded", () => {
     // STAGE 4: CONFIRMATORY TEST
     // ========================================================
 
+    function updateStage4Language() {
+        const outData = sessionData.suspectedData;
+        const isEn = currentLang === "en";
+        const ionName = outData ? (outData.subtitle || outData.title) : (isEn ? "Unknown Substance" : "المادة المجهولة");
+        const formula = outData ? outData.title : "";
+
+        if (stage4PromptText) {
+            stage4PromptText.textContent = isEn
+                ? `Suspected Outcome: ${formula} (${ionName}). Would you like to run the confirmatory test?`
+                : `النتيجة المحتملة: ${formula} (${ionName}). هل تريد إجراء الاختبار التأكيدي؟`;
+        }
+
+        const confTest = sessionData.confirmatory;
+        if (confTest && stage4ExecutionBlock && !stage4ExecutionBlock.hidden) {
+            confirmatoryReagentTitle.textContent = isEn ? `Confirmatory Reagent: ${confTest.reagent}` : `الكاشف التأكيدي: ${confTest.reagent}`;
+            confirmatoryProcedure.textContent = isEn ? `Procedure: ${confTest.procedure}` : `طريقة الإجراء: ${confTest.procedure}`;
+            confirmatorySignBadge.textContent = isEn ? `Expected Sign: ${confTest.expected_sign}` : `العلامة المتوقعة: ${confTest.expected_sign}`;
+            confirmatoryQuestionText.textContent = isEn
+                ? `Add ${confTest.reagent}. Did the expected sign (${confTest.expected_sign}) appear?`
+                : `أضف ${confTest.reagent}. هل ظهرت العلامة المتوقعة (${confTest.expected_sign})؟`;
+        }
+    }
+
     function triggerStage4Confirmatory(outcomeKey, outcomeData) {
         setGlobalBackground(2, 3);
         questionContainer.hidden = true;
@@ -542,10 +856,7 @@ document.addEventListener("DOMContentLoaded", () => {
         stage4FailureBlock.hidden = true;
         userErrorWarningBlock.hidden = true;
 
-        const ionName = outcomeData ? (outcomeData.subtitle || outcomeData.title) : "المادة المجهولة";
-        const formula = outcomeData ? outcomeData.title : "";
-
-        stage4PromptText.textContent = `النتيجة المحتملة: ${formula} (${ionName}). هل تريد إجراء الاختبار التأكيدي؟`;
+        updateStage4Language();
 
         // Display chemical structure preview if available
         if (stage4StructurePreview && stage4StructureImg) {
@@ -564,47 +875,69 @@ document.addEventListener("DOMContentLoaded", () => {
         sessionData.confirmatory = confTest;
 
         stage4YesBtn.onclick = () => {
+            const isEn = currentLang === "en";
             if (confTest) {
                 stage4PromptBlock.hidden = true;
                 stage4ExecutionBlock.hidden = false;
-                confirmatoryReagentTitle.textContent = `الكاشف التأكيدي: ${confTest.reagent}`;
-                confirmatoryProcedure.textContent = `طريقة الإجراء: ${confTest.procedure}`;
-                confirmatorySignBadge.textContent = `العلامة المتوقعة: ${confTest.expected_sign}`;
-                confirmatoryQuestionText.textContent = `أضف ${confTest.reagent}. هل ظهرت العلامة المتوقعة (${confTest.expected_sign})؟`;
+                confirmatoryReagentTitle.textContent = isEn ? `Confirmatory Reagent: ${confTest.reagent}` : `الكاشف التأكيدي: ${confTest.reagent}`;
+                confirmatoryProcedure.textContent = isEn ? `Procedure: ${confTest.procedure}` : `طريقة الإجراء: ${confTest.procedure}`;
+                confirmatorySignBadge.textContent = isEn ? `Expected Sign: ${confTest.expected_sign}` : `العلامة المتوقعة: ${confTest.expected_sign}`;
+                confirmatoryQuestionText.textContent = isEn
+                    ? `Add ${confTest.reagent}. Did the expected sign (${confTest.expected_sign}) appear?`
+                    : `أضف ${confTest.reagent}. هل ظهرت العلامة المتوقعة (${confTest.expected_sign})؟`;
                 window.scrollTo({ top: stage4ExecutionBlock.offsetTop - 50, behavior: "smooth" });
             } else {
                 sessionData.confirmed = true;
                 sessionData.stepsTrail.push({
-                    test: "الاختبار التأكيدي",
-                    observation: "تم التأكيد بناءً على مطابقة السلوك الكيميائي وسلسلة الكواشف الترسيبية"
+                    test: isEn ? "Confirmatory Test" : "الاختبار التأكيدي",
+                    test_ar: "الاختبار التأكيدي",
+                    test_en: "Confirmatory Test",
+                    observation: isEn ? "Confirmed based on chemical behavior and precipitation sequence" : "تم التأكيد بناءً على مطابقة السلوك الكيميائي وسلسلة الكواشف الترسيبية",
+                    observation_ar: "تم التأكيد بناءً على مطابقة السلوك الكيميائي وسلسلة الكواشف الترسيبية",
+                    observation_en: "Confirmed based on chemical behavior and precipitation sequence"
                 });
                 triggerStage5Report();
             }
         };
 
         stage4SkipBtn.onclick = () => {
+            const isEn = currentLang === "en";
             sessionData.confirmed = false;
             sessionData.stepsTrail.push({
-                test: "الاختبار التأكيدي",
-                observation: "تم تخطي الاختبار التأكيدي والاكتفاء بالمشاهدات الاستدلالية المباشرة"
+                test: isEn ? "Confirmatory Test" : "الاختبار التأكيدي",
+                test_ar: "الاختبار التأكيدي",
+                test_en: "Confirmatory Test",
+                observation: isEn ? "Skipped confirmatory test, relying on primary inference observations" : "تم تخطي الاختبار التأكيدي والاكتفاء بالمشاهدات الاستدلالية المباشرة",
+                observation_ar: "تم تخطي الاختبار التأكيدي والاكتفاء بالمشاهدات الاستدلالية المباشرة",
+                observation_en: "Skipped confirmatory test, relying on primary inference observations"
             });
             triggerStage5Report();
         };
 
         confirmatoryConfirmedBtn.onclick = () => {
+            const isEn = currentLang === "en";
             sessionData.confirmed = true;
             sessionData.stepsTrail.push({
-                test: `الاختبار التأكيدي (${confTest.reagent})`,
-                observation: `✓ ظهرت العلامة التأكيدية بنجاح: ${confTest.expected_sign}`
+                test: isEn ? `Confirmatory Test (${confTest.reagent})` : `الاختبار التأكيدي (${confTest.reagent})`,
+                test_ar: `الاختبار التأكيدي (${confTest.reagent})`,
+                test_en: `Confirmatory Test (${confTest.reagent})`,
+                observation: isEn ? `✓ Confirmatory sign successfully observed: ${confTest.expected_sign}` : `✓ ظهرت العلامة التأكيدية بنجاح: ${confTest.expected_sign}`,
+                observation_ar: `✓ ظهرت العلامة التأكيدية بنجاح: ${confTest.expected_sign}`,
+                observation_en: `✓ Confirmatory sign successfully observed: ${confTest.expected_sign}`
             });
             triggerStage5Report();
         };
 
         confirmatoryFailedBtn.onclick = () => {
+            const isEn = currentLang === "en";
             sessionData.confirmed = false;
             sessionData.stepsTrail.push({
-                test: `الاختبار التأكيدي (${confTest.reagent})`,
-                observation: `✗ لم تظهر العلامة المتوقعة: ${confTest.expected_sign}`
+                test: isEn ? `Confirmatory Test (${confTest.reagent})` : `الاختبار التأكيدي (${confTest.reagent})`,
+                test_ar: `الاختبار التأكيدي (${confTest.reagent})`,
+                test_en: `Confirmatory Test (${confTest.reagent})`,
+                observation: isEn ? `✗ Expected sign did not appear: ${confTest.expected_sign}` : `✗ لم تظهر العلامة المتوقعة: ${confTest.expected_sign}`,
+                observation_ar: `✗ لم تظهر العلامة المتوقعة: ${confTest.expected_sign}`,
+                observation_en: `✗ Expected sign did not appear: ${confTest.expected_sign}`
             });
 
             // Show failure resolution block (سؤال المستخدم: نعيد من الأول ولا نكمل من اللي وصلنا له)
@@ -613,7 +946,7 @@ document.addEventListener("DOMContentLoaded", () => {
             userErrorWarningBlock.hidden = true;
             stage4FailureBlock.hidden = false;
 
-            failedReagentName.textContent = confTest ? confTest.reagent : "الكاشف التأكيدي";
+            failedReagentName.textContent = confTest ? confTest.reagent : (isEn ? "Confirmatory Reagent" : "الكاشف التأكيدي");
             failedIonName.textContent = outcomeData.subtitle || outcomeData.title;
 
             // الخيار 1: نعيد من الأول (البدء من السؤال الثالث مع الاحتفاظ باللون والحالة)
@@ -628,13 +961,29 @@ document.addEventListener("DOMContentLoaded", () => {
                     {
                         type: "question",
                         id: "q_first_reagent",
-                        label: "المرحلة 2: الكاشف الأول (HCl)"
+                        label: isEn ? "Stage 2: First Reagent (HCl)" : "المرحلة 2: الكاشف الأول (HCl)",
+                        label_ar: "المرحلة 2: الكاشف الأول (HCl)",
+                        label_en: "Stage 2: First Reagent (HCl)"
                     }
                 ];
 
                 sessionData.stepsTrail = [
-                    { test: "الملاحظة الأولية للون العينة", observation: sessionData.color },
-                    { test: "الحالة الفيزيائية للعينة", observation: sessionData.state }
+                    {
+                        test: isEn ? "Initial Sample Color" : "الملاحظة الأولية للون العينة",
+                        test_ar: "الملاحظة الأولية للون العينة",
+                        test_en: "Initial Sample Color",
+                        observation: sessionData.color,
+                        observation_ar: sessionData.color_ar || sessionData.color,
+                        observation_en: sessionData.color_en || sessionData.color
+                    },
+                    {
+                        test: isEn ? "Physical State of Sample" : "الحالة الفيزيائية للعينة",
+                        test_ar: "الحالة الفيزيائية للعينة",
+                        test_en: "Physical State of Sample",
+                        observation: sessionData.state,
+                        observation_ar: sessionData.state_ar || sessionData.state,
+                        observation_en: sessionData.state_en || sessionData.state
+                    }
                 ];
                 sessionData.suspectedKey = null;
                 sessionData.suspectedData = null;
@@ -651,7 +1000,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // الخيار 2: نكمل من اللي وصلنا له (الرجوع للخطوة السابقة كمسألة جديدة)
             failureResumeBtn.onclick = () => {
-                // العودة للخطوة السابقة مباشرة قبل النتيجة
                 if (historyStack.length > 1) {
                     historyStack.pop();
                     sessionData.stepsTrail.pop();
@@ -796,32 +1144,49 @@ document.addEventListener("DOMContentLoaded", () => {
     function buildSaltHowBreakdown() {
         if (!saltHowPanel) return;
 
-        const physicalSteps = sessionData.stepsTrail.filter(s => s.phase === "physical");
+        const isEn = currentLang === "en";
         const anionSteps = sessionData.stepsTrail.filter(s => s.phase === "anion");
         const cationSteps = sessionData.stepsTrail.filter(s => s.phase === "cation");
         const outData = sessionData.suspectedData;
         const aData = (knowledgeBase.anions_data && knowledgeBase.anions_data[sessionData.detected_anion]) || null;
         const cData = (knowledgeBase.cations_data && knowledgeBase.cations_data[sessionData.detected_cation]) || null;
 
+        const p1Title = isEn ? "🧊 Phase 1: Physical Examination of Salt" : "🧊 المرحلة الأولى: الفحص الفيزيائي للملح (Physical Examination)";
+        const p1Badge = isEn ? "Phase 1" : "المرحلة 1";
+        const p1ColorLabel = isEn ? "Original Solid Color:" : "لون الملح الصلب الأصلي:";
+        const p1ColorVal = isEn ? (sessionData.color_en || sessionData.color || "White / Colorless") : (sessionData.color || "أبيض / عديم اللون");
+        const p1SolLabel = isEn ? "Solubility in Cold Water:" : "الذوبانية في الماء البارد:";
+        const p1SolVal = isEn ? (sessionData.solubility_en || sessionData.state_en || "Dissolves in cold water to form a clear solution") : (sessionData.solubility || sessionData.state || "يذوب في الماء البارد مكوناً محلولاً رائقاً");
+
+        const p2Title = isEn ? "🧪 Phase 2: Acidic Radical (Anion) Tree" : "🧪 المرحلة الثانية: شجرة الكشف عن الشق الحامضي (Anion Tree)";
+        const p2Badge = isEn ? "Phase 2" : "المرحلة 2";
+
+        const p3Title = isEn ? "⚗️ Phase 3: Basic Radical (Cation) Tree" : "⚗️ المرحلة الثالثة: شجرة الكشف عن الشق القاعدي (Cation Tree)";
+        const p3Badge = isEn ? "Phase 3" : "المرحلة 3";
+
+        const p4Title = isEn ? "⚛️ Phase 4: Radical Integration & Stability Verification" : "⚛️ المرحلة الرابعة: دمج الشقين والاستقرار الكيميائي (Salt Integration & Verification)";
+        const p4Badge = isEn ? "Final Outcome" : "النتيجة النهائية";
+        const stabilityLabel = isEn ? "Stability Status:" : "حالة الاستقرار:";
+
         let html = `
             <!-- Phase 0: Physical Examination -->
             <div class="how-phase-card phase-physical">
                 <div class="how-phase-title">
-                    <span>🧊 المرحلة الأولى: الفحص الفيزيائي للملح (Physical Examination)</span>
-                    <span class="how-phase-badge badge-physical">المرحلة 1</span>
+                    <span>${p1Title}</span>
+                    <span class="how-phase-badge badge-physical">${p1Badge}</span>
                 </div>
                 <div class="how-step-item">
                     <span class="how-step-num">1</span>
                     <div class="how-step-content">
-                        <div class="how-step-name">لون الملح الصلب الأصلي:</div>
-                        <div class="how-step-obs">${sessionData.color || "أبيض / عديم اللون"}</div>
+                        <div class="how-step-name">${p1ColorLabel}</div>
+                        <div class="how-step-obs">${p1ColorVal}</div>
                     </div>
                 </div>
                 <div class="how-step-item">
                     <span class="how-step-num">2</span>
                     <div class="how-step-content">
-                        <div class="how-step-name">الذوبانية في الماء البارد:</div>
-                        <div class="how-step-obs">${sessionData.solubility || sessionData.state || "يذوب في الماء البارد مكوناً محلولاً رائقاً"}</div>
+                        <div class="how-step-name">${p1SolLabel}</div>
+                        <div class="how-step-obs">${p1SolVal}</div>
                     </div>
                 </div>
             </div>
@@ -829,29 +1194,33 @@ document.addEventListener("DOMContentLoaded", () => {
             <!-- Phase 1: Anion Diagnostic Tree -->
             <div class="how-phase-card phase-anion">
                 <div class="how-phase-title">
-                    <span>🧪 المرحلة الثانية: شجرة الكشف عن الشق الحامضي (Anion Tree)</span>
-                    <span class="how-phase-badge badge-anion">المرحلة 2</span>
+                    <span>${p2Title}</span>
+                    <span class="how-phase-badge badge-anion">${p2Badge}</span>
                 </div>
         `;
 
         anionSteps.forEach((s, idx) => {
+            const stepName = isEn ? (s.test_en || s.test) : (s.test_ar || s.test);
+            const stepObs = isEn ? (s.observation_en || s.observation) : (s.observation_ar || s.observation);
             html += `
                 <div class="how-step-item">
                     <span class="how-step-num">${idx + 1}</span>
                     <div class="how-step-content">
-                        <div class="how-step-name">${s.test}:</div>
-                        <div class="how-step-obs">${s.observation}</div>
+                        <div class="how-step-name">${stepName}:</div>
+                        <div class="how-step-obs">${stepObs}</div>
                     </div>
                 </div>
             `;
         });
 
         if (aData) {
+            const aName = isEn ? `${aData.name_en} (${aData.symbol})` : `${aData.name_ar} (${aData.symbol})`;
+            const aLabel = isEn ? "Deduced Acidic Radical:" : "الشق الحامضي المستنتج:";
             html += `
                 <div class="how-result-box">
                     <span class="how-result-badge">🎯</span>
                     <div class="how-result-text">
-                        <strong>الشق الحامضي المستنتج:</strong> ${aData.name_ar} (${aData.symbol}) — ${aData.group}
+                        <strong>${aLabel}</strong> ${aName} — ${aData.group}
                         <div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">${aData.summary}</div>
                     </div>
                 </div>
@@ -864,29 +1233,33 @@ document.addEventListener("DOMContentLoaded", () => {
             <!-- Phase 2: Cation Diagnostic Tree -->
             <div class="how-phase-card phase-cation">
                 <div class="how-phase-title">
-                    <span>⚗️ المرحلة الثالثة: شجرة الكشف عن الشق القاعدي (Cation Tree)</span>
-                    <span class="how-phase-badge badge-cation">المرحلة 3</span>
+                    <span>${p3Title}</span>
+                    <span class="how-phase-badge badge-cation">${p3Badge}</span>
                 </div>
         `;
 
         cationSteps.forEach((s, idx) => {
+            const stepName = isEn ? (s.test_en || s.test) : (s.test_ar || s.test);
+            const stepObs = isEn ? (s.observation_en || s.observation) : (s.observation_ar || s.observation);
             html += `
                 <div class="how-step-item">
                     <span class="how-step-num">${idx + 1}</span>
                     <div class="how-step-content">
-                        <div class="how-step-name">${s.test}:</div>
-                        <div class="how-step-obs">${s.observation}</div>
+                        <div class="how-step-name">${stepName}:</div>
+                        <div class="how-step-obs">${stepObs}</div>
                     </div>
                 </div>
             `;
         });
 
         if (cData) {
+            const cName = isEn ? `${cData.name_en} (${cData.symbol})` : `${cData.name_ar} (${cData.symbol})`;
+            const cLabel = isEn ? "Deduced Basic Radical:" : "الشق القاعدي المستنتج:";
             html += `
                 <div class="how-result-box">
                     <span class="how-result-badge">🎯</span>
                     <div class="how-result-text">
-                        <strong>الشق القاعدي المستنتج:</strong> ${cData.name_ar} (${cData.symbol}) — ${cData.group}
+                        <strong>${cLabel}</strong> ${cName} — ${cData.group}
                         <div style="font-size: 12px; color: #cbd5e1; margin-top: 4px;">${cData.summary}</div>
                     </div>
                 </div>
@@ -899,20 +1272,20 @@ document.addEventListener("DOMContentLoaded", () => {
             <!-- Phase 3: Final Synthesis & Compatibility Check -->
             <div class="how-phase-card phase-salt">
                 <div class="how-phase-title">
-                    <span>⚛️ المرحلة الرابعة: دمج الشقين والاستقرار الكيميائي (Salt Integration & Verification)</span>
-                    <span class="how-phase-badge badge-salt">النتيجة النهائية</span>
+                    <span>${p4Title}</span>
+                    <span class="how-phase-badge badge-salt">${p4Badge}</span>
                 </div>
                 <div class="how-result-box" style="background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.4);">
                     <span class="how-result-badge">🧂</span>
                     <div class="how-result-text">
                         <div style="font-size: 15px; color: #e9d5ff; font-weight: 800; font-family: 'JetBrains Mono', monospace;">
-                            ${outData ? outData.title : ''} — ${outData ? outData.subtitle : ''}
+                            ${outData ? outData.title : ''} — ${outData ? (isEn ? (outData.subtitle_en || outData.subtitle) : outData.subtitle) : ''}
                         </div>
                         <div style="margin-top: 6px; font-size: 12px; color: #ddd; line-height: 1.6;">
                             ${outData ? outData.summary : ''}
                         </div>
                         <div style="margin-top: 6px; font-size: 11px; color: #a78bfa;">
-                            حالة الاستقرار: ${outData ? (outData.badge || 'تم تشخيص الملح بنجاح') : ''}
+                            ${stabilityLabel} ${outData ? (outData.badge || (isEn ? 'Salt Diagnosed Successfully' : 'تم تشخيص الملح بنجاح')) : ''}
                         </div>
                     </div>
                 </div>
@@ -976,12 +1349,13 @@ document.addEventListener("DOMContentLoaded", () => {
         stage4Container.hidden = true;
         stage5Container.hidden = false;
 
+        const isEn = currentLang === "en";
         const outData = sessionData.suspectedData;
         const confTest = sessionData.confirmatory;
 
         const reportNum = "CHEMLAB-" + Math.floor(100000 + Math.random() * 900000);
         const now = new Date();
-        const dateStr = now.toLocaleDateString("ar-EG", {
+        const dateStr = now.toLocaleDateString(isEn ? "en-US" : "ar-EG", {
             year: "numeric", month: "long", day: "numeric",
             hour: "2-digit", minute: "2-digit"
         });
@@ -990,17 +1364,20 @@ document.addEventListener("DOMContentLoaded", () => {
         reportDate.textContent = `DATE: ${dateStr}`;
 
         if (sessionData.isSaltDiagnosis) {
-            reportTypeVal.textContent = outData ? (outData.badge || "ملح غير عضوي (Inorganic Salt)") : "ملح غير عضوي";
-            reportStateVal.textContent = sessionData.solubility || sessionData.state || "يذوب في الماء البارد";
-            if (outData && outData.badge && outData.badge.includes("عدم توافق")) {
-                reportStatus.textContent = "STATUS: CHEMICAL INCOMPATIBILITY (عدم توافق كيميائي)";
+            reportTypeVal.textContent = isEn ? "Inorganic Salt" : (outData ? (outData.badge || "ملح غير عضوي (Inorganic Salt)") : "ملح غير عضوي");
+            reportStateVal.textContent = isEn
+                ? (sessionData.solubility_en || sessionData.state_en || "Soluble in cold water")
+                : (sessionData.solubility || sessionData.state || "يذوب في الماء البارد");
+
+            if (outData && outData.badge && (outData.badge.includes("عدم توافق") || outData.badge.includes("Incompatibility"))) {
+                reportStatus.textContent = isEn ? "STATUS: CHEMICAL INCOMPATIBILITY" : "STATUS: CHEMICAL INCOMPATIBILITY (عدم توافق كيميائي)";
                 reportStatus.style.color = "#ef4444";
-                reportConfirmVal.textContent = "مركب غير مستقر كيميائياً ⚠️";
+                reportConfirmVal.textContent = isEn ? "Chemically Unstable / Incompatible ⚠️" : "مركب غير مستقر كيميائياً ⚠️";
                 reportConfirmVal.style.color = "#ef4444";
             } else {
-                reportStatus.textContent = "STATUS: VERIFIED (تشخيص ملح مكتمل)";
+                reportStatus.textContent = isEn ? "STATUS: VERIFIED (Salt Diagnosed)" : "STATUS: VERIFIED (تشخيص ملح مكتمل)";
                 reportStatus.style.color = "#69bd78";
-                reportConfirmVal.textContent = "تم تشخيص الملح بنجاح ✓";
+                reportConfirmVal.textContent = isEn ? "Salt Successfully Diagnosed ✓" : "تم تشخيص الملح بنجاح ✓";
                 reportConfirmVal.style.color = "#69bd78";
             }
             if (saltHowContainer) {
@@ -1012,35 +1389,39 @@ document.addEventListener("DOMContentLoaded", () => {
                 saltHowContainer.style.display = "none";
             }
             if (sessionData.confirmed) {
-                reportStatus.textContent = "STATUS: VERIFIED (مؤكد معملياً)";
+                reportStatus.textContent = isEn ? "STATUS: VERIFIED" : "STATUS: VERIFIED (مؤكد معملياً)";
                 reportStatus.style.color = "#69bd78";
-                reportConfirmVal.textContent = "مؤكد معملياً بنجاح ✓";
+                reportConfirmVal.textContent = isEn ? "Verified in Lab ✓" : "مؤكد معملياً بنجاح ✓";
                 reportConfirmVal.style.color = "#69bd78";
             } else {
-                reportStatus.textContent = "STATUS: UNCONFIRMED (غير مؤكد)";
+                reportStatus.textContent = isEn ? "STATUS: UNCONFIRMED" : "STATUS: UNCONFIRMED (غير مؤكد)";
                 reportStatus.style.color = "#f0cf2e";
-                reportConfirmVal.textContent = "غير مؤكد (يوصى بإعادة الفحص) ⚠️";
+                reportConfirmVal.textContent = isEn ? "Unconfirmed (Re-test recommended) ⚠️" : "غير مؤكد (يوصى بإعادة الفحص) ⚠️";
                 reportConfirmVal.style.color = "#f0cf2e";
             }
-            reportStateVal.textContent = sessionData.state || "محلول مائي";
+            reportStateVal.textContent = isEn
+                ? (sessionData.state_en || "Aqueous Solution")
+                : (sessionData.state || "محلول مائي");
         }
 
-        reportColorVal.textContent = sessionData.color || "غير محدد";
+        reportColorVal.textContent = isEn
+            ? (sessionData.color_en || sessionData.color || "Not specified")
+            : (sessionData.color || "غير محدد");
 
         if (outData) {
             reportFormulaVal.textContent = outData.title;
             reportNameVal.textContent = outData.subtitle || outData.title;
             if (!sessionData.isSaltDiagnosis) {
                 if (sessionData.suspectedKey && sessionData.suspectedKey.startsWith("ORG_")) {
-                    reportTypeVal.textContent = outData.badge ? `مركب عضوي — ${outData.badge}` : "مركب عضوي (Organic Compound)";
+                    reportTypeVal.textContent = isEn ? "Organic Compound" : (outData.badge ? `مركب عضوي — ${outData.badge}` : "مركب عضوي (Organic Compound)");
                 } else {
-                    reportTypeVal.textContent = outData.formula ? "أيون كيميائي نوعي" : "مركب غير عضوي";
+                    reportTypeVal.textContent = isEn ? "Qualitative Ion / Substance" : (outData.formula ? "أيون كيميائي نوعي" : "مركب غير عضوي");
                 }
             }
         } else {
             reportFormulaVal.textContent = "—";
-            reportNameVal.textContent = "غير محدد بدقة";
-            reportTypeVal.textContent = "عينة مجهولة";
+            reportNameVal.textContent = isEn ? "Unidentified" : "غير محدد بدقة";
+            reportTypeVal.textContent = isEn ? "Unknown Sample" : "عينة مجهولة";
         }
 
         // Display Chemical Structure in Stage 5 Report
@@ -1061,21 +1442,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const testSpan = document.createElement("span");
             testSpan.className = "node-test";
-            testSpan.textContent = `${idx + 1}. ${step.test}`;
+            const stepTitle = isEn ? (step.test_en || step.test) : (step.test_ar || step.test);
+            testSpan.textContent = `${idx + 1}. ${stepTitle}`;
 
             if (step.phase) {
                 const phaseTag = document.createElement("span");
                 phaseTag.className = `how-phase-badge badge-${step.phase}`;
-                if (step.phase === "physical") phaseTag.textContent = "فحص فيزيائي";
-                else if (step.phase === "anion") phaseTag.textContent = "الشق الحامضي";
-                else if (step.phase === "cation") phaseTag.textContent = "الشق القاعدي";
-                else if (step.phase === "organic") phaseTag.textContent = "فحص عضوي";
+                if (step.phase === "physical") phaseTag.textContent = isEn ? "Physical Exam" : "فحص فيزيائي";
+                else if (step.phase === "anion") phaseTag.textContent = isEn ? "Acidic Radical" : "الشق الحامضي";
+                else if (step.phase === "cation") phaseTag.textContent = isEn ? "Basic Radical" : "الشق القاعدي";
+                else if (step.phase === "organic") phaseTag.textContent = isEn ? "Organic Exam" : "فحص عضوي";
                 testSpan.appendChild(phaseTag);
             }
 
             const obsSpan = document.createElement("span");
             obsSpan.className = "node-obs";
-            obsSpan.textContent = step.observation;
+            obsSpan.textContent = isEn ? (step.observation_en || step.observation) : (step.observation_ar || step.observation);
 
             node.appendChild(testSpan);
             node.appendChild(obsSpan);
@@ -1102,7 +1484,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             const item = document.createElement("div");
             item.className = "equation-item";
-            item.textContent = "لا توجد معادلات كيميائية إضافية مسجلة لهذه العينة.";
+            item.textContent = isEn ? "No additional chemical equations recorded for this sample." : "لا توجد معادلات كيميائية إضافية مسجلة لهذه العينة.";
             reportEquationList.appendChild(item);
         }
 
@@ -1118,7 +1500,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             const li = document.createElement("li");
             li.className = "note-item";
-            li.textContent = "تم إتمام الفحص التحليلي وفقاً للبروتوكول المعملي الاستدلالي المعتمد.";
+            li.textContent = isEn ? "Analytical procedure completed in accordance with qualitative protocol." : "تم إتمام الفحص التحليلي وفقاً للبروتوكول المعملي الاستدلالي المعتمد.";
             reportNotesList.appendChild(li);
         }
 
@@ -1243,11 +1625,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function executePrediction() {
         if (!selectedIon || !selectedReagent) {
-            alert("يرجى اختيار الأيون والكاشف معاً للتنبؤ بالتفاعل.");
+            alert(currentLang === "en" ? "Please select both an ion and a reagent to predict the reaction." : "يرجى اختيار الأيون والكاشف معاً للتنبؤ بالتفاعل.");
             return;
         }
 
-        tubeLabel.textContent = `تحليل: ${selectedIon} + ${selectedReagent}...`;
+        tubeLabel.textContent = currentLang === "en" ? `Analyzing: ${selectedIon} + ${selectedReagent}...` : `تحليل: ${selectedIon} + ${selectedReagent}...`;
 
         try {
             const response = await fetch("/api/predict", {
@@ -1269,14 +1651,20 @@ document.addEventListener("DOMContentLoaded", () => {
         predictResultPlaceholder.hidden = true;
         predictResultCard.hidden = false;
 
+        const isEn = currentLang === "en";
         tubeLabel.textContent = `${data.ion} + ${data.reagent}`;
 
         if (data.status === "validated") {
             predictStatusBadge.className = "status-badge-validated";
-            predictStatusBadge.textContent = "VALIDATED REACTION RESULT — تفاعل مؤكد معملياً";
+            predictStatusBadge.textContent = isEn ? "VALIDATED REACTION RESULT" : "VALIDATED REACTION RESULT — تفاعل مؤكد معملياً";
 
-            predictResultTitle.textContent = data.result;
-            predictResultAr.textContent = data.arabic_result || "";
+            if (isEn) {
+                predictResultTitle.textContent = data.result;
+                predictResultAr.textContent = data.arabic_result || "";
+            } else {
+                predictResultTitle.textContent = data.arabic_result || data.result;
+                predictResultAr.textContent = data.arabic_result ? data.result : "";
+            }
 
             const swatch = data.swatch || "#ffffff";
             tubePrecipitate.style.background = swatch;
@@ -1310,10 +1698,15 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         } else {
             predictStatusBadge.className = "status-badge-unvalidated";
-            predictStatusBadge.textContent = "UNVALIDATED PAIR — لا تتوفر بيانات مؤكدة";
+            predictStatusBadge.textContent = isEn ? "UNVALIDATED PAIR — NO VERIFIED DATA" : "UNVALIDATED PAIR — لا تتوفر بيانات مؤكدة";
 
-            predictResultTitle.textContent = data.result;
-            predictResultAr.textContent = data.arabic_result || "";
+            if (isEn) {
+                predictResultTitle.textContent = data.result;
+                predictResultAr.textContent = data.arabic_result || "";
+            } else {
+                predictResultTitle.textContent = data.arabic_result || data.result;
+                predictResultAr.textContent = data.arabic_result ? data.result : "";
+            }
 
             tubePrecipitate.style.background = "transparent";
             tubePrecipitate.style.boxShadow = "none";
