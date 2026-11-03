@@ -64,11 +64,25 @@ def get_all_data():
         },
         "salt_explorer_meta": {
             "cations": [
-                {"key": k, "symbol": v["symbol"], "name_ar": v["name_ar"], "name_en": v["name_en"]}
+                {
+                    "key": k,
+                    "symbol": v["symbol"],
+                    "name_ar": v["name_ar"],
+                    "name_en": v["name_en"],
+                    "ar": v["name_ar"],
+                    "en": v["name_en"]
+                }
                 for k, v in kb.CATIONS_DATA.items()
             ],
             "anions": [
-                {"key": k, "symbol": v["symbol"], "name_ar": v["name_ar"], "name_en": v["name_en"]}
+                {
+                    "key": k,
+                    "symbol": v["symbol"],
+                    "name_ar": v["name_ar"],
+                    "name_en": v["name_en"],
+                    "ar": v["name_ar"],
+                    "en": v["name_en"]
+                }
                 for k, v in kb.ANIONS_DATA.items()
             ]
         }

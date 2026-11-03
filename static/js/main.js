@@ -3114,7 +3114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const CATIONS_FALLBACK = [
-        { key: "CU", ar: "النحاس الثنائي", en: "Copper(II)", symbol: "Cu²⁺" },
+        { key: "CU", ar: "النحاس الثنائي", en: "Copper(II)", name_ar: "النحاس الثنائي", name_en: "Copper(II)", symbol: "Cu²⁺" },
         { key: "FE2", ar: "الحديد الثنائي", en: "Iron(II)", symbol: "Fe²⁺" },
         { key: "FE3", ar: "الحديد الثلاثي", en: "Iron(III)", symbol: "Fe³⁺" },
         { key: "AL", ar: "الألومنيوم", en: "Aluminium", symbol: "Al³⁺" },
@@ -3158,7 +3158,9 @@ document.addEventListener("DOMContentLoaded", () => {
             cationsList.forEach(c => {
                 const opt = document.createElement("option");
                 opt.value = c.key;
-                opt.textContent = isEn ? `${c.en} (${c.symbol})` : `${c.ar} (${c.symbol})`;
+                const nameAr = c.name_ar || c.ar || "";
+                const nameEn = c.name_en || c.en || "";
+                opt.textContent = isEn ? `${nameEn} (${c.symbol})` : `${nameAr} (${c.symbol})`;
                 if (c.key === curVal) opt.selected = true;
                 explorerCationSelect.appendChild(opt);
             });
@@ -3170,7 +3172,9 @@ document.addEventListener("DOMContentLoaded", () => {
             anionsList.forEach(a => {
                 const opt = document.createElement("option");
                 opt.value = a.key;
-                opt.textContent = isEn ? `${a.en} (${a.symbol})` : `${a.ar} (${a.symbol})`;
+                const nameAr = a.name_ar || a.ar || "";
+                const nameEn = a.name_en || a.en || "";
+                opt.textContent = isEn ? `${nameEn} (${a.symbol})` : `${nameAr} (${a.symbol})`;
                 if (a.key === curVal) opt.selected = true;
                 explorerAnionSelect.appendChild(opt);
             });
@@ -3279,7 +3283,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // CARD 3: Verification Protocol
         if (explorerAnionGroupInfo) {
-            explorerAnionGroupInfo.textContent = isEn ? `Group: ${verif.anion.group_en} (${verif.anion.symbol})` : `المجموعة: ${verif.anion.group} (${verif.anion.symbol})`;
+            const aName = isEn ? (verif.anion.name_en || "") : (verif.anion.name_ar || "");
+            const aGroup = isEn ? verif.anion.group_en : verif.anion.group;
+            explorerAnionGroupInfo.textContent = aName
+                ? (isEn ? `${aName} (${verif.anion.symbol}) — Group: ${aGroup}` : `${aName} (${verif.anion.symbol}) — المجموعة: ${aGroup}`)
+                : (isEn ? `Group: ${aGroup} (${verif.anion.symbol})` : `المجموعة: ${aGroup} (${verif.anion.symbol})`);
         }
         if (explorerAnionSummary) {
             explorerAnionSummary.textContent = isEn ? verif.anion.summary_en : verif.anion.summary;
@@ -3295,7 +3303,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (explorerCationGroupInfo) {
-            explorerCationGroupInfo.textContent = isEn ? `Group: ${verif.cation.group_en} (${verif.cation.symbol})` : `المجموعة: ${verif.cation.group} (${verif.cation.symbol})`;
+            const cName = isEn ? (verif.cation.name_en || "") : (verif.cation.name_ar || "");
+            const cGroup = isEn ? verif.cation.group_en : verif.cation.group;
+            explorerCationGroupInfo.textContent = cName
+                ? (isEn ? `${cName} (${verif.cation.symbol}) — Group: ${cGroup}` : `${cName} (${verif.cation.symbol}) — المجموعة: ${cGroup}`)
+                : (isEn ? `Group: ${cGroup} (${verif.cation.symbol})` : `المجموعة: ${cGroup} (${verif.cation.symbol})`);
         }
         if (explorerCationSummary) {
             explorerCationSummary.textContent = isEn ? verif.cation.summary_en : verif.cation.summary;
